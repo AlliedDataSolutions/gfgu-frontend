@@ -3,7 +3,7 @@ import { paths } from "@/config/paths";
 import { ProtectedRoute } from "@/lib/auth";
 
 import { Landing } from "@/features/common";
-import NotFound from "@/features/common/NotFound";
+import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
 import { Home, Checkout, Payment } from "@/features/customer";
 import {
@@ -19,8 +19,6 @@ import {
   ManageUsers,
   SalesReport,
 } from "@/features/admin";
-
-
 
 export const createAppRouter = () =>
   createBrowserRouter([
