@@ -1,11 +1,7 @@
-import { Button } from "@/components/ui/button";
+import { AppRouter } from "@/features/router";
 
 function App() {
-  return (
-    <div className="flex-col space-y-2 max-w-60 ">
-      <Button>Button</Button>
-    </div>
-  );
+  return <AppRouter />;
 }
 
 export default App;
