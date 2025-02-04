@@ -20,6 +20,9 @@ Project is feature-base structured. Here is an example
 ```javascript
 project-root/
 ├── src/
+│   ├── config
+│   │   ├── env.ts
+│   │   ├── paths.ts
 │   ├── features/
 │   │   ├── auth/
 │   │   │   ├── components/
