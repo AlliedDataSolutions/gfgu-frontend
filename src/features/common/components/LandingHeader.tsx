@@ -4,6 +4,7 @@ import AppIcon from "../../../assets/react.svg";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "@/config/paths";
+import { LandingHeaderProps } from "@/components/models/landingMenuItems";
 
 export default function LandingHeader({ menuItems }: LandingHeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,13 +59,4 @@ export default function LandingHeader({ menuItems }: LandingHeaderProps) {
       </header>
     </div>
   );
-}
-
-interface MenuItem {
-  name: string;
-  href: string;
-}
-
-interface LandingHeaderProps {
-  menuItems: MenuItem[];
 }

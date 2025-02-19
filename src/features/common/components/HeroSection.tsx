@@ -3,6 +3,10 @@ import { Button } from "@/components/ui/button";
 import Marquee from "react-fast-marquee";
 import { CircleCheck } from "lucide-react";
 import { capitalizeFirstLetter } from "@/lib/utils";
+import {
+  DeliveryDay,
+  DeliveryDayProps,
+} from "@/components/models/deliveryDays";
 
 export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
   return (
@@ -55,13 +59,4 @@ function DeliveryDayComp({ location, dayOfWeek }: DeliveryDay) {
       </p>
     </div>
   );
-}
-
-interface DeliveryDay {
-  location: string;
-  dayOfWeek: string;
-}
-
-interface DeliveryDayProps {
-  deliveryDays: DeliveryDay[];
 }
