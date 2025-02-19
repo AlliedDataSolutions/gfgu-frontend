@@ -1,20 +1,13 @@
 import { useState } from "react";
 import { Menu } from "lucide-react";
-import AppIcon from "../../assets/react.svg";
+import AppIcon from "../../../assets/react.svg";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { paths } from "@/config/paths";
 
-export default function LandingHeader() {
+export default function LandingHeader({ menuItems }: LandingHeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-
-  const menuItems = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Delivery Days", href: "#deliveryDays" },
-    { name: "Contact", href: "#contact" },
-  ];
 
   return (
     <div className="md:shadow-sm">
@@ -27,8 +20,8 @@ export default function LandingHeader() {
           <div className="flex space-x-14 items-center">
             <nav className="hidden md:flex space-x-2">
               {menuItems.map((item) => (
-                <Button variant="link">
-                  <a href={item.href}>{item.name}</a>
+                <Button key={item.name} variant="link">
+                  <Link to={item.href}>{item.name}</Link>
                 </Button>
               ))}
             </nav>
@@ -49,11 +42,11 @@ export default function LandingHeader() {
               <Menu className="md:hidden" onClick={() => setIsOpen(!isOpen)} />
 
               {isOpen && (
-                <div className="absolute right-6 top-14 bg-white shadow-md md:hidden">
+                <div className="absolute z-50 right-6 top-14 bg-white shadow-md flex md:hidden">
                   <nav className="flex-col">
                     {menuItems.map((item) => (
-                      <Button className="block" variant="link">
-                        <a href={item.href}>{item.name}</a>
+                      <Button key={item.name} className="block" variant="link">
+                        <Link to={item.href}>{item.name}</Link>
                       </Button>
                     ))}
                   </nav>
@@ -65,4 +58,16 @@ export default function LandingHeader() {
       </header>
     </div>
   );
+}
+
+interface MenuItem {
+  name: string;
+  href: string;
+}
+
+interface LandingHeaderProps {
+  menuItems: MenuItem[];
+}
+function useEffect(arg0: () => void, arg1: boolean[]) {
+  throw new Error("Function not implemented.");
 }
