@@ -19,12 +19,14 @@ import {
   ManageUsers,
   SalesReport,
 } from "@/features/admin";
+import Delivery from "./days/pages/Delivery";
 
 export const createAppRouter = () =>
   createBrowserRouter([
     { path: paths.landing.path, element: <Landing /> },
     { path: paths.auth.login.path, element: <Login /> },
     { path: paths.auth.register.path, element: <Register /> },
+    { path: paths.days.delivery.path, element: <Delivery /> },
     { path: paths.error.notFound.path, element: <NotFound /> },
 
     {
