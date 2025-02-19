@@ -37,7 +37,7 @@ function Footer({ menuItems }: LandingHeaderProps) {
         {/* Pages */}
         <div>
           <h2 className="text-sm font-bold mb-3">Pages</h2>
-          <ul className="flex flex-col items-start space-y-2">
+          <ul className="flex justify-around items-center md:flex-col md:items-start md:space-y-2">
             {menuItems.map((item) => (
               <Button className="p-0" key={item.name} variant="link">
                 <Link className="text-white" to={item.href}>
