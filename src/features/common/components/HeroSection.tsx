@@ -15,9 +15,9 @@ export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
             alt="background hero"
           />
         </div>
-        <div className="container ">
-          <div className="max-w-screen-xl mx-auto border border-red-700">
-            <div className="absolute top-0 bottom-16 left-0 right-0 m-auto sm:right-auto sm:ml-14 h-72 inline-flex-col  max-w-sm md:max-w-xl p-12 space-y-16 rounded-lg bg-[#F5FFF9]">
+        <div className="container">
+          <div className="absolute top-0 bottom-16 left-0 right-0 flex  max-w-screen-xl mx-auto">
+            <div className="  m-auto sm:right-auto sm:ml-14 h-72 inline-flex-col  max-w-sm md:max-w-xl p-12 space-y-16 rounded-lg bg-[#F5FFF9]">
               <div>
                 <h1 className="text-2xl md:text-5xl bg-gradient-to-r from-brand-900 to-brand-200 bg-clip-text text-transparent">
                   GROWING FROM THE GROUND UP
@@ -35,7 +35,10 @@ export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
       <div className="bg-brand-700 py-5">
         <Marquee speed={50}>
           {deliveryDays.map((item) => (
-            <DeliveryDayComp location={item.location} dayOfWeek={item.day} />
+            <DeliveryDayComp
+              location={item.location}
+              dayOfWeek={item.dayOfWeek}
+            />
           ))}
         </Marquee>
       </div>
