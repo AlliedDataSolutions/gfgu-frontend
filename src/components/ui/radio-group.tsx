@@ -1,6 +1,5 @@
 import * as React from "react"
 import * as RadioGroupPrimitive from "@radix-ui/react-radio-group"
-import { Circle } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 
@@ -10,9 +9,9 @@ const RadioGroup = React.forwardRef<
 >(({ className, ...props }, ref) => {
   return (
     <RadioGroupPrimitive.Root
+      ref={ref}
       className={cn("grid gap-2", className)}
       {...props}
-      ref={ref}
     />
   )
 })
@@ -26,13 +25,17 @@ const RadioGroupItem = React.forwardRef<
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
-        "aspect-square h-4 w-4 rounded-full border border-brand-500 text-brand-500 shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-brand-700 disabled:cursor-not-allowed disabled:opacity-50 dark:border-brand-300 dark:text-brand-100 dark:focus-visible:ring-brand-400",
+        // Set the unselected radio button dimensions and style
+        "relative h-[20px] w-[20px] rounded-full border border-zinc-200 shadow focus:outline-none focus-visible:ring-1 focus-visible:ring-zinc-950 disabled:cursor-not-allowed disabled:opacity-50 dark:border-zinc-800",
         className
       )}
       {...props}
     >
-      <RadioGroupPrimitive.Indicator className="flex items-center justify-center">
-        <Circle className="h-3.5 w-3.5 fill-brand-500 dark:fill-brand-300" />
+      <RadioGroupPrimitive.Indicator className="absolute inset-0">
+        {/* Outer green circle with Figma border-radius of 16px */}
+        <div className="absolute inset-0 rounded-[16px] bg-[#09DE13]" />
+        {/* Inner white ellipse positioned using 30% offsets */}
+        <div className="absolute left-[30%] right-[30%] top-[30%] bottom-[30%] rounded-full bg-white" />
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   )
