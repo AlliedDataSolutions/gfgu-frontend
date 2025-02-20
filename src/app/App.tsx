@@ -1,5 +1,3 @@
-"use client";
-
 import { AppRouter } from "@/features/router";
 
 function App() {
