@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio";
 import { Switch } from "@/components/ui/switch";
@@ -18,8 +18,8 @@ export default function TestComponents() {
   const [switchValue, setSwitchValue] = useState(false);
   const [switchWithTextValue, setSwitchWithTextValue] = useState(false);
 
-  // Toast hook (for real-time toast state if needed)
-  const { toasts } = useToast();
+  // Initialize toast hook (but we don't use "toasts" here)
+  useToast();
 
   // Toast trigger handlers
   const showDefaultToast = () => {
@@ -60,13 +60,14 @@ export default function TestComponents() {
         <h2 className="text-2xl font-bold mb-4">Checkbox Variants</h2>
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
-            <Checkbox
-              checked={checkboxChecked}
-              onCheckedChange={(checked) =>
-                setCheckboxChecked(checked as boolean)
-              }
-              aria-label="Controlled Checkbox"
-            />
+          <Checkbox
+            checked={checkboxChecked}
+            onCheckedChange={(checked: boolean | "indeterminate") =>
+              setCheckboxChecked(checked === true)
+            }
+            aria-label="Controlled Checkbox"
+          />
+
             <span>
               Controlled Checkbox (checked: {checkboxChecked ? "Yes" : "No"})
             </span>
