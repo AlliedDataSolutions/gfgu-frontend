@@ -2,12 +2,14 @@ import Footer from "@/components/ui/footer";
 import LandingHeader from "../components/LandingHeader";
 import HeroSection from "../components/HeroSection";
 import Delivery from "../components/Delivery";
+import { AboutUs } from "../components/AboutUs";
 
 export const Landing = () => {
   return (
     <>
       <LandingHeader menuItems={menuItems} />
       <HeroSection deliveryDays={deliveryDays} />
+      <AboutUs />
       <Delivery deliveryDays={deliveryDays} />
       <Footer menuItems={menuItems} />
     </>
