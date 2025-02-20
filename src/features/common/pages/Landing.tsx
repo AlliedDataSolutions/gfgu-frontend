@@ -1,17 +1,29 @@
-import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
-import { paths } from "@/config/paths";
+import Footer from "@/components/ui/footer";
+import LandingHeader from "../components/LandingHeader";
+import HeroSection from "../components/HeroSection";
+import Delivery from "../components/Delivery";
 
 export const Landing = () => {
-  const navigate = useNavigate();
   return (
-    <div className="text-center mx-auto">
-      Landing Page
-      <div className="border border-red-300">
-        <Button onClick={() => navigate(paths.auth.login.path)}>
-          To login page
-        </Button>
-      </div>
-    </div>
+    <>
+      <LandingHeader menuItems={menuItems} />
+      <HeroSection deliveryDays={deliveryDays} />
+      <Delivery deliveryDays={deliveryDays} />
+      <Footer menuItems={menuItems} />
+    </>
   );
 };
+
+const deliveryDays = [
+  { location: "edmonton", dayOfWeek: "Wednessday" },
+  { location: "calgary", dayOfWeek: "Tuesday" },
+  { location: "lethbridge", dayOfWeek: "Thursday" },
+  { location: "airdrie", dayOfWeek: "Friday" },
+];
+
+const menuItems = [
+  { name: "Home", href: "#home" },
+  { name: "About", href: "#about" },
+  { name: "Delivery Days", href: "#deliveryDays" },
+  { name: "Contact", href: "#contact" },
+];
