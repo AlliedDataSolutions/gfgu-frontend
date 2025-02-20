@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import { Button } from "@/components/ui/button";
 import elipses from "@/assets/elipses.png";
 import rect9 from "@/assets/rect9.png";
