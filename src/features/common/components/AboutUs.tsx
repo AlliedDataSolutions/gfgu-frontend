@@ -71,7 +71,7 @@ export function AboutUs() {
                 has to offer!
               </p>
             </div>
-            <Button size="sm" variant="default">
+            <Button>
             Join Us
             </Button>
           </div>
