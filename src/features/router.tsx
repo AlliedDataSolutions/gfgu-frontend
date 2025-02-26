@@ -20,6 +20,8 @@ import {
   SalesReport,
 } from "@/features/admin";
 
+import { Cart } from "@/features/common/pages/Cart"; // Import the Cart component
+
 export const createAppRouter = () =>
   createBrowserRouter([
     { path: paths.landing.path, element: <Landing /> },
@@ -81,6 +83,9 @@ export const createAppRouter = () =>
         { path: paths.admin.salesReport.path, element: <SalesReport /> },
       ],
     },
+
+    // Add a route for the Cart page
+    { path: "/cart", element: <Cart /> },
   ]);
 
 export const AppRouter = () => {
