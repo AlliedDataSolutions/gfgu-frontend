@@ -47,8 +47,8 @@ export const paths = {
     salesReport: { path: "/admin/sales", getHref: () => "/admin/sales" },
   },
   
-  days: {
-    delivery: { path: "/delivery", getHref: () => "/delivery" },
+  store: {
+    storefront: { path: "/store/StoreFront", getHref: () => "/store/StoreFront" },
   },
   error: {
     notFound: { path: "*", getHref: () => "*" },

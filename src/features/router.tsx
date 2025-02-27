@@ -19,6 +19,7 @@ import {
   ManageUsers,
   SalesReport,
 } from "@/features/admin";
+import StoreFront from "./store/pages/StoreFront";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -26,6 +27,7 @@ export const createAppRouter = () =>
     { path: paths.auth.login.path, element: <Login /> },
     { path: paths.auth.register.path, element: <Register /> },
     { path: paths.error.notFound.path, element: <NotFound /> },
+    {path: paths.store.storefront.path, element: <StoreFront />},
 
     {
       path: paths.customer.home.path,
