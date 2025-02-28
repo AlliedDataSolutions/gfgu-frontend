@@ -1,5 +1,5 @@
 const StoreFront = () => {
-  return <div>StoreFront</div>;
+  return <div> StoreFront</div>;
 };
 
 export default StoreFront;
