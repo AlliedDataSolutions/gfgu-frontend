@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Menu, ShoppingCart, User, Search } from "lucide-react";
 import AppIcon from "@/assets/react.svg";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
-import { paths } from "@/config/paths";
+import { Link,} from "react-router-dom";
+//import { paths } from "@/config/paths";
 
 interface MenuItem {
   name: string;
@@ -16,7 +16,7 @@ interface HeaderProps {
 
 export default function Header({ menuItems }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+  
 
   return (
     <div className="md:shadow-sm">
