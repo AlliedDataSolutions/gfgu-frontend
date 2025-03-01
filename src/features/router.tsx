@@ -5,7 +5,7 @@ import { ProtectedRoute } from "@/lib/auth";
 import { Landing } from "@/features/common";
 import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
-import { Home, Checkout, Payment } from "@/features/customer";
+import { Home, Payment } from "@/features/customer";
 import {
   VendorLayout,
   VendorDashboard,
@@ -20,7 +20,7 @@ import {
   SalesReport,
 } from "@/features/admin";
 
-import { Cart } from "@/features/common/pages/Cart"; // Import the Cart component
+import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -41,7 +41,7 @@ export const createAppRouter = () =>
       path: paths.customer.checkout.path,
       element: (
         <ProtectedRoute>
-          <Checkout />
+          <CheckoutPage />
         </ProtectedRoute>
       ),
     },
@@ -84,8 +84,8 @@ export const createAppRouter = () =>
       ],
     },
 
-    // Add a route for the Cart page
-    { path: "/cart", element: <Cart /> },
+    // Add a route for the CheckoutPage
+    { path: "/checkoutpage", element: <CheckoutPage /> },
   ]);
 
 export const AppRouter = () => {

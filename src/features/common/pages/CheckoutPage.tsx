@@ -1,11 +1,10 @@
 import Footer from "@/components/ui/footer";
-import Header from "@/components/ui/Header"; //don't know why this Header isn't header but it gives me an error if I change it
-
-//import cart from database
+import Header from "@/components/ui/header"; 
+//import checkout from database
 //if no items in cart, display empty cart message
 //import product info from product catalog
 
-export const Cart = () => {
+export const CheckoutPage = () => {
   return (
     <>
       <Header menuItems={menuItems} />
@@ -14,7 +13,6 @@ export const Cart = () => {
   );
 };
 
-//cart logic here
 
 const menuItems = [
   { name: "Home", href: "#home" },
