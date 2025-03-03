@@ -3,13 +3,14 @@ import LandingHeader from "../components/LandingHeader";
 import HeroSection from "../components/HeroSection";
 import Delivery from "../components/Delivery";
 import { AboutUs } from "../components/AboutUs";
-
+import Need from "../components/need";
 export const Landing = () => {
   return (
     <>
       <LandingHeader menuItems={menuItems} />
       <HeroSection deliveryDays={deliveryDays} />
       <AboutUs />
+      <Need/>
       <Delivery deliveryDays={deliveryDays} />
       <Footer menuItems={menuItems} />
     </>
