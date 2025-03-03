@@ -6,12 +6,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio";
 import LandingHeader from "@/features/common/components/LandingHeader";
 import Footer from "@/components/ui/footer";
 
-/** 
- * Optional: If you have a "Form" wrapper or "FormField" from your 
- * form.tsx file, you can import them here for more advanced usage.
- * But for simplicity, I'm using react-hook-form's basic syntax + your Input/Checkbox/Radio.
- */
-
 export function ShippingAddress() {
   const {
     register,
@@ -19,11 +13,21 @@ export function ShippingAddress() {
     formState: { errors },
   } = useForm();
 
-  // For demonstration, just logging data
-  const onSubmit = (data: any) => {
-    console.log("Shipping Address form data:", data);
-    // You could POST to your backend (e.g., /api/address/shipping)
+  // Call endpoint from backend
+  const onSubmit = async (data: any) => {
+    try {
+      const response = await fetch("/api/address/shipping", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) throw new Error("Failed to save address");
+      console.log("Address saved!");
+    } catch (error) {
+      console.error(error);
+    }
   };
+  
 
   // Mock cart items for the "Your Order" section
   const cartItems = [
