@@ -49,6 +49,7 @@ export const paths = {
   
   store: {
     storefront: { path: "/store/StoreFront", getHref: () => "/store/StoreFront" },
+    productView: { path: "/store/ProductView", getHref: () => "/store/ProductView" },
   },
   error: {
     notFound: { path: "*", getHref: () => "*" },

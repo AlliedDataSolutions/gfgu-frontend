@@ -41,6 +41,10 @@ export default {
           400: "#CAEF45",
           600: "#B6D73E",
         },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
       }
     }
   },

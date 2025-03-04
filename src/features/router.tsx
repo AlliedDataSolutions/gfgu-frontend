@@ -22,6 +22,7 @@ import {
 import StoreFront from "./store/pages/StoreFront";
 
 import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
+import ProductView from "./store/components/product-view";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -30,6 +31,7 @@ export const createAppRouter = () =>
     { path: paths.auth.register.path, element: <Register /> },
     { path: paths.error.notFound.path, element: <NotFound /> },
     {path: paths.store.storefront.path, element: <StoreFront />},
+    { path: paths.store.productView.path, element: <ProductView /> },
 
     {
       path: paths.customer.home.path,
