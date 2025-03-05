@@ -67,7 +67,7 @@ export const Login = () => {
               </Button>
             </div>
 
-            <Button className="w-full mt-10" variant={"disabled"} size="lg">
+            <Button className="w-full mt-10" disabled size="lg">
               Continue
             </Button>
 

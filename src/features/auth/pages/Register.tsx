@@ -30,15 +30,17 @@ export const Register = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid },
+    formState: { errors },
   } = useForm<RegisterFormData>({
     resolver: zodResolver(registerSchema),
     mode: "onChange",
   });
 
-  //   const { watch } = useForm();
-  //   const formValues = watch();
-  //   console.log(formValues);
+  // To be visited later:
+  // Intention is to make button acive automatically when form is valid
+  // const { watch } = useForm();
+  // const formValues = watch();
+  // console.log(formValues);
 
   const {
     registerUser,
