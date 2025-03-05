@@ -6,26 +6,27 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Vegies from "@/assets/vegies.png";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useRegister } from "@/features/auth/hooks/useRegister";
-import { toast } from "react-hot-toast";
 import ErrorMessage from "@/components/ui/errormessage";
+import { paths } from "@/config/paths";
+import { handleAxiosError } from "@/lib/handleAxiosError";
+import { Role } from "@/core/role";
 
 const registerSchema = z.object({
   firstName: z.string().min(2, "First name is too short"),
   lastName: z.string().min(2, "Last name is too short"),
   email: z.string().email("Invalid email"),
-  phone: z.string().min(10, "Invalid phone number"),
   password: z.string().min(8, "Password must be at least 6 characters"),
-  accountType: z.enum(["customer", "vendor", "manager"]),
   businessName: z.string().optional(),
 });
 
 type RegisterFormData = z.infer<typeof registerSchema>;
 
 export const Register = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -35,14 +36,13 @@ export const Register = () => {
     mode: "onChange",
   });
 
-  const { watch } = useForm();
-  const formValues = watch();
-  console.log(formValues);
+  //   const { watch } = useForm();
+  //   const formValues = watch();
+  //   console.log(formValues);
 
   const {
     registerUser,
     loading,
-    error,
     accountType,
     setAccountType,
     agreed,
@@ -52,15 +52,13 @@ export const Register = () => {
   } = useRegister();
 
   const onSubmit = async (data: RegisterFormData) => {
-    console.log("errors::::", errors);
-    if (!agreed) {
-      toast.error("Invalid form");
-      return;
-    }
+    // const { acctType, ...restData } = data;
+    const payload = { ...data, role: accountType as Role };
     try {
-      await registerUser(data);
+      await registerUser(payload);
+      navigate(paths.auth.login.path);
     } catch (err) {
-      toast.error(error || "Registration failed");
+      handleAxiosError(err);
     }
   };
 
@@ -99,12 +97,10 @@ export const Register = () => {
                   value="vendor"
                   id="vendor"
                   checked={accountType === "vendor"}
-                  {...register("accountType")}
                 />
                 <Label htmlFor="vendor">Vendor</Label>
               </div>
             </RadioGroup>
-            <ErrorMessage message={errors.accountType?.message} />
           </div>
 
           {/* Form Fields */}
@@ -142,17 +138,6 @@ export const Register = () => {
                 {...register("email")}
               />
               <ErrorMessage message={errors.email?.message} />
-            </div>
-
-            <div>
-              <Label htmlFor="phone">Phone Number</Label>
-              <Input
-                type="tel"
-                id="phone"
-                placeholder="Enter number"
-                {...register("phone")}
-              />
-              <ErrorMessage message={errors.phone?.message} />
             </div>
 
             {accountType === "vendor" && (
@@ -212,13 +197,11 @@ export const Register = () => {
             </div>
 
             <Button
-              //   type="submit"
+              type="submit"
               className="w-full"
-              //   disabled={!isValid || !agreed || loading}
+              disabled={!agreed || loading}
+              // disabled={!isValid || !agreed || loading}
               size="lg"
-              onClick={() => {
-                // onSubmit(register.)
-              }}
             >
               {loading ? "Registering..." : "Register"}
             </Button>
