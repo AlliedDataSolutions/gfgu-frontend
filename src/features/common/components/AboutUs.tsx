@@ -1,9 +1,9 @@
 // import React from "react";
 import { Button } from "@/components/ui/button";
-import elipses from "@/assets/elipses.png";
-import rect9 from "@/assets/rect9.png";
-import rect10 from "@/assets/rect10.png";
-import rect11 from "@/assets/rect11.png";
+import AboutUsElipses from "@/assets/AboutUsElipses.png";
+import AboutUsVeggies from "@/assets/AboutUsVeggies.png"; 
+import AboutUsBananas from "@/assets/AboutUsBananas.png";
+import AboutUsApples from "@/assets/AboutUsApples.png";
 
 export function AboutUs() {
   return (
@@ -28,22 +28,22 @@ export function AboutUs() {
         {/* Left side: Image collage */}
         <div className="relative w-[655px] h-[566px]">
           <img
-            src={elipses}
+            src={AboutUsElipses}
             alt="Ellipses pattern"
             className="absolute w-[240px] h-[189px] top-0 left-0"
           />
           <img
-            src={rect9}
+            src={AboutUsVeggies}
             alt="Rectangle 9"
             className="absolute w-[412px] h-[492px] left-[34px] top-[58px] rounded-md"
           />
           <img
-            src={rect10}
+            src={AboutUsBananas}
             alt="Rectangle 10"
             className="absolute w-[186px] h-[187px] left-[469px] top-[58px] rounded-md"
           />
           <img
-            src={rect11}
+            src={AboutUsApples}
             alt="Rectangle 11"
             className="absolute w-[276px] h-[298px] left-[379px] top-[268px] rounded-md"
           />
