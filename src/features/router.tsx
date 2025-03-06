@@ -55,10 +55,11 @@ export const createAppRouter = () =>
     },
 
     {
-      path: paths.customer.shipping.path,
+      path: paths.store.shipping.path,
       element: (
-
+        <ProtectedRoute>
           <ShippingAddress />
+        </ProtectedRoute>
 
       ),
     },
