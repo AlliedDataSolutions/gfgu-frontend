@@ -16,6 +16,7 @@ export const handleAxiosError = (err: unknown) => {
     }
   } else {
     // Handle other errors (e.g., programming errors)
+    console.log(err);
     toast.error("Something went wrong");
   }
 };

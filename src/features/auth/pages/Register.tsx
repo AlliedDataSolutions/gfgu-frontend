@@ -54,7 +54,6 @@ export const Register = () => {
   } = useRegister();
 
   const onSubmit = async (data: RegisterFormData) => {
-    // const { acctType, ...restData } = data;
     const payload = { ...data, role: accountType as Role };
     try {
       await registerUser(payload);
@@ -198,15 +197,28 @@ export const Register = () => {
               </Label>
             </div>
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={!agreed || loading}
-              // disabled={!isValid || !agreed || loading}
-              size="lg"
-            >
-              {loading ? "Registering..." : "Register"}
-            </Button>
+            <div className="flex flex-col">
+              <Button
+                type="submit"
+                className="w-full mt-5"
+                disabled={!agreed || loading}
+                // disabled={!isValid || !agreed || loading}
+                size="lg"
+              >
+                {loading ? "Registering..." : "Register"}
+              </Button>
+
+              <div>
+                <p className="text-sm text-center">
+                  Already have an account?{" "}
+                  <Button className="px-0" variant={"link"}>
+                    <Link to={paths.auth.login.path} replace>
+                      Sign in
+                    </Link>
+                  </Button>
+                </p>
+              </div>
+            </div>
           </div>
         </form>
       </div>
