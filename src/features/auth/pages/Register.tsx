@@ -54,7 +54,6 @@ export const Register = () => {
   } = useRegister();
 
   const onSubmit = async (data: RegisterFormData) => {
-    // const { acctType, ...restData } = data;
     const payload = { ...data, role: accountType as Role };
     try {
       await registerUser(payload);
