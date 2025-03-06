@@ -30,7 +30,7 @@ export const createAppRouter = () =>
     { path: paths.error.notFound.path, element: <NotFound /> },
 
     {
-      path: paths.customer.home.path,
+      path: paths.store.home.path,
       element: (
         <ProtectedRoute>
           <Home />
@@ -38,7 +38,7 @@ export const createAppRouter = () =>
       ),
     },
     {
-      path: paths.customer.checkout.path,
+      path: paths.store.checkout.path,
       element: (
         <ProtectedRoute>
           <CheckoutPage />
@@ -46,7 +46,7 @@ export const createAppRouter = () =>
       ),
     },
     {
-      path: paths.customer.payment.path,
+      path: paths.store.payment.path,
       element: (
         <ProtectedRoute>
           <Payment />
