@@ -5,7 +5,7 @@ import { ProtectedRoute } from "@/lib/auth";
 import { Landing } from "@/features/common";
 import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
-import { Home, Payment } from "@/features/customer";
+import { Home, Payment, ShippingAddress } from "@/features/customer";
 import {
   VendorLayout,
   VendorDashboard,
@@ -53,6 +53,17 @@ export const createAppRouter = () =>
         </ProtectedRoute>
       ),
     },
+
+    {
+      path: paths.store.shipping.path,
+      element: (
+        <ProtectedRoute>
+          <ShippingAddress />
+        </ProtectedRoute>
+
+      ),
+    },
+    
 
     // Vendor Routes with Nested Pages
     {

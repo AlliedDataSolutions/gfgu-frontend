@@ -23,6 +23,7 @@ export const paths = {
     home: { path: "/home", getHref: () => "/home" },
     checkout: { path: "/checkout", getHref: () => "/checkout" },
     payment: { path: "/payment", getHref: () => "/payment" },
+    shipping: { path: "/checkout/shipping", getHref: () => "/checkout/shipping" }, 
   },
 
   vendor: {
