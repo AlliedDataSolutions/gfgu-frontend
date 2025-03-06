@@ -19,7 +19,7 @@ export const paths = {
     logout: { path: "/auth/logout", getHref: () => "/auth/logout" },
   },
 
-  customer: {
+  store: {
     home: { path: "/home", getHref: () => "/home" },
     checkout: { path: "/checkout", getHref: () => "/checkout" },
     payment: { path: "/payment", getHref: () => "/payment" },
@@ -47,7 +47,7 @@ export const paths = {
     manageUsers: { path: "/admin/users", getHref: () => "/admin/users" },
     salesReport: { path: "/admin/sales", getHref: () => "/admin/sales" },
   },
-  
+
   days: {
     delivery: { path: "/delivery", getHref: () => "/delivery" },
   },

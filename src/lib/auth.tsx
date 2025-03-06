@@ -1,11 +1,17 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { paths } from "@/config/paths";
+import { useAuth } from "@/features/context/AuthContext";
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const user = { data: null }; // const user = useUser();
+  const { user, loading } = useAuth();
   const location = useLocation();
 
-  if (!user.data) {
+  // If still checking authentication, show a loading screen
+  if (loading) {
+    return <p>Loading...</p>; // replace this with a spinner or skeleton
+  }
+
+  if (!user) {
     return (
       <Navigate to={paths.auth.login.getHref(location.pathname)} replace />
     );

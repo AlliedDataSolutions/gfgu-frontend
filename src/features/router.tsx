@@ -5,7 +5,7 @@ import { ProtectedRoute } from "@/lib/auth";
 import { Landing } from "@/features/common";
 import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
-import { Home, Checkout, Payment, ShippingAddress } from "@/features/customer";
+import { Home, Payment, ShippingAddress } from "@/features/customer";
 import {
   VendorLayout,
   VendorDashboard,
@@ -20,6 +20,8 @@ import {
   SalesReport,
 } from "@/features/admin";
 
+import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
+
 export const createAppRouter = () =>
   createBrowserRouter([
     { path: paths.landing.path, element: <Landing /> },
@@ -28,7 +30,7 @@ export const createAppRouter = () =>
     { path: paths.error.notFound.path, element: <NotFound /> },
 
     {
-      path: paths.customer.home.path,
+      path: paths.store.home.path,
       element: (
         <ProtectedRoute>
           <Home />
@@ -36,15 +38,15 @@ export const createAppRouter = () =>
       ),
     },
     {
-      path: paths.customer.checkout.path,
+      path: paths.store.checkout.path,
       element: (
         <ProtectedRoute>
-          <Checkout />
+          <CheckoutPage />
         </ProtectedRoute>
       ),
     },
     {
-      path: paths.customer.payment.path,
+      path: paths.store.payment.path,
       element: (
         <ProtectedRoute>
           <Payment />
@@ -91,6 +93,9 @@ export const createAppRouter = () =>
         { path: paths.admin.salesReport.path, element: <SalesReport /> },
       ],
     },
+
+    // Add a route for the CheckoutPage
+    { path: "/checkoutpage", element: <CheckoutPage /> },
   ]);
 
 export const AppRouter = () => {
