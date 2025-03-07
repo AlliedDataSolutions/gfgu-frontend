@@ -106,7 +106,7 @@ export default function ProductView() {
 
           {/* Thumbnails */}
           <div className="grid grid-cols-4 gap-2">
-            {productImages.map((image, index) => (
+            {productImages.map((_, index) => (
               <Button
                 key={index}
                 onClick={() => setSelectedImage(index)}
