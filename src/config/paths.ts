@@ -53,4 +53,23 @@ export const paths = {
   error: {
     notFound: { path: "*", getHref: () => "*" },
   },
+
+  account: {
+    personalInfo: {
+      path: "/account/personal-info",
+      getHref: () => "/account/personal-info",
+    },
+    address: {
+      path: "/account/address",
+      getHref: () => "/account/address",
+    },
+    addAddress: {
+      path: "/account/add-address",
+      getHref: () => "/account/add-address",
+    },
+    orders: {
+      path: "/account/orders",
+      getHref: () => "/account/orders",
+    },
+  },
 };
