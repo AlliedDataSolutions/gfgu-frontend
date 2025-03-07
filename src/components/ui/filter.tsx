@@ -1,48 +1,47 @@
-import { useState, useEffect } from "react"
-import { Minus, Plus } from "lucide-react"
+import React, { useState, useEffect } from "react";
+import { Minus, Plus } from "lucide-react";
 
-interface FilterProps {
-  filters: {
-    categories: string[];
-    vendors: string[];
-    priceRange: number[];
-  };
-  onFilterChange: (filters: { categories?: string[]; vendors?: string[]; priceRange?: number[] }) => void;
+interface Filters {
+  categories: string[];
+  vendors: string[];
+  priceRange: [number, number];
 }
 
-export function FilterSidebar({ filters, onFilterChange }: FilterProps) {
-  const [localFilters, setLocalFilters] = useState(filters)
+interface FilterSidebarProps {
+  filters: Filters;
+  onFilterChange: (filters: Filters) => void;
+}
+
+export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
+  const [localFilters, setLocalFilters] = useState(filters);
 
   useEffect(() => {
-    setLocalFilters(filters)
-  }, [filters])
+    setLocalFilters(filters);
+  }, [filters]);
 
-const handleCategoryChange = (category: string) => {
+  const handleCategoryChange = (category: string) => {
     const updatedCategories = localFilters.categories.includes(category)
-        ? localFilters.categories.filter((c) => c !== category)
-        : [...localFilters.categories, category]
+      ? localFilters.categories.filter((c) => c !== category)
+      : [...localFilters.categories, category];
 
-    setLocalFilters((prev) => ({ ...prev, categories: updatedCategories }))
-    onFilterChange({ categories: updatedCategories })
-}
+    setLocalFilters((prev) => ({ ...prev, categories: updatedCategories }));
+    onFilterChange({ ...filters, categories: updatedCategories });
+  };
 
-
-const handleVendorChange = (vendor: string) => {
+  const handleVendorChange = (vendor: string) => {
     const updatedVendors = localFilters.vendors.includes(vendor)
-        ? localFilters.vendors.filter((v) => v !== vendor)
-        : [...localFilters.vendors, vendor];
+      ? localFilters.vendors.filter((v) => v !== vendor)
+      : [...localFilters.vendors, vendor];
 
     setLocalFilters((prev) => ({ ...prev, vendors: updatedVendors }));
-    onFilterChange({ vendors: updatedVendors });
-};
+    onFilterChange({ ...filters, vendors: updatedVendors });
+  };
 
-interface PriceChangeEvent extends React.ChangeEvent<HTMLInputElement> {}
-
-const handlePriceChange = (event: PriceChangeEvent) => {
-    const newPrice = Number.parseInt(event.target.value)
-    setLocalFilters((prev) => ({ ...prev, priceRange: [0, newPrice] }))
-    onFilterChange({ priceRange: [0, newPrice] })
-}
+  const handlePriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const newPrice = Number.parseInt(event.target.value);
+    setLocalFilters((prev) => ({ ...prev, priceRange: [0, newPrice] }));
+    onFilterChange({ ...filters, priceRange: [0, newPrice] });
+  };
 
   return (
     <div className="space-y-6">
@@ -116,5 +115,5 @@ const handlePriceChange = (event: PriceChangeEvent) => {
         </div>
       </div>
     </div>
-  )
+  );
 }

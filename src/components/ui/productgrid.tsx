@@ -1,5 +1,12 @@
 import { Button } from "@/components/ui/button"
 
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+  // add any additional properties as needed
+}
+
 const allProducts = [
   {
     id: 1,
@@ -81,12 +88,13 @@ interface Filters {
   priceRange: [number, number];
 }
 
-interface ProductGridProps {
+export interface ProductGridProps {
   filters: Filters;
   sortBy: string;
+  onAddToCart: (product: Product) => void;
 }
 
-export function ProductGrid({ filters, sortBy }: ProductGridProps) {
+export function ProductGrid({ filters, sortBy, onAddToCart }: ProductGridProps) {
   const filteredProducts = allProducts.filter((product) => {
     const categoryMatch = filters.categories.length === 0 || filters.categories.includes(product.category)
     const vendorMatch = filters.vendors.length === 0 || filters.vendors.includes(product.vendor)
@@ -118,7 +126,7 @@ export function ProductGrid({ filters, sortBy }: ProductGridProps) {
             <h3 className="font-medium text-center">{product.name}</h3>
             <p className="text-sm text-center text-muted-foreground">{product.vendor}</p>
             <p className="text-center font-semibold mt-2">${product.price.toFixed(2)}</p>
-            <Button className="w-full mt-4">Add to Cart</Button>
+            <Button className="w-full mt-4" onClick={() => onAddToCart(product)}>Add to Cart</Button>
           </div>
         </div>
       ))}
