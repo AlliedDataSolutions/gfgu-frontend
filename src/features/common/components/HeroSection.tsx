@@ -50,7 +50,7 @@ export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
   );
 }
 
-function DeliveryDayComp({ location, dayOfWeek }: DeliveryDay) {
+export function DeliveryDayComp({ location, dayOfWeek }: DeliveryDay) {
   return (
     <div className="flex text-white mx-3">
       <CircleCheck />
