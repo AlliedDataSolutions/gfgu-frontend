@@ -2,8 +2,6 @@ import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio";
 import { Switch } from "@/components/ui/switch";
-import { Toaster } from "@/components/ui/toaster";
-import { toast, useToast } from "@/hooks/use-toast";
 
 export default function TestComponents() {
   // Checkbox state
@@ -16,41 +14,6 @@ export default function TestComponents() {
   const [switchValue, setSwitchValue] = useState(false);
   const [switchWithTextValue, setSwitchWithTextValue] = useState(false);
 
-  // Initialize toast hook (but we don't use "toasts" here)
-  useToast();
-
-  // Toast trigger handlers
-  const showDefaultToast = () => {
-    toast({
-      title: "Default Toast",
-      description: "This is a default toast message.",
-      variant: "default",
-    });
-  };
-
-  const showDestructiveToast = () => {
-    toast({
-      title: "Destructive Toast",
-      description: "This is a destructive toast message.",
-      variant: "destructive",
-    });
-  };
-
-  const showToastWithAction = () => {
-    toast({
-      title: "Toast with Action",
-      description: "This toast includes an action button.",
-      action: (
-        <button
-          className="bg-blue-500 text-white px-2 py-1 rounded"
-          onClick={() => alert("Action clicked!")}
-        >
-          Action
-        </button>
-      ),
-    });
-  };
-
   return (
     <div className="p-6 space-y-8">
       {/* Checkbox Variants */}
@@ -58,13 +21,13 @@ export default function TestComponents() {
         <h2 className="text-2xl font-bold mb-4">Checkbox Variants</h2>
         <div className="space-y-4">
           <div className="flex items-center space-x-2">
-          <Checkbox
-            checked={checkboxChecked}
-            onCheckedChange={(checked: boolean | "indeterminate") =>
-              setCheckboxChecked(checked === true)
-            }
-            aria-label="Controlled Checkbox"
-          />
+            <Checkbox
+              checked={checkboxChecked}
+              onCheckedChange={(checked: boolean | "indeterminate") =>
+                setCheckboxChecked(checked === true)
+              }
+              aria-label="Controlled Checkbox"
+            />
 
             <span>
               Controlled Checkbox (checked: {checkboxChecked ? "Yes" : "No"})
@@ -136,34 +99,6 @@ export default function TestComponents() {
           </div>
         </div>
       </section>
-
-      {/* Toast Variants */}
-      <section className="border p-4">
-        <h2 className="text-2xl font-bold mb-4">Toast Variants</h2>
-        <div className="flex flex-col space-y-3">
-          <button
-            className="px-4 py-2 bg-green-500 text-white rounded"
-            onClick={showDefaultToast}
-          >
-            Show Default Toast
-          </button>
-          <button
-            className="px-4 py-2 bg-red-500 text-white rounded"
-            onClick={showDestructiveToast}
-          >
-            Show Destructive Toast
-          </button>
-          <button
-            className="px-4 py-2 bg-blue-500 text-white rounded"
-            onClick={showToastWithAction}
-          >
-            Show Toast with Action
-          </button>
-        </div>
-      </section>
-
-      {/* Toast viewport to display notifications */}
-      <Toaster />
     </div>
   );
 }

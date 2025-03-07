@@ -23,7 +23,7 @@ import {
 import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
 import ProductView from "./store/components/product-view";
 import ProductListing from "./store/pages/ProductListing";
-import StoreFront from "./store/pages/Storefront";
+import StoreFront from "./store/pages/StoreFront";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -31,12 +31,12 @@ export const createAppRouter = () =>
     { path: paths.auth.login.path, element: <Login /> },
     { path: paths.auth.register.path, element: <Register /> },
     { path: paths.error.notFound.path, element: <NotFound /> },
-    { path: paths.store.storefront.path, element: <StoreFront /> },
-    { path: paths.store.productView.path, element: <ProductView /> },
-    { path: paths.store.productListing.path, element: <ProductListing /> },
+    { path: paths.stores.storefront.path, element: <StoreFront /> },
+    { path: paths.stores.productView.path, element: <ProductView /> },
+    { path: paths.stores.productListing.path, element: <ProductListing /> },
 
     {
-      path: paths.customer.home.path,
+      path: paths.store.home.path,
       element: (
         <ProtectedRoute>
           <Home />
@@ -44,7 +44,7 @@ export const createAppRouter = () =>
       ),
     },
     {
-      path: paths.customer.checkout.path,
+      path: paths.store.checkout.path,
       element: (
         <ProtectedRoute>
           <CheckoutPage />
@@ -52,7 +52,7 @@ export const createAppRouter = () =>
       ),
     },
     {
-      path: paths.customer.payment.path,
+      path: paths.store.payment.path,
       element: (
         <ProtectedRoute>
           <Payment />
