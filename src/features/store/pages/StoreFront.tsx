@@ -3,6 +3,9 @@ import CategoryGrid from "../components/category-grid"
 import ProductGrid from "../components/product-grid"
 import { DeliveryDayComp } from "@/features/common/components/HeroSection"
 import ShopBgImg from "../../../assets/ShopBgImg.png";
+import { useNavigate } from "react-router-dom";
+import { ENDPOINTS } from "@/app_config";
+
 
 
 import Marquee from "react-fast-marquee";
@@ -10,19 +13,21 @@ import Marquee from "react-fast-marquee";
 import { deliveryDays } from "@/features/common"
 import { useEffect, useState } from "react";
 import { postCall } from "@/app.service";
+import { Button } from "@/components/ui/button";
 
 export default function StoreFront() {
 
   const [categories, setCategories] = useState<CategoryType[]>([]);
   const [products, setproducts] = useState<ProductType[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const navigate = useNavigate();
 
-const selectCategory = (category: CategoryType) => {
-  setSelectedCategory(category.id);
-}
+  const selectCategory = (category: CategoryType) => {
+    setSelectedCategory(category.id);
+  }
   useEffect(() => {
 
-    postCall<{ data: CategoryType[] }>("http://localhost:5000/api/category/allCategory", {}).then((resp) => {
+    postCall<{ data: CategoryType[] }>(ENDPOINTS.ALLCATEGORY, {}).then((resp) => {
       if (resp && resp.data)
         setCategories(resp.data.data);
     });
@@ -30,12 +35,16 @@ const selectCategory = (category: CategoryType) => {
 
   useEffect(() => {
 
-    postCall<{ data: ProductType[] }>("http://localhost:5000/api/product/allProduct", {category:selectedCategory}).then((resp) => {
+    postCall<{ data: ProductType[] }>(ENDPOINTS.GETALLPRODUCT, { category: selectedCategory }).then((resp) => {
       if (resp && resp.data)
         setproducts(resp.data.data);
     });
   }, [selectedCategory]);
 
+  const handleNavigationToProductListing = () => {
+
+    navigate(`/store/productListing`);
+  };
   return (
     <div>
 
@@ -72,13 +81,13 @@ const selectCategory = (category: CategoryType) => {
         </div>
       </section>
 
-      <section className="bg-[#FAFDEC] py-10">
+      <section className="bg-yellow-50 py-10">
         <div className="max-w-screen-xl mx-auto px-4">
-          <div className="text-[#04910C] mb-2">Category</div>
+          <div className="text-brand-700 mb-2">Category</div>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-semibold">Shop By Category</h2>
           </div>
-          <CategoryGrid categories={categories} selectCategory={selectCategory}/>
+          <CategoryGrid categories={categories} selectCategory={selectCategory} />
         </div>
       </section>
 
@@ -86,12 +95,14 @@ const selectCategory = (category: CategoryType) => {
 
         <section className="text-center mt-16">
           <div className="text-[#04910C] mb-2">Popular Choices</div>
-          <h2 className="text-2xl font-semibold mb-8">Explore Products</h2>
+          <h2 className="text-2xl font-semibold mb-8">Popular Products</h2>
           <ProductGrid products={products} />
           <div className="flex justify-center mt-12">
-            <button className="px-8 py-3 bg-green-700 text-white rounded-md hover:bg-green-600 transition-colors">
+            <Button onClick={handleNavigationToProductListing}
+
+              className="px-8 py-3 bg-green-700 text-white rounded-md hover:bg-green-600 transition-colors">
               View all Products
-            </button>
+            </Button>
           </div>
         </section>
       </main>

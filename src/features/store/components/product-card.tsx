@@ -1,12 +1,8 @@
 
 import { useState } from "react"
-import DeliveryBgImg from "../../../assets/DeliveryBgImg.png";
-
 import { ProductType } from "@/components/models/type"
-
-// interface ProductCardProps {
-//   product: ProductType
-// }
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 interface ProductCardProps {
     product: ProductType
@@ -14,21 +10,27 @@ interface ProductCardProps {
   }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false)
+
+  const handleNavigation = () => {
+    navigate(`/store/productView?ref=${product.id}`); 
+  };
 
   return (
     <div
-      className="rounded-lg overflow-hidden"
+      className="rounded-lg overflow-hidden" 
+      onClick={handleNavigation}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="relative aspect-square bg-[#F6F6F6]">
-        <img src={DeliveryBgImg || "/placeholder.svg"} alt={product.name} className="object-cover" />
+        <img src={product.images ? product.images[0].url : "/placeholder.svg"} alt={product.name} className="object-cover w-full h-full" />
         {isHovered && (
           <div className="absolute inset-0 flex items-end justify-center bg-black bg-opacity-50 transition-opacity">
-            <button className="w-full py-2 bg-black text-white rounded">
+            <Button className="w-full py-2 bg-black text-white rounded">
               Add to Cart
-            </button>
+            </Button>
           </div>
         )}
       </div>

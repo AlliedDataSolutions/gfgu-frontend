@@ -1,11 +1,23 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
 import { Facebook, Instagram, Linkedin, Twitter, Minus, Plus, ShoppingCart } from "lucide-react"
 import DeliveryBgImg from "../../../assets/DeliveryBgImg.png";
+import { postCall } from "@/app.service";
+import { ProductType } from "@/components/models/type";
+import { useSearchParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { ENDPOINTS } from "@/app_config";
+
+
 
 export default function ProductView() {
   const [quantity, setQuantity] = useState(1)
   const [selectedImage, setSelectedImage] = useState(0)
+  const [searchParams] = useSearchParams();
+  const productId = searchParams.get("ref");
+
+  const [productDetails, setProductDetails] = useState<ProductType | null>(null);
+
 
   const productImages = [
     "/placeholder.svg?height=500&width=500",
@@ -45,6 +57,14 @@ export default function ProductView() {
     },
   ]
 
+  useEffect(() => {
+    postCall<{ data: ProductType }>(ENDPOINTS.GETPRODUCTBYID, { id: productId }).then((resp) => {
+      if (resp && resp.data) {
+        setProductDetails(resp.data.data);
+      }
+    });
+  }, []);
+
   const decreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1)
@@ -67,7 +87,7 @@ export default function ProductView() {
           Beans
         </Link>
         <span className="mx-2 text-gray-400">/</span>
-        <span className="text-gray-700">White Beans</span>
+        <span className="text-gray-700">{productDetails?.name}</span>
       </nav>
 
       {/* Product Details */}
@@ -87,12 +107,11 @@ export default function ProductView() {
           {/* Thumbnails */}
           <div className="grid grid-cols-4 gap-2">
             {productImages.map((image, index) => (
-              <button
+              <Button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`bg-gray-100 rounded-lg overflow-hidden border-2 ${
-                  selectedImage === index ? "border-green-500" : "border-transparent"
-                }`}
+                className={`bg-gray-100 rounded-lg overflow-hidden border-2 ${selectedImage === index ? "border-green-500" : "border-transparent"
+                  }`}
               >
                 <img
                   src={DeliveryBgImg || "/placeholder.svg"}
@@ -101,14 +120,14 @@ export default function ProductView() {
                   height={100}
                   className="w-full h-auto object-contain"
                 />
-              </button>
+              </Button>
             ))}
           </div>
         </div>
 
         {/* Product Info */}
         <div>
-          <h1 className="text-3xl font-bold mb-4">White Beans</h1>
+          <h1 className="text-3xl font-bold mb-4">{productDetails?.name}</h1>
 
           <div className="flex items-center mb-2">
             <ShoppingCart className="h-5 w-5 text-gray-500 mr-2" />
@@ -116,14 +135,11 @@ export default function ProductView() {
             <span className="ml-4 text-green-600 text-sm font-medium">In Stock</span>
           </div>
 
-          <div className="text-2xl font-bold mb-6">$45.55</div>
+          <div className="text-2xl font-bold mb-6">${productDetails?.price}</div>
 
           <div className="border-t border-b border-gray-200 py-6 mb-6">
             <p className="text-gray-700 mb-4">
-              Beans are an incredibly versatile and nutritious food staple enjoyed worldwide. They belong to the legume
-              family and come in a variety of types, including black beans, kidney beans, chickpeas, pinto beans, and
-              navy beans, to name just a few. Rich in protein, fiber, vitamins, and minerals, beans are often considered
-              a superfood, especially for plant-based diets. They're a key ingredient in many cuisines.
+              {productDetails?.description}
             </p>
           </div>
 
@@ -133,9 +149,9 @@ export default function ProductView() {
               Quantity
             </label>
             <div className="flex items-center">
-              <button onClick={decreaseQuantity} className="p-2 border border-gray-300 rounded-l-md hover:bg-gray-100">
+              <Button onClick={decreaseQuantity} className="p-2 border border-gray-300 rounded-l-md hover:bg-gray-100">
                 <Minus className="h-4 w-4" />
-              </button>
+              </Button>
               <input
                 type="text"
                 id="quantity"
@@ -143,13 +159,13 @@ export default function ProductView() {
                 readOnly
                 className="w-12 text-center border-t border-b border-gray-300 py-2"
               />
-              <button onClick={increaseQuantity} className="p-2 border border-gray-300 rounded-r-md hover:bg-gray-100">
+              <Button onClick={increaseQuantity} className="p-2 border border-gray-300 rounded-r-md hover:bg-gray-100">
                 <Plus className="h-4 w-4" />
-              </button>
+              </Button>
 
-              <button className="ml-4 bg-green-500 hover:bg-green-600 text-white py-2 px-6 rounded-md flex-grow md:flex-grow-0 md:ml-6">
+              <Button className="ml-4 text-white py-2 px-6 rounded-md flex-grow md:flex-grow-0 md:ml-6">
                 Add to cart
-              </button>
+              </Button>
             </div>
           </div>
 

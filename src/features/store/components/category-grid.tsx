@@ -1,5 +1,6 @@
 import { useRef } from "react"
 import type { CategoryType } from "@/components/models/type"
+import { Button } from "@/components/ui/button"
 
 interface CategoryGridProps {
   categories: CategoryType[],
@@ -49,9 +50,9 @@ export default function CategoryGrid({ categories, selectCategory }: CategoryGri
       </div>
 
       {/* Left Arrow Button */}
-      <button
+      <Button
         onClick={() => scroll("left")}
-        className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-green-700 text-white shadow-md hover:bg-green-600 transition-colors"
+        className="absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full text-white shadow-md transition-colors"
       >
         <svg
           width="24"
@@ -65,12 +66,12 @@ export default function CategoryGrid({ categories, selectCategory }: CategoryGri
         >
           <path d="M15 18l-6-6 6-6" />
         </svg>
-      </button>
+      </Button>
 
       {/* Right Arrow Button */}
-      <button
+      <Button
         onClick={() => scroll("right")}
-        className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-green-700 text-white shadow-md hover:bg-green-600 transition-colors"
+        className="absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full  text-white shadow-md  transition-colors"
       >
         <svg
           width="24"
@@ -84,7 +85,7 @@ export default function CategoryGrid({ categories, selectCategory }: CategoryGri
         >
           <path d="M9 18l6-6-6-6" />
         </svg>
-      </button>
+      </Button>
     </div>
 
   )
