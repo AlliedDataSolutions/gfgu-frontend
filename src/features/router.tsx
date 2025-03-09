@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { paths } from "@/config/paths";
 import { ProtectedRoute } from "@/lib/auth";
 
@@ -21,6 +21,10 @@ import {
 } from "@/features/admin";
 
 import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
+
+import AccountLayout from "@/features/customer/pages/AccountLayout";
+import AddressList from "@/features/customer/pages/AddressList";
+import AddAddress from "./customer/pages/AddAddress";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -81,6 +85,35 @@ export const createAppRouter = () =>
         { path: "", element: <AdminDashboard /> },
         { path: paths.admin.manageUsers.path, element: <ManageUsers /> },
         { path: paths.admin.salesReport.path, element: <SalesReport /> },
+      ],
+    },
+
+    
+    {
+      path: "/account",
+      element: (
+        <ProtectedRoute>
+          <AccountLayout />
+        </ProtectedRoute>
+      ),
+      children: [
+        {
+          // When no child is specified, redirect to /account/address
+          index: true,
+          element: <Navigate to="address" replace />,
+        },
+        {
+          path: "address",
+          element: <AddressList />,
+        },
+        {
+          path: "add-address",
+          element: <AddAddress />,
+        },
+        {
+          path: "orders",
+          element: <div>My Orders (Placeholder)</div>,
+        },
       ],
     },
 
