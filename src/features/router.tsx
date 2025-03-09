@@ -21,6 +21,9 @@ import {
 } from "@/features/admin";
 
 import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
+import ProductView from "./store/components/product-view";
+import ProductListing from "./store/pages/ProductListing";
+import StoreFront from "./store/pages/StoreFront";
 
 import AccountLayout from "@/features/customer/pages/AccountLayout";
 import AddressList from "@/features/customer/pages/AddressList";
@@ -32,6 +35,9 @@ export const createAppRouter = () =>
     { path: paths.auth.login.path, element: <Login /> },
     { path: paths.auth.register.path, element: <Register /> },
     { path: paths.error.notFound.path, element: <NotFound /> },
+    { path: paths.stores.storefront.path, element: <StoreFront /> },
+    { path: paths.stores.productView.path, element: <ProductView /> },
+    { path: paths.stores.productListing.path, element: <ProductListing /> },
 
     {
       path: paths.store.home.path,

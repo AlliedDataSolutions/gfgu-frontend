@@ -46,9 +46,12 @@ export const paths = {
     manageUsers: { path: "/admin/users", getHref: () => "/admin/users" },
     salesReport: { path: "/admin/sales", getHref: () => "/admin/sales" },
   },
-
-  days: {
-    delivery: { path: "/delivery", getHref: () => "/delivery" },
+  
+  stores: {
+    storefront: { path: "/store/StoreFront", getHref: () => "/store/StoreFront" },
+    productView: { path: "/store/ProductView", getHref: () => "/store/ProductView" },
+    productListing: { path: "/store/ProductListing", getHref: () => "/store/ProductListing" },
+  
   },
   error: {
     notFound: { path: "*", getHref: () => "*" },
