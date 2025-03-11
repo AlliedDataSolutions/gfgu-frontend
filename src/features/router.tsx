@@ -1,11 +1,15 @@
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import { paths } from "@/config/paths";
 import { ProtectedRoute } from "@/lib/auth";
 
 import { Landing } from "@/features/common";
 import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
-import { Home, Payment } from "@/features/customer";
+import { Payment } from "@/features/customer";
 import {
   VendorLayout,
   VendorDashboard,
@@ -21,7 +25,7 @@ import {
 } from "@/features/admin";
 
 import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
-import ProductView from "./store/components/product-view";
+import ProductView from "./store/pages/ProductDetails";
 import ProductListing from "./store/pages/ProductListing";
 import StoreFront from "./store/pages/StoreFront";
 
@@ -35,15 +39,28 @@ export const createAppRouter = () =>
     { path: paths.auth.login.path, element: <Login /> },
     { path: paths.auth.register.path, element: <Register /> },
     { path: paths.error.notFound.path, element: <NotFound /> },
-    { path: paths.stores.storefront.path, element: <StoreFront /> },
-    { path: paths.stores.productView.path, element: <ProductView /> },
-    { path: paths.stores.productListing.path, element: <ProductListing /> },
 
     {
       path: paths.store.home.path,
       element: (
         <ProtectedRoute>
-          <Home />
+          <StoreFront />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: paths.store.listing.path,
+      element: (
+        <ProtectedRoute>
+          <ProductListing />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: paths.store.productDetail.path,
+      element: (
+        <ProtectedRoute>
+          <ProductListing />
         </ProtectedRoute>
       ),
     },
@@ -94,7 +111,6 @@ export const createAppRouter = () =>
       ],
     },
 
-    
     {
       path: "/account",
       element: (

@@ -20,7 +20,9 @@ export const paths = {
   },
 
   store: {
-    home: { path: "/home", getHref: () => "/home" },
+    home: { path: "/store", getHref: () => "/store" },
+    listing: { path: "/store/listing", getHref: () => "/store/listing" },
+    productDetail: { path: "/store/product-details", getHref: () => "/store/product-details" },
     checkout: { path: "/checkout", getHref: () => "/checkout" },
     payment: { path: "/payment", getHref: () => "/payment" },
   },

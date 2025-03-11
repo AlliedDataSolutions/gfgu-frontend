@@ -2,7 +2,8 @@ import { useState } from "react";
 import { Menu, ShoppingCart, User, Search } from "lucide-react";
 import AppIcon from "@/assets/react.svg";
 import { Button } from "@/components/ui/button";
-import { Link,} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { Input } from "./input";
 //import { paths } from "@/config/paths";
 
 interface MenuItem {
@@ -16,7 +17,6 @@ interface HeaderProps {
 
 export default function Header({ menuItems }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
-  
 
   return (
     <div className="md:shadow-sm">
@@ -26,7 +26,7 @@ export default function Header({ menuItems }: HeaderProps) {
             <img src={AppIcon} alt="App icon" />
           </div>
 
-          <div className="flex space-x-14 items-center">
+          <div className="flex items-center">
             <nav className="hidden md:flex space-x-2">
               {menuItems.map((item) => (
                 <Button key={item.name} variant="link">
@@ -36,24 +36,12 @@ export default function Header({ menuItems }: HeaderProps) {
             </nav>
 
             <div className="flex items-center space-x-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="What are you looking for?"
-                  className="bg-[#888888] bg-opacity-50 text-black placeholder-white placeholder-opacity-75 py-2 px-4 rounded-full shadow-md focus:outline-none"
-                  style={{
-                    background: "linear-gradient(135deg, #D1D1D1, #e0e0e0)",
-                    border: "1px solid #ccc",
-                    width: "400px",
-                  }}
-                />
-                <button
-                  className="absolute right-0 top-0 bottom-0 flex items-center justify-center px-4"
-                  style={{ border: "none", backgroundColor: "transparent" }}
-                >
-                  <Search className="w-5 h-5 text-black" />
-                </button>
-              </div>
+              <Input
+                className="flex-1 sm:w-64"
+                type={"text"}
+                placeholder="What are you looking for?"
+                icon={<Search size={18} />}
+              />
 
               <button
                 className="flex items-center text-[#HEX background: #1A1A1B;] hover:text-[#35736e] focus:outline-none"

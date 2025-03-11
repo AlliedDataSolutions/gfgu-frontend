@@ -4,6 +4,7 @@ import HeroSection from "../components/HeroSection";
 import Delivery from "../components/Delivery";
 import AboutUs  from "../components/AboutUs";
 import Need from "../components/need";
+import { deliveryDays, menuItems } from "@/core/data";
 export const Landing = () => {
   return (
     <>
@@ -17,16 +18,4 @@ export const Landing = () => {
   );
 };
 
-export const deliveryDays = [
-  { location: "edmonton", dayOfWeek: "Wednessday" },
-  { location: "calgary", dayOfWeek: "Tuesday" },
-  { location: "lethbridge", dayOfWeek: "Thursday" },
-  { location: "airdrie", dayOfWeek: "Friday" },
-];
 
-export const menuItems = [
-  { name: "Home", href: "#home" },
-  { name: "About", href: "#about" },
-  { name: "Delivery Days", href: "#deliveryDays" },
-  { name: "Contact", href: "#contact" },
-];

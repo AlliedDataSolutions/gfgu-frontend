@@ -1,30 +1,33 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Facebook, Instagram, Linkedin, Twitter, Minus, Plus, ShoppingCart } from "lucide-react"
+import {
+  Facebook,
+  Instagram,
+  Linkedin,
+  Twitter,
+  Minus,
+  Plus,
+  ShoppingCart,
+} from "lucide-react";
 import DeliveryBgImg from "../../../assets/DeliveryBgImg.png";
-import { postCall } from "@/app.service";
-import { ProductType } from "@/components/models/type";
+import { Product } from "@/components/models/type";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ENDPOINTS } from "@/app_config";
-
-
 
 export default function ProductView() {
-  const [quantity, setQuantity] = useState(1)
-  const [selectedImage, setSelectedImage] = useState(0)
+  const [quantity, setQuantity] = useState(1);
+  const [selectedImage, setSelectedImage] = useState(0);
   const [searchParams] = useSearchParams();
   const productId = searchParams.get("ref");
 
-  const [productDetails, setProductDetails] = useState<ProductType | null>(null);
-
+  const [productDetails, setProductDetails] = useState<Product | null>(null);
 
   const productImages = [
     "/placeholder.svg?height=500&width=500",
     "/placeholder.svg?height=500&width=500",
     "/placeholder.svg?height=500&width=500",
     "/placeholder.svg?height=500&width=500",
-  ]
+  ];
 
   const relatedProducts = [
     {
@@ -55,25 +58,19 @@ export default function ProductView() {
       price: 200,
       image: "/placeholder.svg?height=300&width=300",
     },
-  ]
+  ];
 
-  useEffect(() => {
-    postCall<{ data: ProductType }>(ENDPOINTS.GETPRODUCTBYID, { id: productId }).then((resp) => {
-      if (resp && resp.data) {
-        setProductDetails(resp.data.data);
-      }
-    });
-  }, []);
+  useEffect(() => {}, []);
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
-      setQuantity(quantity - 1)
+      setQuantity(quantity - 1);
     }
-  }
+  };
 
   const increaseQuantity = () => {
-    setQuantity(quantity + 1)
-  }
+    setQuantity(quantity + 1);
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -110,8 +107,11 @@ export default function ProductView() {
               <Button
                 key={index}
                 onClick={() => setSelectedImage(index)}
-                className={`bg-gray-100 rounded-lg overflow-hidden border-2 ${selectedImage === index ? "border-green-500" : "border-transparent"
-                  }`}
+                className={`bg-gray-100 rounded-lg overflow-hidden border-2 ${
+                  selectedImage === index
+                    ? "border-green-500"
+                    : "border-transparent"
+                }`}
               >
                 <img
                   src={DeliveryBgImg || "/placeholder.svg"}
@@ -132,24 +132,32 @@ export default function ProductView() {
           <div className="flex items-center mb-2">
             <ShoppingCart className="h-5 w-5 text-gray-500 mr-2" />
             <span className="text-gray-600">Sold by Loan Farmer Limited</span>
-            <span className="ml-4 text-green-600 text-sm font-medium">In Stock</span>
+            <span className="ml-4 text-green-600 text-sm font-medium">
+              In Stock
+            </span>
           </div>
 
-          <div className="text-2xl font-bold mb-6">${productDetails?.price}</div>
+          <div className="text-2xl font-bold mb-6">
+            ${productDetails?.price}
+          </div>
 
           <div className="border-t border-b border-gray-200 py-6 mb-6">
-            <p className="text-gray-700 mb-4">
-              {productDetails?.description}
-            </p>
+            <p className="text-gray-700 mb-4">{productDetails?.description}</p>
           </div>
 
           {/* Quantity Selector */}
           <div className="mb-6">
-            <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 mb-2">
+            <label
+              htmlFor="quantity"
+              className="block text-sm font-medium text-gray-700 mb-2"
+            >
               Quantity
             </label>
             <div className="flex items-center">
-              <Button onClick={decreaseQuantity} className="p-2 border border-gray-300 rounded-l-md hover:bg-gray-100">
+              <Button
+                onClick={decreaseQuantity}
+                className="p-2 border border-gray-300 rounded-l-md hover:bg-gray-100"
+              >
                 <Minus className="h-4 w-4" />
               </Button>
               <input
@@ -159,7 +167,10 @@ export default function ProductView() {
                 readOnly
                 className="w-12 text-center border-t border-b border-gray-300 py-2"
               />
-              <Button onClick={increaseQuantity} className="p-2 border border-gray-300 rounded-r-md hover:bg-gray-100">
+              <Button
+                onClick={increaseQuantity}
+                className="p-2 border border-gray-300 rounded-r-md hover:bg-gray-100"
+              >
                 <Plus className="h-4 w-4" />
               </Button>
 
@@ -172,7 +183,10 @@ export default function ProductView() {
           {/* Category */}
           <div className="mb-4">
             <span className="text-gray-600">Category: </span>
-            <Link to="/category/food" className="text-gray-800 hover:text-green-600">
+            <Link
+              to="/category/food"
+              className="text-gray-800 hover:text-green-600"
+            >
               Food
             </Link>
           </div>
@@ -204,10 +218,15 @@ export default function ProductView() {
 
       {/* Related Products */}
       <div>
-        <h2 className="text-2xl font-bold text-center mb-8">Related Products</h2>
+        <h2 className="text-2xl font-bold text-center mb-8">
+          Related Products
+        </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {relatedProducts.map((product) => (
-            <div key={product.id} className="bg-gray-100 rounded-lg overflow-hidden group">
+            <div
+              key={product.id}
+              className="bg-gray-100 rounded-lg overflow-hidden group"
+            >
               <div className="p-4">
                 <img
                   src={product.image || "/placeholder.svg"}
@@ -216,15 +235,20 @@ export default function ProductView() {
                   height={300}
                   className="w-full h-auto object-contain mb-4"
                 />
-                <h3 className="text-lg font-medium text-center">{product.name}</h3>
-                <p className="text-sm text-gray-500 text-center">Sold By {product.seller}</p>
-                <p className="text-lg font-bold text-center text-red-500 mt-2">${product.price}</p>
+                <h3 className="text-lg font-medium text-center">
+                  {product.name}
+                </h3>
+                <p className="text-sm text-gray-500 text-center">
+                  Sold By {product.seller}
+                </p>
+                <p className="text-lg font-bold text-center text-red-500 mt-2">
+                  ${product.price}
+                </p>
               </div>
             </div>
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
-

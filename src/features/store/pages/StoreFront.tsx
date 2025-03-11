@@ -1,112 +1,69 @@
-import { CategoryType, ProductType } from "@/components/models/type"
-import CategoryGrid from "../components/category-grid"
-import ProductGrid from "../components/product-grid"
-import { DeliveryDayComp } from "@/features/common/components/HeroSection"
-import ShopBgImg from "../../../assets/ShopBgImg.png";
-import { useNavigate } from "react-router-dom";
-import { ENDPOINTS } from "@/app_config";
-
-
-
+import { ProductCategory } from "@/components/models/type";
+import ProductGrid from "../components/ProductGrid";
+import { DeliveryDayComp } from "@/features/common/components/HeroSection";
+import { Link } from "react-router-dom";
 import Marquee from "react-fast-marquee";
-
-import { deliveryDays } from "@/features/common"
-import { useEffect, useState } from "react";
-import { postCall } from "@/app.service";
 import { Button } from "@/components/ui/button";
+import { paths } from "@/config/paths";
+import Banner from "../components/Storebanner";
+import Header from "@/components/ui/header";
+import ProductCategoryGrid from "../components/ProductCategoryGrid";
+import Footer from "@/components/ui/footer";
+import { deliveryDays, menuItems, storeMenuItems } from "@/core/data";
+import { useStore } from "../hooks/useStore";
+
+const categoryAll = [
+  { id: "1", name: "Fruits", imageUrl: "", description: "" },
+  { id: "2", name: "Vegetable", imageUrl: "", description: "" },
+  { id: "3", name: "Fiber", imageUrl: "", description: "" },
+  { id: "4", name: "Oil", imageUrl: "", description: "" },
+  { id: "5", name: "Dairy", imageUrl: "", description: "" },
+  { id: "6", name: "Bakery", imageUrl: "", description: "" },
+];
 
 export default function StoreFront() {
+  const { loading, popularProducts } = useStore();
 
-  const [categories, setCategories] = useState<CategoryType[]>([]);
-  const [products, setproducts] = useState<ProductType[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
-  const navigate = useNavigate();
-
-  const selectCategory = (category: CategoryType) => {
-    setSelectedCategory(category.id);
-  }
-  useEffect(() => {
-
-    postCall<{ data: CategoryType[] }>(ENDPOINTS.ALLCATEGORY, {}).then((resp) => {
-      if (resp && resp.data)
-        setCategories(resp.data.data);
-    });
-  }, []);
-
-  useEffect(() => {
-
-    postCall<{ data: ProductType[] }>(ENDPOINTS.GETALLPRODUCT, { category: selectedCategory }).then((resp) => {
-      if (resp && resp.data)
-        setproducts(resp.data.data);
-    });
-  }, [selectedCategory]);
-
-  const handleNavigationToProductListing = () => {
-
-    navigate(`/store/productListing`);
-  };
   return (
     <div>
-
-      <section className="relative bg-gradient-to-r from-[#24601F] to-[#53DE48] overflow-hidden">
-        {/* Image Container */}
-        <div className="absolute right-0 h-full w-full md:w-1/2">
-          <img
-            className="h-full w-full object-right-buttom"
-            src={ShopBgImg}
-            alt="background hero"
-          />
-        </div>
-
-        {/* Text Container */}
-        <div className="relative container mx-auto flex items-center h-96 md:h-[calc(100vh-8rem)] px-6">
-          <div className="max-w-lg md:max-w-xl text-left space-y-4">
-            <small className="text-white">Always fresh product for you</small>
-            <h1 className="text-2xl md:text-5xl font-bold text-white">
-              Feast Your Senses,
-            </h1>
-            <h1 className="text-2xl md:text-5xl font-bold text-[#B6D73E]">
-              Fast and Fresh
-            </h1>
-          </div>
-        </div>
-
-        {/* Scrolling Marquee */}
-        <div className="bg-black py-5 relative z-10">
-          <Marquee speed={50}>
-            {deliveryDays.map((item) => (
-              <DeliveryDayComp location={item.location} dayOfWeek={item.dayOfWeek} />
-            ))}
-          </Marquee>
-        </div>
-      </section>
+      <Header menuItems={storeMenuItems} />
+      <Banner />
+      <div className="bg-black py-4">
+        <Marquee speed={50}>
+          {deliveryDays.map((item) => (
+            <DeliveryDayComp
+              location={item.location}
+              dayOfWeek={item.dayOfWeek}
+            />
+          ))}
+        </Marquee>
+      </div>
 
       <section className="bg-yellow-50 py-10">
-        <div className="max-w-screen-xl mx-auto px-4">
-          <div className="text-brand-700 mb-2">Category</div>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold">Shop By Category</h2>
-          </div>
-          <CategoryGrid categories={categories} selectCategory={selectCategory} />
-        </div>
+        {!loading && (
+          <ProductCategoryGrid
+            categories={categoryAll}
+            selectCategory={function (_: ProductCategory): void {}}
+          />
+        )}
       </section>
 
       <main className="container mx-auto px-4 py-8">
-
-        <section className="text-center mt-16">
-          <div className="text-[#04910C] mb-2">Popular Choices</div>
-          <h2 className="text-2xl font-semibold mb-8">Popular Products</h2>
-          <ProductGrid products={products} />
-          <div className="flex justify-center mt-12">
-            <Button onClick={handleNavigationToProductListing}
-
-              className="px-8 py-3 bg-green-700 text-white rounded-md hover:bg-green-600 transition-colors">
-              View all Products
-            </Button>
-          </div>
-        </section>
+        {!loading && (
+          <section className="text-center mt-8 md:mt-16">
+            <div className="text-brand-600 mb-2">Popular Choices</div>
+            <h2 className="text-2xl font-semibold mb-8">Popular Products</h2>
+            <ProductGrid products={popularProducts} />
+            <div className="flex justify-center mt-12">
+              <Button className="px-8 py-3 bg-green-700 text-white rounded-md hover:bg-green-600 transition-colors">
+                <Link to={paths.store.listing.path}>View all Products</Link>
+              </Button>
+            </div>
+          </section>
+        )}
       </main>
-    </div>
-  )
-}
 
+      <Footer menuItems={menuItems} />
+    </div>
+  );
+}
