@@ -1,4 +1,4 @@
-import { Product, ProductCategory } from "@/components/models/type";
+import { Product } from "@/components/models/type";
 import axiosInstance from "@/core/axiosInstance";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 import { useEffect, useState } from "react";
