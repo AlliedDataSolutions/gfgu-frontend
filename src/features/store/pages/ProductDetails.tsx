@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button";
 export default function ProductView() {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
+  
 
   const [
     productDetails,

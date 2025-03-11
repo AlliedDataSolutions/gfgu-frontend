@@ -3,7 +3,6 @@ import { Product } from "@/components/models/type";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Apple from "@/assets/apple.png";
-import { useProduct } from "../hooks/productContext";
 import { paths } from "@/config/paths";
 
 interface ProductCardProps {
@@ -12,12 +11,10 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { setSelectedProduct } = useProduct();
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
 
   const handleNavigation = () => {
-    setSelectedProduct(product);
     navigate(`${paths.store.productDetail.path}/${product.id}`);
   };
 

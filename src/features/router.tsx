@@ -57,7 +57,7 @@ export const createAppRouter = () =>
       ),
     },
     {
-      path: paths.store.productDetail.path,
+      path: `${paths.store.productDetail.path}/:id`,
       element: (
         <ProtectedRoute>
           <ProductDetails />
