@@ -11,16 +11,16 @@ import {
 } from "lucide-react";
 import DeliveryBgImg from "../../../assets/DeliveryBgImg.png";
 import { Product } from "@/components/models/type";
-import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 export default function ProductView() {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(0);
-  const [searchParams] = useSearchParams();
-  const productId = searchParams.get("ref");
 
-  const [productDetails, setProductDetails] = useState<Product | null>(null);
+  const [
+    productDetails,
+    //setProductDetails
+  ] = useState<Product | null>(null);
 
   const productImages = [
     "/placeholder.svg?height=500&width=500",

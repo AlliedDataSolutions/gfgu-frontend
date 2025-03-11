@@ -25,7 +25,7 @@ import {
 } from "@/features/admin";
 
 import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
-import ProductView from "./store/pages/ProductDetails";
+import ProductDetails from "./store/pages/ProductDetails";
 import ProductListing from "./store/pages/ProductListing";
 import StoreFront from "./store/pages/StoreFront";
 
@@ -60,7 +60,7 @@ export const createAppRouter = () =>
       path: paths.store.productDetail.path,
       element: (
         <ProtectedRoute>
-          <ProductListing />
+          <ProductDetails />
         </ProtectedRoute>
       ),
     },

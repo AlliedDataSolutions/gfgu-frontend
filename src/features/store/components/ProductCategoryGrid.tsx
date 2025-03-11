@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { ProductCategory } from "@/components/models/type";
 import { MoveLeft, MoveRight } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import Apple from "@/assets/apple.png";
 import { cn } from "@/lib/utils";
 
@@ -12,7 +11,7 @@ interface CategoryGridProps {
 
 export default function ProductCategoryGrid({
   categories,
-  selectCategory,
+  //selectCategory,
 }: CategoryGridProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);

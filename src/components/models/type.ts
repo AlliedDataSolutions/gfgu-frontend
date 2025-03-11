@@ -28,16 +28,3 @@ export interface Vendor {
   businessName: string;
   businessDescription: string;
 }
-
-export const sampleProduct = Array(8).fill({
-  id: "f8fecbc2-a3ac-498f-9738-5e0696e273f8",
-  name: "Garri",
-  description: "Bag of garri available",
-  price: 59.99,
-  stockLevel: 20,
-  createdDate: new Date("2025-03-08T01:35:54.659Z"),
-  modifeidDate: new Date("2025-03-08T01:35:54.659Z"),
-  //vendor
-  //images: [],
-  //categories: []
-});
