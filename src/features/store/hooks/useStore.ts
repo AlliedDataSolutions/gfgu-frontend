@@ -1,10 +1,10 @@
-import { Product } from "@/components/models/type";
+import { Product, ProductCategory } from "@/components/models/type";
 import axiosInstance from "@/core/axiosInstance";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 import { useEffect, useState } from "react";
 
 export const useStore = () => {
-  // const [categories, setCategories] = useState<ProductCategory[]>([]);
+  const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [products, setProducts] = useState<Product[]>([]);
   const [popularProducts, setPopularProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
@@ -18,8 +18,8 @@ export const useStore = () => {
   const fetchCategories = async () => {
     try {
       setLoading(true);
-      //const loginResponse = await axiosInstance.get("/categories");
-      //setCategories(loginResponse.data);
+      const loginResponse = await axiosInstance.get("/categories");
+      setCategories(loginResponse.data);
     } catch (error) {
       handleAxiosError;
     } finally {
@@ -76,7 +76,7 @@ export const useStore = () => {
 
   return {
     loading,
-    // categories,
+    categories,
     popularProducts,
     products,
     fetchProduct,

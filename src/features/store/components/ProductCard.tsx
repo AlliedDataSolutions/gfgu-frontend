@@ -27,7 +27,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     >
       <div className="relative rounded-lg placeholder:aspect-square bg-neutral-50">
         <img
-          src={Apple}
+          src={product.images?.length ? product.images[0].url : Apple}
           alt={product.name}
           className="object-cover w-full h-full p-6"
         />

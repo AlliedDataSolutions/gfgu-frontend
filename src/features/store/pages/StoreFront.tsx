@@ -12,17 +12,9 @@ import Footer from "@/components/ui/footer";
 import { deliveryDays, menuItems, storeMenuItems } from "@/core/data";
 import { useStore } from "../hooks/useStore";
 
-const categoryAll = [
-  { id: "1", name: "Fruits", imageUrl: "", description: "" },
-  { id: "2", name: "Vegetable", imageUrl: "", description: "" },
-  { id: "3", name: "Fiber", imageUrl: "", description: "" },
-  { id: "4", name: "Oil", imageUrl: "", description: "" },
-  { id: "5", name: "Dairy", imageUrl: "", description: "" },
-  { id: "6", name: "Bakery", imageUrl: "", description: "" },
-];
 
 export default function StoreFront() {
-  const { loading, popularProducts } = useStore();
+  const { loading, popularProducts, categories } = useStore();
 
   return (
     <div>
@@ -42,7 +34,7 @@ export default function StoreFront() {
       <section className="bg-yellow-50 py-10">
         {!loading && (
           <ProductCategoryGrid
-            categories={categoryAll}
+            categories={categories}
             selectCategory={function (_: ProductCategory): void {}}
           />
         )}

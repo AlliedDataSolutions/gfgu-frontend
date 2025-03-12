@@ -19,8 +19,8 @@ export interface Product {
   vendor: Vendor;
   createdDate: Date;
   modifeidDate: Date;
-  // images;
-  // categories;
+  images: ImageType[];
+  categories: ProductCategory[];
 }
 
 export interface Vendor {
