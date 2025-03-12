@@ -1,11 +1,15 @@
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
 import { paths } from "@/config/paths";
 import { ProtectedRoute } from "@/lib/auth";
 
 import { Landing } from "@/features/common";
 import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
-import { Home, Payment } from "@/features/customer";
+import { Payment } from "@/features/customer";
 import {
   VendorLayout,
   VendorDashboard,
@@ -21,6 +25,9 @@ import {
 } from "@/features/admin";
 
 import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
+import ProductDetails from "./store/pages/ProductDetails";
+import ProductListing from "./store/pages/ProductListing";
+import StoreFront from "./store/pages/StoreFront";
 
 import AccountLayout from "@/features/customer/pages/AccountLayout";
 import AddressList from "@/features/customer/pages/AddressList";
@@ -37,7 +44,23 @@ export const createAppRouter = () =>
       path: paths.store.home.path,
       element: (
         <ProtectedRoute>
-          <Home />
+          <StoreFront />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: paths.store.listing.path,
+      element: (
+        <ProtectedRoute>
+          <ProductListing />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: `${paths.store.productDetail.path}/:id`,
+      element: (
+        <ProtectedRoute>
+          <ProductDetails />
         </ProtectedRoute>
       ),
     },
@@ -88,7 +111,6 @@ export const createAppRouter = () =>
       ],
     },
 
-    
     {
       path: "/account",
       element: (

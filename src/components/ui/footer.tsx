@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 function Footer({ menuItems }: LandingHeaderProps) {
   return (
-    <footer className="bg-black text-white py-10 px-5 md:px-16">
+    <footer className="bg-black text-white py-10 px-5 md:px-16" id="contact">
       <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
         {/* Social Media */}
         <div>
@@ -37,7 +37,7 @@ function Footer({ menuItems }: LandingHeaderProps) {
         {/* Pages */}
         <div>
           <h2 className="text-sm font-bold mb-3">Pages</h2>
-          <ul className="flex justify-around items-center md:flex-col md:items-start md:space-y-2">
+          <ul className="flex flex-col sm:flex-row justify-around items-start md:flex-col md:items-start md:space-y-2">
             {menuItems.map((item) => (
               <Button className="p-0" key={item.name} variant="link">
                 <Link className="text-white" to={item.href}>

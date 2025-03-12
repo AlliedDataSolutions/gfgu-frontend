@@ -1,6 +1,7 @@
 import { Link, Outlet } from "react-router-dom";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
+import { menuItems } from "@/core/data";
 
 export default function AccountLayout() {
   return (
@@ -57,7 +58,7 @@ export default function AccountLayout() {
       </div>
 
       {/* Common Footer */}
-      <Footer menuItems={[]} />
+      <Footer menuItems={menuItems} />
     </div>
   );
 }

@@ -10,7 +10,7 @@ import {
 
 export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
   return (
-    <section className="relative">
+    <section className="relative" id="home">
       <div>
         <div>
           <img
@@ -50,7 +50,7 @@ export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
   );
 }
 
-function DeliveryDayComp({ location, dayOfWeek }: DeliveryDay) {
+export function DeliveryDayComp({ location, dayOfWeek }: DeliveryDay) {
   return (
     <div className="flex text-white mx-3">
       <CircleCheck />
