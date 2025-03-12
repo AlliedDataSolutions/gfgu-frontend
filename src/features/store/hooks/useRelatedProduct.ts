@@ -3,26 +3,24 @@ import { Product } from "@/components/models/type";
 import axiosInstance from "@/core/axiosInstance";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 
-
-export const useProductDetails = (id: string | undefined) => {
+export const useRelatedProduct = (type: string | undefined) => {
   const [
-    productDetails,
-    setProductDetails
-  ] = useState<Product>();
+    realtedProducts,
+    setRelatedProductDetails
+  ] = useState<Product[]>([]);
 
   useEffect(() => {
-    if (!id) return;
-    fetchProductById();
-  }, [id]);
+    if (!type) return;
+    fetchProductByCategory();
+  }, [type]);
 
-
-  const fetchProductById = async () => {
+  const fetchProductByCategory = async () => {
     try {
       // setLoading(true);
-      const reponse = await axiosInstance.get(`/product/${id}`);
+      const reponse = await axiosInstance.get(`/product?limit=4&category=${type}`);
       console.log(reponse);
 
-      setProductDetails(reponse.data);
+      setRelatedProductDetails(reponse.data);
     } catch (error) {
       handleAxiosError(error);
     } finally {
@@ -31,6 +29,6 @@ export const useProductDetails = (id: string | undefined) => {
   };
 
   return {
-    productDetails,
+    realtedProducts,
   };
 };

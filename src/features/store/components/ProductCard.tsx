@@ -32,7 +32,7 @@ export default function ProductCard({ product }: ProductCardProps) {
           className="object-cover w-full h-full p-6"
         />
         {isHovered && (
-          <div className="mt-2 absolute inset-0 flex items-end justify-center z-50 transition-opacity">
+          <div className=" w-full mt-2 absolute inset-0 flex items-end justify-center z-50 transition-opacity">
             <Button className="w-full py-2 rounded-t-none bg-black hover:bg-black text-white">
               Add to Cart
             </Button>
