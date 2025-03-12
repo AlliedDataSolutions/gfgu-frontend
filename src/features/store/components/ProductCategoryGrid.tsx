@@ -11,8 +11,8 @@ interface CategoryGridProps {
 
 export default function ProductCategoryGrid({
   categories,
-  //selectCategory,
-}: CategoryGridProps) {
+}: //selectCategory,
+CategoryGridProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -93,25 +93,25 @@ export default function ProductCategoryGrid({
       >
         {categories.map((category, index) => (
           <div
-          key={index}
-          className={cn(
-            "w-[250px] flex-shrink-0 border-t border-b border-r border-green-600",
-            index === 0 && "border-l",
-            index === 0 && "rounded-l-lg",
-            index === categories.length - 1 && "rounded-r-lg",
-          )}
-        >
-          <div className="p-4 flex flex-col items-center">
-            <div className="relative w-28 h-28 mb-4">
-              <img
-                src={Apple}
-                alt={category.name}
-                className="object-contain"
-              />
+            key={index}
+            className={cn(
+              "w-[250px] flex-shrink-0 border-t border-b border-r border-green-600",
+              index === 0 && "border-l",
+              index === 0 && "rounded-l-lg",
+              index === categories.length - 1 && "rounded-r-lg"
+            )}
+          >
+            <div className="p-4 flex flex-col items-center">
+              <div className="relative w-28 h-28 mb-4">
+                <img
+                  src={category.imageUrl ?? Apple}
+                  alt={category.type}
+                  className="object-contain"
+                />
+              </div>
+              <h3 className="text-center font-medium">{category.type}</h3>
             </div>
-            <h3 className="text-center font-medium">{category.name}</h3>
           </div>
-        </div>
         ))}
       </div>
 

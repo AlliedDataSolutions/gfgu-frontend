@@ -10,33 +10,38 @@ export const useStore = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    fetchCategories(); 
+    fetchCategories();
     fetchPopularProduct();
   }, []);
 
-  // category endpoint not fully functional 
-  const fetchCategories = async () => {
-    try {
-      setLoading(true);
-      const loginResponse = await axiosInstance.get("/categories");
-      setCategories(loginResponse.data);
-    } catch (error) {
-      handleAxiosError;
-    } finally {
-      setLoading(false);
-    }
+  // category endpoint not fully functional
+  const fetchCategories = () => {
+    setLoading(true);
+    axiosInstance
+      .get("/product/categories")
+      .then((res) => {
+        setCategories(res.data);
+      })
+      .catch((err) => {
+        handleAxiosError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   const fetchPopularProduct = async () => {
-    try {
-      setLoading(true);
-      const reponse = await axiosInstance.get("/product?limit=8");
-      setPopularProducts(reponse.data);
-    } catch (error) {
-      handleAxiosError(error);
-    } finally {
-      setLoading(false);
-    }
+    await axiosInstance
+      .get("/product?limit=8")
+      .then((res) => {
+        setPopularProducts(res.data);
+      })
+      .catch((err) => {
+        handleAxiosError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   // can be call like this

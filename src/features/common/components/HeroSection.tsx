@@ -10,7 +10,7 @@ import {
 
 export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
   return (
-    <section className="relative">
+    <section className="relative" id="home">
       <div>
         <div>
           <img

@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 
 function Footer({ menuItems }: LandingHeaderProps) {
   return (
-    <footer className="bg-black text-white py-10 px-5 md:px-16">
+    <footer className="bg-black text-white py-10 px-5 md:px-16" id="contact">
       <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-10">
         {/* Social Media */}
         <div>

@@ -5,7 +5,7 @@ import { DeliveryDayProps } from "@/components/models/deliveryDays";
 
 const Delivery = ({ deliveryDays }: DeliveryDayProps) => {
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-b from-white to-[#2EEF76A6] flex justify-center items-center p-6">
+    <div className="relative w-full min-h-screen bg-gradient-to-b from-white to-[#2EEF76A6] flex justify-center items-center p-6" id="deliveryDays">
       {/* Background Image */}
       <div className="absolute bottom-0 right-0 w-full h-1/3 md:h-1/2 flex justify-end">
         <img

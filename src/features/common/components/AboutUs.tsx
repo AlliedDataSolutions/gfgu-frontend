@@ -6,7 +6,7 @@ import AboutUsApples from "@/assets/AboutUsApples.png";
 
 export function AboutUs() {
   return (
-    <section className="relative w-full">
+    <section className="relative w-full" id="about">
       {/* Desktop Background overlay */}
       <div className="hidden md:block absolute w-[1440px] h-[822px] bg-green-100 opacity-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
 

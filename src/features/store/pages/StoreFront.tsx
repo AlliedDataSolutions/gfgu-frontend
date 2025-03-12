@@ -12,18 +12,18 @@ import Footer from "@/components/ui/footer";
 import { deliveryDays, menuItems, storeMenuItems } from "@/core/data";
 import { useStore } from "../hooks/useStore";
 
-
 export default function StoreFront() {
   const { loading, popularProducts, categories } = useStore();
 
   return (
-    <div>
+    <div className="pt-14 md:pt-16">
       <Header menuItems={storeMenuItems} />
       <Banner />
       <div className="bg-black py-4">
         <Marquee speed={50}>
-          {deliveryDays.map((item) => (
+          {deliveryDays.map((item, index) => (
             <DeliveryDayComp
+              key={index}
               location={item.location}
               dayOfWeek={item.dayOfWeek}
             />
