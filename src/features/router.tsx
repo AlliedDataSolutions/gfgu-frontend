@@ -9,7 +9,15 @@ import { ProtectedRoute } from "@/lib/auth";
 import { Landing } from "@/features/common";
 import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
+<<<<<<< HEAD
 import { Payment } from "@/features/customer";
+=======
+import { Home, Payment } from "@/features/customer";
+import CartPage from "@/features/store/pages/cartpage";
+import ProductsPage from "@/features/store/pages/productpage"; // import ProductPage
+import { CheckoutPage } from "@/features/common/pages/CheckoutPage";
+
+>>>>>>> origin/features/cartpage
 import {
   VendorLayout,
   VendorDashboard,
@@ -24,6 +32,7 @@ import {
   SalesReport,
 } from "@/features/admin";
 
+<<<<<<< HEAD
 import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
 import ProductDetails from "./store/pages/ProductDetails";
 import ProductListing from "./store/pages/ProductListing";
@@ -33,6 +42,8 @@ import AccountLayout from "@/features/customer/pages/AccountLayout";
 import AddressList from "@/features/customer/pages/AddressList";
 import AddAddress from "./customer/pages/AddAddress";
 
+=======
+>>>>>>> origin/features/cartpage
 export const createAppRouter = () =>
   createBrowserRouter([
     { path: paths.landing.path, element: <Landing /> },
@@ -77,6 +88,22 @@ export const createAppRouter = () =>
       element: (
         <ProtectedRoute>
           <Payment />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: paths.store.cartpage.path, // added cart page route
+      element: (
+        <ProtectedRoute>
+          <CartPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: paths.store.productpage.path, // added product page route
+      element: (
+        <ProtectedRoute>
+          <ProductsPage />
         </ProtectedRoute>
       ),
     },
