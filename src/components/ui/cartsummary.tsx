@@ -1,14 +1,17 @@
 import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router-dom"
 
 interface CartSummaryProps {
   subtotal: number;
   shipping: number;
   total: number;
   onCheckout: () => void;
-  onCancelOrder: () => void;
+  onclearCart: () => void;
 }
 
-export function CartSummary({ subtotal, shipping, total, onCheckout, onCancelOrder }: CartSummaryProps) {
+export function CartSummary({ subtotal, shipping, total, onCheckout, onclearCart }: CartSummaryProps) {
+  const navigate = useNavigate();
+
   return (
     <div className="border rounded-lg p-6 space-y-4">
       <h2 className="font-semibold text-lg mb-4">Cart Total</h2>
@@ -35,9 +38,21 @@ export function CartSummary({ subtotal, shipping, total, onCheckout, onCancelOrd
       <Button
         variant="outline"
         className="w-full border-green-200 text-green-600 bg-green-50 hover:bg-green-100"
-        onClick={onCancelOrder}
+        onClick={() => {
+          if (window.confirm("Are you sure you want to clear the cart?")) {
+            onclearCart();
+          }
+        }}
       >
-        Cancel Order
+        Clear Cart
+      </Button>
+
+      <Button
+        variant="outline"
+        className="w-full border-green-500 text-green-600 bg-green-300 hover:bg-green-200"
+        onClick={() => navigate("/product")}
+      >
+        Continue Shopping
       </Button>
     </div>
   )

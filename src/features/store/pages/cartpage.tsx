@@ -50,7 +50,7 @@ export default function CartPage() {
     setCartItems(cartItems.map((item: CartItem) => (item.id === id ? { ...item, quantity: newQuantity } : item)));
   }
 
-  const cancelOrder = () => {
+  const clearCart = () => {
     setCartItems([])
   }
 
@@ -146,7 +146,7 @@ export default function CartPage() {
               shipping={shipping}
               total={total}
               onCheckout={() => alert("Proceeding to checkout...")}
-              onCancelOrder={cancelOrder}
+              onclearCart={clearCart}
             />
           </div>
         </div>
