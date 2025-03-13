@@ -1,3 +1,7 @@
+import { VendorDashboard } from "./VendorDashboard";
+
 export const VendorLayout = () => {
-    return <div>Vendor Layout</div>;
+    return <div>
+        <VendorDashboard/>
+    </div>;
 }
