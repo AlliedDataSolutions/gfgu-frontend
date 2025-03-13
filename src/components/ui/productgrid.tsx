@@ -1,12 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Apple } from "lucide-react";
-
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  // add any additional properties as needed
-}
+import { Product } from "../models/type";
 
 interface Filters {
   categories: string[];
@@ -32,7 +25,7 @@ export function ProductGrid({ sortBy, onAddToCart, filterProducts }: ProductGrid
       case "name-a-z":
         return a.name.localeCompare(b.name)
       default: // 'newest'
-        return b.id - a.id
+        return parseInt(b.id) - parseInt(a.id)
     }
   })
 
@@ -42,7 +35,7 @@ export function ProductGrid({ sortBy, onAddToCart, filterProducts }: ProductGrid
         <div key={product.id} className="bg-white rounded-lg overflow-hidden border">
           <div className="p-4">
             <div className="aspect-square relative mb-4">
-              {/* <img src={product.images?.length ? product.images?.url : Apple} alt={product.name} className="object-cover" /> */}
+              <img src={product?.images?.length && product?.images?.length > 0 ? product?.images[0]?.url :  "/placeholder.svg?height=500&width=500" } alt={product.name} className="object-cover" />
             </div>
             <h3 className="font-medium text-center">{product.name}</h3>
             <p className="text-sm text-center text-muted-foreground">{product.name}</p>

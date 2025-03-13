@@ -2,9 +2,9 @@ import { useState } from "react"
 import { CartSummary } from "@/components/ui/cartsummary"
 import Footer from "@/components/ui/footer"
 import Header from "@/components/ui/header" // Import the Header component
+import { menuItems, storeMenuItems } from "@/core/data";
 
 export default function CartPage() {
-  console.log("CartPage rendered");
   const [cartItems, setCartItems] = useState([
     {
       id: 1,
@@ -58,16 +58,10 @@ export default function CartPage() {
   const shipping = 0  // Assuming free shipping
   const total = subtotal + shipping
 
-  const menuItems = [
-    { name: "Home", href: "#home" },
-    { name: "About", href: "#about" },
-    { name: "Delivery Days", href: "#deliveryDays" },
-    { name: "Contact", href: "#contact" },
-  ];
-
   return (
-    <>
-      <Header menuItems={[]} />
+    <div className="flex flex-col min-h-screen">
+      <Header menuItems={storeMenuItems} />
+      <div className="flex-1 pt-16 px-4">
       <div className="text-sm breadcrumbs mb-6">
         <ul>
           <li>Cart</li>
@@ -151,7 +145,11 @@ export default function CartPage() {
           </div>
         </div>
       </div>
+      </div>
+
+      <div className="mt-auto">
       <Footer menuItems={menuItems} />
-    </>
+      </div>
+      </div>
   );
 }

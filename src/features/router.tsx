@@ -11,7 +11,6 @@ import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
 import { Payment } from "@/features/customer";
 import CartPage from "@/features/store/pages/cartpage";
-import ProductsPage from "@/features/store/pages/productpage";
 import { CheckoutPage } from "@/features/common/pages/CheckoutPage";
 
 import {
@@ -83,18 +82,10 @@ export const createAppRouter = () =>
       ),
     },
     {
-      path: paths.store.cartpage.path, // added cart page route
+      path: paths.store.cartPage.path, // added cart page route
       element: (
         <ProtectedRoute>
           <CartPage />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: paths.store.productpage.path, // added product page route
-      element: (
-        <ProtectedRoute>
-          <ProductsPage />
         </ProtectedRoute>
       ),
     },

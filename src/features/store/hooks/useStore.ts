@@ -6,8 +6,8 @@ import { useEffect, useState } from "react";
 export const useStore = () => {
   const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [vendors, setVendors] = useState<Vendor[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [popularProducts, setPopularProducts] = useState<Product[]>([]);
+  const [products, setProducts] = useState<{records: Product[], count: number}>({records: [], count: 0});
+  const [popularProducts, setPopularProducts] = useState<{records: Product[], count: number}>({records: [], count: 0});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {

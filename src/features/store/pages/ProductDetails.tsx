@@ -213,7 +213,7 @@ export default function ProductView() {
           <section className="text-center mt-8 md:mt-16">
 
             <h2 className="text-2xl font-semibold mb-8">Related Products</h2>
-            <ProductGrid products={realtedProducts} />
+            <ProductGrid products={realtedProducts.records} />
           </section>
         </main>
       </div>
