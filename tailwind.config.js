@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Poppins', 'sans-serif'],
+      },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
@@ -40,6 +43,15 @@ export default {
           50: "#EFFAC5",
           400: "#CAEF45",
           600: "#B6D73E",
+        },
+        yellow: {
+          50: "#FAFDEC",
+          400: "#F2D024",
+          600: "#C99A2E",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
       }
     }

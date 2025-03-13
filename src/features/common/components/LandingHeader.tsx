@@ -12,8 +12,8 @@ export default function LandingHeader({ menuItems }: LandingHeaderProps) {
 
   return (
     <div className="md:shadow-sm">
-      <header className="container mx-auto min-h-14 md:min-h-16 flex items-center ">
-        <div className="flex flex-grow items-center justify-between max-w-screen-xl px-4">
+      <header className="fixed top-0 left-0 w-full z-50 bg-white   min-h-14 md:min-h-16 flex items-center ">
+        <div className="container mx-auto flex flex-grow items-center justify-between max-w-screen-xl px-4">
           <div>
             <img src={AppIcon} alt="App icon" />
           </div>
@@ -47,7 +47,7 @@ export default function LandingHeader({ menuItems }: LandingHeaderProps) {
                   <nav className="flex-col">
                     {menuItems.map((item) => (
                       <Button key={item.name} className="block" variant="link">
-                        <Link to={item.href}>{item.name}</Link>
+                        <a href={item.href}>{item.name}</a>
                       </Button>
                     ))}
                   </nav>
