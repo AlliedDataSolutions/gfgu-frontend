@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Minus, Plus } from "lucide-react";
+import { useStore } from "@/features/store/hooks/useStore";
 
 interface Filters {
   categories: string[];
@@ -18,6 +19,7 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
   useEffect(() => {
     setLocalFilters(filters);
   }, [filters]);
+const {categories, vendors} = useStore();
 
   const handleCategoryChange = (category: string) => {
     const updatedCategories = localFilters.categories.includes(category)
@@ -53,15 +55,15 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
         <div className="space-y-2">
           <h4 className="text-sm font-medium mb-2">Category</h4>
           <div className="space-y-1">
-            {["Fruits", "Vegetables", "Dairy", "Beans", "Grains"].map((category) => (
-              <label key={category} className="flex items-center gap-2">
+            {categories.map((category) => (
+              <label key={category?.type} className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   className="rounded"
-                  checked={localFilters.categories.includes(category)}
-                  onChange={() => handleCategoryChange(category)}
+                  checked={localFilters.categories.includes(category?.type)}
+                  onChange={() => handleCategoryChange(category?.type)}
                 />
-                <span className="text-sm">{category}</span>
+                <span className="text-sm">{category?.type}</span>
               </label>
             ))}
           </div>
@@ -74,21 +76,15 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
           <Minus className="h-4 w-4" />
         </div>
         <div className="space-y-1">
-          {[
-            "Green Valley Farm",
-            "Organic Harvest Co.",
-            "Sunrise Farms",
-            "Local Farmer Limited",
-            "Fresh Fields Co-op",
-          ].map((vendor) => (
-            <label key={vendor} className="flex items-center gap-2">
+          {vendors.map((vendor) => (
+            <label key={vendor.businessName} className="flex items-center gap-2">
               <input
                 type="checkbox"
                 className="rounded"
-                checked={localFilters.vendors.includes(vendor)}
-                onChange={() => handleVendorChange(vendor)}
+                checked={localFilters.vendors.includes(vendor.businessName)}
+                onChange={() => handleVendorChange(vendor.businessName)}
               />
-              <span className="text-sm">{vendor}</span>
+              <span className="text-sm">{vendor.businessName}</span>
             </label>
           ))}
         </div>

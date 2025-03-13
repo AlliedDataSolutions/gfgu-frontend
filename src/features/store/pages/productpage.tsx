@@ -5,6 +5,7 @@ import { ProductGrid } from "@/components/ui/productgrid"
 import { Pagination } from "@/components/ui/pagination"
 import { Button } from "@/components/ui/button"
 import { FilterSidebar } from "@/components/ui/filter" // Import your filter sidebar
+import { useProductFilter } from "../hooks/useProductFilter"
 
 export default function ProductsPage() {
   interface Filters {
@@ -39,6 +40,8 @@ export default function ProductsPage() {
     { name: "Contact", href: "#contact" },
   ];
 
+  const { filterProducts } = useProductFilter(appliedFilters.categories[0], appliedFilters.vendors[0], 1, 10)
+
   return (
     <>
       <Header menuItems={menuItems} />
@@ -70,7 +73,7 @@ export default function ProductsPage() {
             </Button>
           </div>
           <div className="flex-1">
-            <ProductGrid filters={appliedFilters} sortBy={sortBy} onAddToCart={() => { /* Add your onAddToCart logic here */ }} />
+            <ProductGrid filterProducts={filterProducts} filters={appliedFilters} sortBy={sortBy} onAddToCart={() => { /* Add your onAddToCart logic here */ }} />
             <div className="mt-8">
               <Pagination />
             </div>
