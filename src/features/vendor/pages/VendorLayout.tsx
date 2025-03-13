@@ -8,7 +8,6 @@ export function VendorLayout() {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // You might call your logout API here before navigating
     navigate("/auth/logout");
   };
 
@@ -19,7 +18,6 @@ export function VendorLayout() {
         <div className="flex flex-col h-full justify-between">
           <div>
             <div className="flex items-center gap-3 p-8">
-              {/* Logo */}
               <div className="w-8 h-8 rounded-full bg-white" />
               <span className="text-white font-medium text-lg">Vendor</span>
             </div>
@@ -84,9 +82,15 @@ export function VendorLayout() {
           <aside className="fixed top-0 left-0 w-64 h-full bg-[#0A7110] border-r border-gray-200 p-8">
             <div className="flex flex-col h-full justify-between">
               <div>
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="w-8 h-8 rounded-full bg-white" />
-                  <span className="text-white font-medium text-lg">Vendor</span>
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-white" />
+                    <span className="text-white font-medium text-lg">Vendor</span>
+                  </div>
+                  {/* Close button */}
+                  <button onClick={() => setSidebarOpen(false)} className="text-white">
+                    <X size={24} />
+                  </button>
                 </div>
                 <nav className="flex flex-col space-y-2">
                   <NavLink
@@ -155,15 +159,15 @@ export function VendorLayout() {
       <div className="flex-1 md:ml-[352px] flex flex-col">
         {/* Top Bar */}
         <header className="flex justify-between items-center bg-white border-b border-gray-200 px-4 py-4 md:px-8">
+          {/* If sidebar is open, show close (X) icon, otherwise show menu (☰) */}
           <button
             className="md:hidden text-gray-600"
-            onClick={() => setSidebarOpen(true)}
+            onClick={() => setSidebarOpen(!sidebarOpen)}
           >
-            <Menu size={24} />
+            {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
           <h1 className="text-2xl font-semibold text-black">Dashboard</h1>
           <div className="flex items-center gap-4">
-            {/* Notification/Profile area */}
             <div className="w-10 h-10 rounded-full bg-gray-300" />
           </div>
         </header>
