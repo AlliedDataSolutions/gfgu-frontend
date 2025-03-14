@@ -45,7 +45,7 @@ export default function StoreFront() {
           <section className="text-center mt-8 md:mt-16">
             <div className="text-brand-600 mb-2">Popular Choices</div>
             <h2 className="text-2xl font-semibold mb-8">Popular Products</h2>
-            <ProductGrid products={popularProducts} />
+            <ProductGrid products={popularProducts.records} />
             <div className="flex justify-center mt-12">
               <Button className="px-8 py-3 bg-green-700 text-white rounded-md hover:bg-green-600 transition-colors">
                 <Link to={paths.store.listing.path}>View all Products</Link>
