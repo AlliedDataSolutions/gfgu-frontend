@@ -25,6 +25,7 @@ export const paths = {
     productDetail: { path: "/store/product-details", getHref: () => "/store/product-details" },
     checkout: { path: "/checkout", getHref: () => "/checkout" },
     payment: { path: "/payment", getHref: () => "/payment" },
+    cartPage: { path: "/cart", getHref: () => "/cart" },
   },
 
   vendor: {

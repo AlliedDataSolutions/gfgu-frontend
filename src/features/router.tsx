@@ -10,6 +10,9 @@ import { Landing } from "@/features/common";
 import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
 import { Payment } from "@/features/customer";
+import CartPage from "@/features/store/pages/cartpage";
+import { CheckoutPage } from "@/features/common/pages/CheckoutPage";
+
 import {
   VendorLayout,
   VendorDashboard,
@@ -23,8 +26,6 @@ import {
   ManageUsers,
   SalesReport,
 } from "@/features/admin";
-
-import { CheckoutPage } from "@/features/common/pages/CheckoutPage"; // Import the CheckoutPage component
 import ProductDetails from "./store/pages/ProductDetails";
 import ProductListing from "./store/pages/ProductListing";
 import StoreFront from "./store/pages/StoreFront";
@@ -77,6 +78,14 @@ export const createAppRouter = () =>
       element: (
         <ProtectedRoute>
           <Payment />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: paths.store.cartPage.path, // added cart page route
+      element: (
+        <ProtectedRoute>
+          <CartPage />
         </ProtectedRoute>
       ),
     },

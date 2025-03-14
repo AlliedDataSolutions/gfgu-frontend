@@ -216,11 +216,11 @@ export default function ProductView() {
         </div>
 
         {/* Related Products */}
-        {realtedProducts.length > 0 && (
+        {realtedProducts.records.length > 0 && (
           <main className="container mx-auto px-4 py-8">
             <section className="text-center mt-8 md:mt-16">
               <h2 className="text-2xl font-semibold mb-8">Related Products</h2>
-              <ProductGrid products={realtedProducts} />
+              <ProductGrid products={realtedProducts.records} />
             </section>
           </main>
         )}

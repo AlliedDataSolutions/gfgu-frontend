@@ -7,7 +7,10 @@ export const useRelatedProduct = (
   type: string | undefined,
   selectedProductId: string | undefined
 ) => {
-  const [realtedProducts, setRelatedProductDetails] = useState<Product[]>([]);
+  const [relatedProducts, setRelatedProductDetails] = useState<{
+    records: Product[];
+    count: number;
+  }>({ records: [], count: 0 });
 
   useEffect(() => {
     if (!type) return;
@@ -22,12 +25,12 @@ export const useRelatedProduct = (
       );
       console.log(reponse);
       const related: Product[] = reponse.data.records;
+      const count: number = reponse.data.count;
 
-      setRelatedProductDetails(
-        related.filter((product) => {
-          product.id !== selectedProductId;
-        })
-      );
+      setRelatedProductDetails({
+        records: related.filter((product) => product.id !== selectedProductId),
+        count: count
+      });
     } catch (error) {
       handleAxiosError(error);
     } finally {
@@ -36,6 +39,6 @@ export const useRelatedProduct = (
   };
 
   return {
-    realtedProducts,
+    realtedProducts: relatedProducts,
   };
 };
