@@ -7,10 +7,13 @@ import { paths } from "@/config/paths";
 
 interface ProductCardProps {
   product: Product;
-  featured?: boolean;
+  onClickAddToCart?: () => void;
 }
 
-export default function ProductCard({ product }: ProductCardProps) {
+export default function ProductCard({
+  product,
+  onClickAddToCart,
+}: ProductCardProps) {
   const navigate = useNavigate();
   const [isHovered, setIsHovered] = useState(false);
 
@@ -20,7 +23,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   return (
     <div
-      className=" overflow-hidden"
+      className=" overflow-hidden max-w-36 md:max-w-80 "
       onClick={handleNavigation}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -33,15 +36,18 @@ export default function ProductCard({ product }: ProductCardProps) {
         />
         {isHovered && (
           <div className=" w-full mt-2 absolute inset-0 flex items-end justify-center z-50 transition-opacity">
-            <Button className="w-full py-2 rounded-t-none bg-black hover:bg-black text-white">
+            <Button
+              onClick={onClickAddToCart}
+              className="w-full py-2 rounded-t-none bg-black hover:bg-black text-white"
+            >
               Add to Cart
             </Button>
           </div>
         )}
       </div>
-      <div className="p-1">
+      <div className="p-1 flex flex-col items-center">
         <h3 className="font-normal mb-1">{product.name}</h3>
-        <p className="text-sm text-neutral-600 mb-1">
+        <p className="text-sm text-center text-neutral-600 mb-1">
           Sold By Farmer {product.vendor.businessName}
         </p>
         <p className="text-red-500">${product.price}</p>

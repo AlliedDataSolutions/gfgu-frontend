@@ -2,6 +2,7 @@ import { Link, Outlet } from "react-router-dom";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
 import { menuItems, storeMenuItems } from "@/core/data";
+import { paths } from "@/config/paths";
 
 export default function AccountLayout() {
   return (
@@ -36,13 +37,13 @@ export default function AccountLayout() {
 
               {/* Side Panel Menu */}
               <Link
-                to="/account/address"
+                to={paths.account.address.path}
                 className="block px-4 py-2 rounded mb-2 hover:bg-green-700"
               >
                 Account Settings
               </Link>
               <Link
-                to="/account/orders"
+                to={paths.account.orders.path}
                 className="block px-4 py-2 rounded hover:bg-green-700"
               >
                 My Orders

@@ -6,14 +6,20 @@ import { useEffect, useState } from "react";
 export const useStore = () => {
   const [categories, setCategories] = useState<ProductCategory[]>([]);
   const [vendors, setVendors] = useState<Vendor[]>([]);
-  const [products, setProducts] = useState<{records: Product[], count: number}>({records: [], count: 0});
-  const [popularProducts, setPopularProducts] = useState<{records: Product[], count: number}>({records: [], count: 0});
+  const [products, setProducts] = useState<{
+    records: Product[];
+    count: number;
+  }>({ records: [], count: 0 });
+  const [popularProducts, setPopularProducts] = useState<{
+    records: Product[];
+    count: number;
+  }>({ records: [], count: 0 });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchCategories();
     fetchPopularProduct();
-    fetchVendors() ;
+    fetchVendors();
   }, []);
 
   // category endpoint not fully functional
@@ -52,7 +58,10 @@ export const useStore = () => {
     axiosInstance
       .get("/product?limit=8")
       .then((res) => {
-        setPopularProducts(res.data.records);
+        setPopularProducts({
+          records: res.data.records,
+          count: res.data.count,
+        });
       })
       .catch((err) => {
         handleAxiosError(err);

@@ -22,7 +22,10 @@ export const paths = {
   store: {
     home: { path: "/store", getHref: () => "/store" },
     listing: { path: "/store/listing", getHref: () => "/store/listing" },
-    productDetail: { path: "/store/product-details", getHref: () => "/store/product-details" },
+    productDetail: {
+      path: "/store/product-details",
+      getHref: () => "/store/product-details",
+    },
     checkout: { path: "/checkout", getHref: () => "/checkout" },
     payment: { path: "/payment", getHref: () => "/payment" },
     cartPage: { path: "/cart", getHref: () => "/cart" },
@@ -49,12 +52,16 @@ export const paths = {
     manageUsers: { path: "/admin/users", getHref: () => "/admin/users" },
     salesReport: { path: "/admin/sales", getHref: () => "/admin/sales" },
   },
-  
+
   error: {
     notFound: { path: "*", getHref: () => "*" },
   },
 
   account: {
+    account: {
+      path: "/account",
+      getHref: () => "/account/personal-info",
+    },
     personalInfo: {
       path: "/account/personal-info",
       getHref: () => "/account/personal-info",

@@ -49,18 +49,14 @@ export default function Header({ menuItems }: HeaderProps) {
                 icon={<Search size={18} />}
               />
 
-              <button
-                className="flex items-center text-[#HEX background: #1A1A1B;] hover:text-[#35736e] focus:outline-none"
-                style={{ backgroundColor: "transparent", border: "none" }}
-              >
+              <Button variant={"link"} className="p-0">
                 <ShoppingCart className="w-5 h-5" />
-              </button>
-              <button
-                className="flex items-center text-[#HEX background: #1A1A1B;] hover:text-[#35736e] focus:outline-none"
-                style={{ backgroundColor: "transparent", border: "none" }}
-              >
-                <User className="w-5 h-5" />
-              </button>
+              </Button>
+              <Button variant={"link"} className="p-0">
+                <Link to={paths.account.account.path}>
+                  <User className="w-5 h-5" />
+                </Link>
+              </Button>
 
               <Menu className="md:hidden" onClick={() => setIsOpen(!isOpen)} />
 

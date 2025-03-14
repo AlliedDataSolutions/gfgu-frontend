@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
   Facebook,
@@ -24,16 +24,13 @@ import ProductGrid from "../components/ProductGrid";
 export default function ProductView() {
   const [quantity, setQuantity] = useState(1);
   const params = useParams();
-  const { productDetails } = useProductDetails(params.id);
+  const { selectedImage, productDetails, setSelectedImage } = useProductDetails(
+    params.id
+  );
   const { realtedProducts } = useRelatedProduct(
     productDetails?.categories[0]?.type,
     params.id
   );
-  const [selectedImage, setSelectedImage] = useState("");
-
-  useEffect(() => {
-    setSelectedImage(productDetails?.images[0]?.url ?? "");
-  }, []);
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
@@ -79,11 +76,11 @@ export default function ProductView() {
         </nav>
 
         {/* Product Details */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
           {/* Product Images */}
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4 mx-w-[230px] md:mx-w-[320px]">
             {/* Main Image Container */}
-            <div className="w-[230px] h-[230px] md:w-[480px] md:h-[480px] bg-neutral-100 rounded-lg overflow-hidden mx-auto">
+            <div className=" bg-neutral-100 rounded-lg overflow-hidden mx-auto">
               <img
                 src={selectedImage}
                 alt={productDetails?.name || "Product Image"}
