@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ChevronUp, Minus, Plus } from "lucide-react";
+import { ChevronUp, Minus } from "lucide-react";
 import { useStore } from "@/features/store/hooks/useStore";
 import { Slider } from "@/components/ui/slider";
 
