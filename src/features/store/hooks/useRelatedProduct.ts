@@ -3,11 +3,14 @@ import { Product } from "@/components/models/type";
 import axiosInstance from "@/core/axiosInstance";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 
-export const useRelatedProduct = (type: string | undefined) => {
-  const [
-    realtedProducts,
-    setRelatedProductDetails
-  ] = useState<{records: Product[], count: number}>({records: [], count: 0});
+export const useRelatedProduct = (
+  type: string | undefined,
+  selectedProductId: string | undefined
+) => {
+  const [relatedProducts, setRelatedProductDetails] = useState<{
+    records: Product[];
+    count: number;
+  }>({ records: [], count: 0 });
 
   useEffect(() => {
     if (!type) return;
@@ -17,10 +20,17 @@ export const useRelatedProduct = (type: string | undefined) => {
   const fetchProductByCategory = async () => {
     try {
       // setLoading(true);
-      const reponse = await axiosInstance.get(`/product?limit=4&category=${type}`);
+      const reponse = await axiosInstance.get(
+        `/product?limit=4&category=${type}`
+      );
       console.log(reponse);
+      const related: Product[] = reponse.data.records;
+      const count: number = reponse.data.count;
 
-      setRelatedProductDetails(reponse.data);
+      setRelatedProductDetails({
+        records: related.filter((product) => product.id !== selectedProductId),
+        count: count
+      });
     } catch (error) {
       handleAxiosError(error);
     } finally {
@@ -29,6 +39,6 @@ export const useRelatedProduct = (type: string | undefined) => {
   };
 
   return {
-    realtedProducts,
+    realtedProducts: relatedProducts,
   };
 };

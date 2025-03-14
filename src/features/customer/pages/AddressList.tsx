@@ -15,10 +15,9 @@ interface AddressData {
 export default function AddressList() {
   const [addresses, setAddresses] = useState<AddressData[]>([]);
 
-  // Fetch addresses from the backend
   useEffect(() => {
     axiosInstance
-      .get("/address") // Calls GET /api/address
+      .get("/address") 
       .then((res) => {
         setAddresses(res.data);
       })

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
 import { Product } from "../models/type";
+import ProductCard from "@/features/store/components/ProductCard";
 
 interface Filters {
   categories: string[];
@@ -14,36 +14,33 @@ export interface ProductGridProps {
   onAddToCart: (product: Product) => void;
 }
 
-export function ProductGrid({ sortBy, onAddToCart, filterProducts }: ProductGridProps) {
-
+export function ProductGrid({
+  sortBy,
+  onAddToCart,
+  filterProducts,
+}: ProductGridProps) {
   const sortedProducts = [...filterProducts].sort((a, b) => {
     switch (sortBy) {
       case "price-low-high":
-        return a.price - b.price
+        return a.price - b.price;
       case "price-high-low":
-        return b.price - a.price
+        return b.price - a.price;
       case "name-a-z":
-        return a.name.localeCompare(b.name)
+        return a.name.localeCompare(b.name);
       default: // 'newest'
-        return parseInt(b.id) - parseInt(a.id)
+        return parseInt(b.id) - parseInt(a.id);
     }
-  })
+  });
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6 justify-items-center">
       {sortedProducts.map((product) => (
-        <div key={product.id} className="bg-white rounded-lg overflow-hidden border">
-          <div className="p-4">
-            <div className="aspect-square relative mb-4">
-              <img src={product?.images?.length && product?.images?.length > 0 ? product?.images[0]?.url :  "/placeholder.svg?height=500&width=500" } alt={product.name} className="object-cover" />
-            </div>
-            <h3 className="font-medium text-center">{product.name}</h3>
-            <p className="text-sm text-center text-muted-foreground">{product.name}</p>
-            <p className="text-center font-semibold mt-2">${product?.price}</p>
-            <Button className="w-full mt-4" onClick={() => onAddToCart(product)}>Add to Cart</Button>
-          </div>
-        </div>
+        <ProductCard
+          onClickAddToCart={() => onAddToCart(product)}
+          key={product.id}
+          product={product}
+        />
       ))}
     </div>
-  )
+  );
 }

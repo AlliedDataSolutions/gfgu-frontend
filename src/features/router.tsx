@@ -33,6 +33,8 @@ import StoreFront from "./store/pages/StoreFront";
 import AccountLayout from "@/features/customer/pages/AccountLayout";
 import AddressList from "@/features/customer/pages/AddressList";
 import AddAddress from "./customer/pages/AddAddress";
+import { MyOrder } from "./customer/pages/MyOrder";
+import { PersonalInfo } from "./customer/pages/PersonInfo";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -121,7 +123,7 @@ export const createAppRouter = () =>
     },
 
     {
-      path: "/account",
+      path: paths.account.account.path,
       element: (
         <ProtectedRoute>
           <AccountLayout />
@@ -131,19 +133,24 @@ export const createAppRouter = () =>
         {
           // When no child is specified, redirect to /account/address
           index: true,
-          element: <Navigate to="address" replace />,
+          element: <Navigate to={paths.account.address.path} replace />,
         },
         {
-          path: "address",
+          index: true,
+          path: paths.account.address.path,
           element: <AddressList />,
         },
         {
-          path: "add-address",
+          path: paths.account.addAddress.path,
           element: <AddAddress />,
         },
         {
-          path: "orders",
-          element: <div>My Orders (Placeholder)</div>,
+          path: paths.account.orders.path,
+          element: <MyOrder />,
+        },
+        {
+          path: paths.account.personalInfo.path,
+          element: <PersonalInfo />,
         },
       ],
     },

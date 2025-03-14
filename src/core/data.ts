@@ -1,3 +1,5 @@
+import { paths } from "@/config/paths";
+
 export const deliveryDays = [
   { location: "edmonton", dayOfWeek: "Wednessday" },
   { location: "calgary", dayOfWeek: "Tuesday" },
@@ -14,6 +16,6 @@ export const menuItems = [
 
 
 export const storeMenuItems = [
-    { name: "Home", href: "#home" },
-    { name: "Store", href: "#store" },
+    { name: "Home", href: `${paths.store.home.path}` },
+    { name: "Store", href: `${paths.store.listing.path}` },
   ];

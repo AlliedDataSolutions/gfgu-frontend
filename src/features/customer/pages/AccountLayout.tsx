@@ -1,13 +1,14 @@
 import { Link, Outlet } from "react-router-dom";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
-import { menuItems } from "@/core/data";
+import { menuItems, storeMenuItems } from "@/core/data";
+import { paths } from "@/config/paths";
 
 export default function AccountLayout() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Common Header */}
-      <Header menuItems={[]} />
+      <Header menuItems={storeMenuItems} />
 
       {/* Main Content */}
       <div className="flex-grow bg-neutral-50 py-4">
@@ -36,13 +37,13 @@ export default function AccountLayout() {
 
               {/* Side Panel Menu */}
               <Link
-                to="/account/address"
+                to={paths.account.address.path}
                 className="block px-4 py-2 rounded mb-2 hover:bg-green-700"
               >
                 Account Settings
               </Link>
               <Link
-                to="/account/orders"
+                to={paths.account.orders.path}
                 className="block px-4 py-2 rounded hover:bg-green-700"
               >
                 My Orders

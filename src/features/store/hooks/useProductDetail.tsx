@@ -10,6 +10,8 @@ export const useProductDetails = (id: string | undefined) => {
     setProductDetails
   ] = useState<Product>();
 
+  const [selectedImage, setSelectedImage] = useState("");
+
   useEffect(() => {
     if (!id) return;
     fetchProductById();
@@ -21,8 +23,9 @@ export const useProductDetails = (id: string | undefined) => {
       // setLoading(true);
       const reponse = await axiosInstance.get(`/product/${id}`);
       console.log(reponse);
-
-      setProductDetails(reponse.data);
+      const product: Product = reponse.data
+      setProductDetails(product);
+      setSelectedImage(product?.images[0]?.url ?? "");
     } catch (error) {
       handleAxiosError(error);
     } finally {
@@ -31,6 +34,8 @@ export const useProductDetails = (id: string | undefined) => {
   };
 
   return {
+    selectedImage,
     productDetails,
+    setSelectedImage
   };
 };

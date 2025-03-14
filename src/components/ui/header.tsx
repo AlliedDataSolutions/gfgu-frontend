@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Menu, ShoppingCart, User, Search } from "lucide-react";
-import AppIcon from "@/assets/react.svg";
+import AppIcon from "@/assets/bee-logo.png";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Input } from "./input";
-//import { paths } from "@/config/paths";
+import { paths } from "@/config/paths";
 
 interface MenuItem {
   name: string;
@@ -23,7 +23,13 @@ export default function Header({ menuItems }: HeaderProps) {
       <header className="fixed top-0 left-0 w-full bg-white z-50  mx-auto min-h-14 md:min-h-16 flex items-center ">
         <div className="flex flex-grow items-center mx-auto container justify-between max-w-screen-xl px-4">
           <div>
-            <img src={AppIcon} alt="App icon" />
+            <a href={paths.landing.path} className="block w-12 h-12">
+              <img
+                src={AppIcon}
+                alt="App icon"
+                className="w-full h-full object-contain"
+              />
+            </a>
           </div>
 
           <div className="flex items-center">
@@ -43,18 +49,14 @@ export default function Header({ menuItems }: HeaderProps) {
                 icon={<Search size={18} />}
               />
 
-              <button
-                className="flex items-center text-[#HEX background: #1A1A1B;] hover:text-[#35736e] focus:outline-none"
-                style={{ backgroundColor: "transparent", border: "none" }}
-              >
+              <Button variant={"link"} className="p-0">
                 <ShoppingCart className="w-5 h-5" />
-              </button>
-              <button
-                className="flex items-center text-[#HEX background: #1A1A1B;] hover:text-[#35736e] focus:outline-none"
-                style={{ backgroundColor: "transparent", border: "none" }}
-              >
-                <User className="w-5 h-5" />
-              </button>
+              </Button>
+              <Button variant={"link"} className="p-0">
+                <Link to={paths.account.account.path}>
+                  <User className="w-5 h-5" />
+                </Link>
+              </Button>
 
               <Menu className="md:hidden" onClick={() => setIsOpen(!isOpen)} />
 
