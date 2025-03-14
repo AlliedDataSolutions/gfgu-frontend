@@ -11,7 +11,7 @@ import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
 import { Payment } from "@/features/customer";
 import CartPage from "@/features/store/pages/cartpage";
-import { CheckoutPage } from "@/features/common/pages/CheckoutPage";
+import CheckoutPage from "@/features/customer/pages/CheckoutPage";
 
 import {
   VendorLayout,
