@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button"
-import { useNavigate } from "react-router-dom"
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 
 interface CartSummaryProps {
   subtotal: number;
@@ -9,11 +9,17 @@ interface CartSummaryProps {
   onclearCart: () => void;
 }
 
-export function CartSummary({ subtotal, shipping, total, onCheckout, onclearCart }: CartSummaryProps) {
+export function CartSummary({
+  subtotal,
+  shipping,
+  total,
+  onCheckout,
+  onclearCart,
+}: CartSummaryProps) {
   const navigate = useNavigate();
 
   return (
-    <div className="border rounded-lg p-6 space-y-4">
+    <div className="max-w-4lg border rounded-lg p-6 space-y-4"> {/* Set max width */}
       <h2 className="font-semibold text-lg mb-4">Cart Total</h2>
 
       <div className="flex justify-between py-2">
@@ -31,29 +37,35 @@ export function CartSummary({ subtotal, shipping, total, onCheckout, onclearCart
         <span>${total.toFixed(2)}</span>
       </div>
 
-      <Button className="w-full bg-green-500 hover:bg-green-800" onClick={onCheckout}>
+      {/* Proceed to Checkout Button */}
+      <Button
+        className="w-full bg-green-700 text-white hover:bg-green-800 border-none"
+        onClick={onCheckout}
+      >
         Proceed to Checkout
       </Button>
 
+      {/* Clear Cart Button */}
       <Button
         variant="outline"
-        className="w-full border-green-200 text-green-600 bg-green-50 hover:bg-green-100"
+        className="w-full bg-green-100 text-green-700 hover:bg-green-200 border-green-700"
         onClick={() => {
           if (window.confirm("Are you sure you want to clear the cart?")) {
             onclearCart();
           }
         }}
       >
-        Clear Cart
+        Cancel Order
       </Button>
 
+      {/* Continue Shopping Button */}
       <Button
         variant="outline"
-        className="w-full border-green-500 text-green-600 bg-green-300 hover:bg-green-200"
-        onClick={() => navigate("/product")}
+        className="w-full bg-green-100 text-green-700 hover:bg-green-200 border-green-700"
+        onClick={() => navigate("/store/listing")}
       >
         Continue Shopping
       </Button>
     </div>
-  )
+  );
 }
