@@ -84,7 +84,7 @@ export default function CheckoutPage() {
     setServerError("");
     try {
       // Call your backend endpoint using axiosInstance
-      const response = await axiosInstance.post("/address/shipping", data);
+      const response = await axiosInstance.post("/address", data);
       console.log("Checkout response:", response.data);
       alert("Checkout data submitted successfully!");
     } catch (error) {
@@ -264,10 +264,11 @@ export default function CheckoutPage() {
                   rules={{
                     required: "Phone number is required",
                     pattern: {
-                      value: /^[0-9]+$/,
-                      message: "Phone number must be digits only",
+                      value: /^[0-9]{10}$/,
+                      message: "Phone number must be exactly 10 digits",
                     },
                   }}
+                  
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Phone Number</FormLabel>
