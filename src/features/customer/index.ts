@@ -1,2 +1,2 @@
-export * from "./pages/Checkout";
+export * from "./pages/CheckoutPage";
 export * from "./pages/Payment";
