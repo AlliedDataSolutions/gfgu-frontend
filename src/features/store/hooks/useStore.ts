@@ -1,17 +1,19 @@
-import { Product, ProductCategory } from "@/components/models/type";
+import { Product, ProductCategory, Vendor } from "@/components/models/type";
 import axiosInstance from "@/core/axiosInstance";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 import { useEffect, useState } from "react";
 
 export const useStore = () => {
   const [categories, setCategories] = useState<ProductCategory[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [popularProducts, setPopularProducts] = useState<Product[]>([]);
+  const [vendors, setVendors] = useState<Vendor[]>([]);
+  const [products, setProducts] = useState<{records: Product[], count: number}>({records: [], count: 0});
+  const [popularProducts, setPopularProducts] = useState<{records: Product[], count: number}>({records: [], count: 0});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchCategories();
     fetchPopularProduct();
+    fetchVendors() ;
   }, []);
 
   // category endpoint not fully functional
@@ -21,6 +23,22 @@ export const useStore = () => {
       .get("/product/categories")
       .then((res) => {
         setCategories(res.data);
+      })
+      .catch((err) => {
+        handleAxiosError(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  // vendor endpoint not fully functional
+  const fetchVendors = () => {
+    setLoading(true);
+    axiosInstance
+      .get("/product/vendors")
+      .then((res) => {
+        setVendors(res.data);
       })
       .catch((err) => {
         handleAxiosError(err);
@@ -82,6 +100,7 @@ export const useStore = () => {
   return {
     loading,
     categories,
+    vendors,
     popularProducts,
     products,
     fetchProduct,

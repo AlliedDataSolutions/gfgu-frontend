@@ -7,7 +7,7 @@ export const useRelatedProduct = (type: string | undefined) => {
   const [
     realtedProducts,
     setRelatedProductDetails
-  ] = useState<Product[]>([]);
+  ] = useState<{records: Product[], count: number}>({records: [], count: 0});
 
   useEffect(() => {
     if (!type) return;
