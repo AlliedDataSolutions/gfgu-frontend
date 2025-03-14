@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Menu, ShoppingCart, User, Search } from "lucide-react";
-import AppIcon from "@/assets/react.svg";
+import AppIcon from "@/assets/bee-logo.png";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Input } from "./input";
-//import { paths } from "@/config/paths";
+import { paths } from "@/config/paths";
 
 interface MenuItem {
   name: string;
@@ -23,7 +23,13 @@ export default function Header({ menuItems }: HeaderProps) {
       <header className="fixed top-0 left-0 w-full bg-white z-50  mx-auto min-h-14 md:min-h-16 flex items-center ">
         <div className="flex flex-grow items-center mx-auto container justify-between max-w-screen-xl px-4">
           <div>
-            <img src={AppIcon} alt="App icon" />
+            <a href={paths.landing.path} className="block w-12 h-12">
+              <img
+                src={AppIcon}
+                alt="App icon"
+                className="w-full h-full object-contain"
+              />
+            </a>
           </div>
 
           <div className="flex items-center">

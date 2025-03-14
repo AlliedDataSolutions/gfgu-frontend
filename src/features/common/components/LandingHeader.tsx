@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Menu } from "lucide-react";
-import AppIcon from "../../../assets/react.svg";
+import AppIcon from "@/assets/bee-logo.png";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { paths } from "@/config/paths";
@@ -15,9 +15,14 @@ export default function LandingHeader({ menuItems }: LandingHeaderProps) {
       <header className="fixed top-0 left-0 w-full z-50 bg-white   min-h-14 md:min-h-16 flex items-center ">
         <div className="container mx-auto flex flex-grow items-center justify-between max-w-screen-xl px-4">
           <div>
-            <img src={AppIcon} alt="App icon" />
+            <a href="#home" className="block w-12 h-12">
+              <img
+                src={AppIcon}
+                alt="App icon"
+                className="w-full h-full object-contain"
+              />
+            </a>
           </div>
-
           <div className="flex space-x-14 items-center">
             <nav className="hidden md:flex space-x-2">
               {menuItems.map((item) => (

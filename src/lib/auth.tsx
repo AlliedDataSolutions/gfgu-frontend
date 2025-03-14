@@ -1,6 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { paths } from "@/config/paths";
 import { useAuth } from "@/features/context/AuthContext";
+import InlineLoader from "@/components/ui/inlineloading";
 
 export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { user, loading } = useAuth();
@@ -8,7 +9,7 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
   // If still checking authentication, show a loading screen
   if (loading) {
-    return <p>Loading...</p>; // replace this with a spinner or skeleton
+    return <InlineLoader loading={loading} children={undefined} />;
   }
 
   if (!user) {

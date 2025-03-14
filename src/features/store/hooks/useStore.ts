@@ -31,10 +31,10 @@ export const useStore = () => {
   };
 
   const fetchPopularProduct = async () => {
-    await axiosInstance
+    axiosInstance
       .get("/product?limit=8")
       .then((res) => {
-        setPopularProducts(res.data);
+        setPopularProducts(res.data.records);
       })
       .catch((err) => {
         handleAxiosError(err);

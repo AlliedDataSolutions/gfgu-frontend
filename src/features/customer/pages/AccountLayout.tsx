@@ -1,13 +1,13 @@
 import { Link, Outlet } from "react-router-dom";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
-import { menuItems } from "@/core/data";
+import { menuItems, storeMenuItems } from "@/core/data";
 
 export default function AccountLayout() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Common Header */}
-      <Header menuItems={[]} />
+      <Header menuItems={storeMenuItems} />
 
       {/* Main Content */}
       <div className="flex-grow bg-neutral-50 py-4">
