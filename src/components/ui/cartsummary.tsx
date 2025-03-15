@@ -13,7 +13,6 @@ export function CartSummary({
   subtotal,
   shipping,
   total,
-  onCheckout,
   onclearCart,
 }: CartSummaryProps) {
   const navigate = useNavigate();
@@ -40,7 +39,8 @@ export function CartSummary({
       {/* Proceed to Checkout Button */}
       <Button
         className="w-full bg-green-700 text-white hover:bg-green-800 border-none"
-        onClick={onCheckout}
+        // onClick={onCheckout}
+        onClick={() => navigate("/checkout")}
       >
         Proceed to Checkout
       </Button>
@@ -62,7 +62,7 @@ export function CartSummary({
       <Button
         variant="outline"
         className="w-full bg-green-100 text-green-700 hover:bg-green-200 border-green-700"
-        onClick={() => navigate("/store/listing")}
+        onClick={() => navigate("/store/listing/all")}
       >
         Continue Shopping
       </Button>

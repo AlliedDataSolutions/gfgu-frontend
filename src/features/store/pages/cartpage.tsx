@@ -1,55 +1,26 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartSummary } from "@/components/ui/cartsummary";
 import Footer from "@/components/ui/footer";
 import Header from "@/components/ui/header";
 import { menuItems, storeMenuItems } from "@/core/data";
+import { CartDataContext } from "../hooks/useCart";
+import { Apple } from "lucide-react";
+import { Product } from "@/components/models/type";
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Organic Apples",
-      price: 3.99,
-      quantity: 4,
-      image: "/images/apples.png",
-      type: "Fresh",
-    },
-    {
-      id: 2,
-      name: "Fresh Carrots",
-      price: 2.49,
-      quantity: 2,
-      image: "/images/carrots.png",
-      type: "Fresh",
-    },
-    {
-      id: 3,
-      name: "Whole Milk",
-      price: 3.99,
-      quantity: 1,
-      image: "/images/milk.png",
-      type: "Fresh",
-    },
-  ]);
+const { cart, addToCart, removeFromCart, clearCart} = useContext(CartDataContext)
 
-  const removeItem = (id: number) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
 
-  const updateQuantity = (id: number, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    setCartItems(
-      cartItems.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item))
-    );
-  };
+const [subtotal, setSubtotal] = useState(0);
+const [total, setTotal] = useState(0);
+const [shipping, setShipping] = useState(0);
 
-  const clearCart = () => {
-    setCartItems([]);
-  };
-
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = 0;
-  const total = subtotal + shipping;
+useEffect(() => {
+  const subtotal = cart.product.reduce((sum, item:Product) => sum + Number(item.price) * Number(item.quantity), 0);
+  setSubtotal(subtotal)
+  setShipping(0)
+  setTotal(subtotal + shipping)
+},[cart])
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -64,7 +35,7 @@ export default function CartPage() {
 
         <div className="flex flex-col lg:flex-row gap-6">
           <div className="flex-1">
-            {cartItems.length > 0 ? (
+            {cart.product.length > 0 ? (
               <div className="overflow-x-auto">
                 <table className="w-full border-collapse">
                   <thead className="bg-gray-100 text-sm">
@@ -76,40 +47,40 @@ export default function CartPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {cartItems.map((item) => (
-                      <tr key={item.id} className="border-b text-sm">
+                    {cart.product.map((item: Product) => (
+                      <tr key={item?.id } className="border-b text-sm">
                         <td className="p-3 flex items-center gap-4">
-                          <img src={item.image} alt={item.name} className="w-16 h-16 rounded-md bg-gray-200" />
+                          <img src={item?.images?.length ? item?.images[0]?.url : Apple} alt={item.name} className="w-16 h-16 rounded-md bg-gray-200" />
                           <div className="flex flex-col">
-                            <h3 className="font-medium">{item.name}</h3>
-                            <p className="text-xs text-gray-500">{item.type}</p>
+                            <h3 className="font-medium">{item?.name}</h3>
+                            <p className="text-xs text-gray-500">{item.categories[0]?.type}</p>
                             <button
                               className="text-xs text-red-500 hover:underline"
-                              onClick={() => removeItem(item.id)}
+                              onClick={() => removeFromCart(item)}
                             >
                               Remove
                             </button>
                           </div>
                         </td>
-                        <td className="p-3 text-center">${item.price.toFixed(2)}</td>
+                        <td className="p-3 text-center">${Number(item?.price)}</td>
                         <td className="p-3">
                           <div className="flex items-center justify-center gap-2">
                             <button
                               className="border rounded-md px-2 py-1"
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                              onClick={() => removeFromCart(item)}
                             >
                               -
                             </button>
-                            <span className="text-sm">{item.quantity}</span>
+                            <span className="text-sm">{item?.quantity}</span>
                             <button
                               className="border rounded-md px-2 py-1"
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                              onClick={() => addToCart(item)}
                             >
                               +
                             </button>
                           </div>
                         </td>
-                        <td className="p-3 text-right">${(item.price * item.quantity).toFixed(2)}</td>
+                        <td className="p-3 text-right">${(Number(item.price) * Number(item.quantity)).toFixed(2)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -123,7 +94,9 @@ export default function CartPage() {
           </div>
 
           <div className="w-full lg:w-80">
-            <CartSummary subtotal={subtotal} shipping={shipping} total={total} onCheckout={() => alert("Proceeding to checkout...")} onclearCart={clearCart} />
+            <CartSummary subtotal={subtotal} shipping={shipping} total={total} onCheckout={() => alert("Proceeding to checkout...")} 
+            onclearCart={clearCart} 
+            />
           </div>
         </div>
       </div>

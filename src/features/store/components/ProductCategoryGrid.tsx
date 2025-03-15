@@ -3,6 +3,8 @@ import type { ProductCategory } from "@/components/models/type";
 import { MoveLeft, MoveRight } from "lucide-react";
 import Apple from "@/assets/apple.png";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
+import { paths } from "@/config/paths";
 
 interface CategoryGridProps {
   categories: ProductCategory[];
@@ -15,6 +17,7 @@ export default function ProductCategoryGrid({
 CategoryGridProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const navigate = useNavigate();
 
   const scroll = (direction: "left" | "right") => {
     if (scrollContainerRef.current) {
@@ -56,6 +59,10 @@ CategoryGridProps) {
     }
   }, []);
 
+  const handleNavigation = (category : ProductCategory)  => {
+    navigate(`${paths.store.listing.path}/${category.type}`);
+  };
+
   return (
     <div className="container mx-auto px-4">
       {/* {Title and arrow left and right} */}
@@ -93,6 +100,7 @@ CategoryGridProps) {
       >
         {categories.map((category, index) => (
           <div
+          onClick={() => {handleNavigation(category)}}
             key={index}
             className={cn(
               "w-[250px] flex-shrink-0 border-t border-b border-r border-green-600",

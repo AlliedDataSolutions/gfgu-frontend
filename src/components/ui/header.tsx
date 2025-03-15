@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Menu, ShoppingCart, User, Search } from "lucide-react";
 import AppIcon from "@/assets/bee-logo.png";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Input } from "./input";
 import { paths } from "@/config/paths";
+import { useNavigate } from "react-router-dom";
+import { CartDataContext } from "@/features/store/hooks/useCart";
 
 interface MenuItem {
   name: string;
@@ -17,6 +19,16 @@ interface HeaderProps {
 
 export default function Header({ menuItems }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const handleNavigationToCart = () => {
+    navigate(`${paths.store.cartPage.path}`);
+  };
+
+  const { cart } = useContext(CartDataContext);
+
+  // Calculate total quantity of items in cart
+  const totalItems = cart.product.reduce((total, item) => total + Number(item.quantity), 0);
 
   return (
     <div className="md:shadow-sm">
@@ -49,8 +61,19 @@ export default function Header({ menuItems }: HeaderProps) {
                 icon={<Search size={18} />}
               />
 
-              <Button variant={"link"} className="p-0">
-                <ShoppingCart className="w-5 h-5" />
+              {/* Cart Button with Badge */}
+              <Button variant="link" className="p-0" onClick={handleNavigationToCart}>
+                <div className="relative cursor-pointer">
+                  {/* Shopping Cart Icon */}
+                  <ShoppingCart className="h-6 w-6 text-gray-700" />
+
+                  {/* Badge - Shows only if cart has items */}
+                  {totalItems > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                      {totalItems}
+                    </span>
+                  )}
+                </div>
               </Button>
               <Button variant={"link"} className="p-0">
                 <Link to={paths.account.account.path}>

@@ -10,7 +10,7 @@ import { Landing } from "@/features/common";
 import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
 import { Payment } from "@/features/customer";
-import CartPage from "@/features/store/pages/cartpage";
+import CartPage from "@/features/store/pages/CartPage";
 import CheckoutPage from "@/features/customer/pages/CheckoutPage";
 
 import {
@@ -52,7 +52,7 @@ export const createAppRouter = () =>
       ),
     },
     {
-      path: paths.store.listing.path,
+      path: `${paths.store.listing.path}/:id`,      
       element: (
         <ProtectedRoute>
           <ProductListing />
