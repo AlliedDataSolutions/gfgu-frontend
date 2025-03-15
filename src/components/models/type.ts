@@ -21,10 +21,20 @@ export interface Product {
   modifeidDate: Date;
   images: ImageType[];
   categories: ProductCategory[];
+  quantity?: number;
 }
 
 export interface Vendor {
   id: string;
   businessName: string;
   businessDescription: string;
+}
+
+export interface CartProducts  extends Product {
+  quantity: number;
+}
+
+export interface CartType {
+  cartId: string;
+  product: CartProducts[];
 }

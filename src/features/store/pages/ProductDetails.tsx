@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import {
   Facebook,
@@ -20,9 +20,10 @@ import { DeliveryDayComp } from "@/features/common/components/HeroSection";
 import Footer from "@/components/ui/footer";
 import { deliveryDays, menuItems, storeMenuItems } from "@/core/data";
 import ProductGrid from "../components/ProductGrid";
+import { CartDataContext } from "../hooks/useCart";
+import { Product } from "@/components/models/type";
 
 export default function ProductView() {
-  const [quantity, setQuantity] = useState(1);
   const params = useParams();
   const { selectedImage, productDetails, setSelectedImage } = useProductDetails(
     params.id
@@ -32,15 +33,7 @@ export default function ProductView() {
     params.id
   );
 
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
-
-  const increaseQuantity = () => {
-    setQuantity(quantity + 1);
-  };
+  const { cart, addToCart, removeFromCart } = useContext(CartDataContext);
 
   return (
     <div>
@@ -148,10 +141,10 @@ export default function ProductView() {
               >
                 Quantity
               </label>
-              <div className="flex items-center">
+              {productDetails && <div className="flex items-center">
                 {/* Minus Button */}
                 <Button
-                  onClick={decreaseQuantity}
+                  onClick={() => removeFromCart({ ...productDetails })}
                   className="p-2 border border-neutral-300 rounded-l-md hover:bg-neutral-100 text-neutral-700 bg-neutral-100"
                 >
                   <Minus className="h-4 w-4 text-neutral-700" />
@@ -161,24 +154,27 @@ export default function ProductView() {
                 <input
                   type="text"
                   id="quantity"
-                  value={quantity.toString().padStart(2, "0")}
+                  value={(cart.product.find((ele: Product) => ele.id === productDetails?.id)?.quantity) ? (cart.product.find((ele: Product) => ele.id === productDetails?.id)?.quantity) : 0}
                   readOnly
                   className="w-12 text-center border-t border-b border-neutral-300 py-2 text-neutral-700"
                 />
 
                 {/* Plus Button */}
                 <Button
-                  onClick={increaseQuantity}
+                  onClick={() => addToCart({ ...productDetails })}
                   className="p-2 border border-neutral-300 rounded-r-md hover:bg-neutral-100 text-neutral-700 bg-neutral-100"
                 >
                   <Plus className="h-4 w-4 text-neutral-700" />
                 </Button>
+                {/* </div>} */}
 
-                {/* Add to Cart Button */}
-                <Button className="ml-4 text-white py-2 px-6 rounded-md flex-grow md:flex-grow-0 md:ml-6 w-full">
+               <Button className="ml-4 text-white py-2 px-6 rounded-md flex-grow md:flex-grow-0 md:ml-6 w-full"
+                onClick={() => addToCart({ ...productDetails })}
+                >
                   Add to cart
                 </Button>
-              </div>
+
+              </div>}
             </div>
 
             {/* Category */}

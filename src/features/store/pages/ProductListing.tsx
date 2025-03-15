@@ -9,6 +9,7 @@ import { useProductFilter } from "../hooks/useProductFilter";
 import { deliveryDays, menuItems, storeMenuItems } from "@/core/data";
 import Marquee from "react-fast-marquee";
 import { DeliveryDayComp } from "@/features/common/components/HeroSection";
+import { useParams } from "react-router";
 
 export default function ProductListing() {
   interface Filters {
@@ -18,6 +19,7 @@ export default function ProductListing() {
   }
 
   const [page, setPage] = useState<number>(0);
+  const params = useParams();
   const limit = 10;
   const [appliedFilters, setAppliedFilters] = useState<Filters>({
     categories: [],
@@ -40,7 +42,7 @@ export default function ProductListing() {
   };
 
   const { filterProducts } = useProductFilter(
-    appliedFilters.categories[0],
+    appliedFilters.categories.length > 0 ? appliedFilters.categories[0] : params.id && params.id != 'all' ? params.id : undefined,
     appliedFilters.vendors[0],
     page + 1,
     limit,

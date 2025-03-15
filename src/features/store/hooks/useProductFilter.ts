@@ -23,7 +23,7 @@ export const useProductFilter = (
   const fetchProductByFilter = async () => {
     try {
       // setLoading(true);
-      var url = `/product?limit=${limit}&page=${page}&${
+      let url = `/product?limit=${limit}&page=${page}&${
         minPrice ? `minPrice=${minPrice}&` : ""
       }${maxPrice ? `maxPrice=${maxPrice}&` : ""}`;
       if (category) {

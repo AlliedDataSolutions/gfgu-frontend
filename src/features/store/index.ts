@@ -1,2 +1,2 @@
 export * from "./pages/StoreFront";
-export * from "./pages/cartpage";
+export * from "./pages/CartPage";
