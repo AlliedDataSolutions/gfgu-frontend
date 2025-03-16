@@ -1,15 +1,29 @@
 import { useState } from "react";
-import { NavLink, Outlet, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { paths } from "@/config/paths";
-import { Menu, X } from "lucide-react";
+import { X } from "lucide-react";
+import VendorMenu from "@/features/vendor/components/VendorMenu"; // Importing the VendorMenu component
 
 export function VendorLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleLogout = () => {
     navigate("/auth/logout");
   };
+
+  // Map page paths to their respective titles
+  const pageTitles: Record<string, string> = {
+    "/vendor": "Dashboard",
+    "/vendor/orders": "Orders",
+    "/vendor/products": "Products",
+    "/vendor/payment": "Payment",
+    "/vendor/profile": "Profile",
+  };
+
+  // Determine the title based on the current path
+  const currentPageTitle = pageTitles[location.pathname] || "Vendor Panel";
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -32,7 +46,7 @@ export function VendorLayout() {
                 Dashboard
               </NavLink>
               <NavLink
-                to="/vendor/products"
+                to={paths.vendor.products.getHref()}
                 className={({ isActive }) =>
                   `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
                 }
@@ -40,7 +54,7 @@ export function VendorLayout() {
                 Products
               </NavLink>
               <NavLink
-                to="/vendor/orders"
+                to={paths.vendor.orders.getHref()}
                 className={({ isActive }) =>
                   `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
                 }
@@ -56,7 +70,7 @@ export function VendorLayout() {
                 Payment
               </NavLink>
               <NavLink
-                to="/vendor/profile"
+                to="{paths.vendor.profile.getHref()}"
                 className={({ isActive }) =>
                   `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
                 }
@@ -87,7 +101,6 @@ export function VendorLayout() {
                     <div className="w-8 h-8 rounded-full bg-white" />
                     <span className="text-white font-medium text-lg">Vendor</span>
                   </div>
-                  {/* Close button */}
                   <button onClick={() => setSidebarOpen(false)} className="text-white">
                     <X size={24} />
                   </button>
@@ -104,7 +117,7 @@ export function VendorLayout() {
                     Dashboard
                   </NavLink>
                   <NavLink
-                    to="/vendor/products"
+                    to={paths.vendor.products.getHref()}
                     className={({ isActive }) =>
                       `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
                     }
@@ -113,7 +126,7 @@ export function VendorLayout() {
                     Products
                   </NavLink>
                   <NavLink
-                    to="/vendor/orders"
+                    to={paths.vendor.orders.getHref()}
                     className={({ isActive }) =>
                       `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
                     }
@@ -122,7 +135,7 @@ export function VendorLayout() {
                     Orders
                   </NavLink>
                   <NavLink
-                    to="/vendor/payment"
+                    to="{paths.vendor.payment.getHref()}"
                     className={({ isActive }) =>
                       `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
                     }
@@ -131,7 +144,7 @@ export function VendorLayout() {
                     Payment
                   </NavLink>
                   <NavLink
-                    to="/vendor/profile"
+                    to="{paths.vendor.profile.getHref()}"
                     className={({ isActive }) =>
                       `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
                     }
@@ -157,21 +170,8 @@ export function VendorLayout() {
 
       {/* Main Content Area */}
       <div className="flex-1 md:ml-[352px] flex flex-col">
-        {/* Top Bar */}
-        <header className="flex justify-between items-center bg-white border-b border-gray-200 px-4 py-4 md:px-8">
-          {/* If sidebar is open, show close (X) icon, otherwise show menu (☰) */}
-          <button
-            className="md:hidden text-gray-600"
-            onClick={() => setSidebarOpen(!sidebarOpen)}
-          >
-            {sidebarOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
-          <h1 className="text-2xl font-semibold text-black">Dashboard</h1>
-          <div className="flex items-center gap-4">
-            <div className="w-10 h-10 rounded-full bg-gray-300" />
-          </div>
-        </header>
-        {/* Main content scrolls here */}
+        {/* Top Bar using VendorMenu */}
+        <VendorMenu title={currentPageTitle} />
         <main className="flex-1 overflow-auto p-4 md:p-8">
           <Outlet />
         </main>
