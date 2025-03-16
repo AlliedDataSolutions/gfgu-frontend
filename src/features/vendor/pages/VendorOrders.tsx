@@ -22,11 +22,12 @@ export function VendorOrders() {
   const [pageCount, setPageCount] = useState(1);
   const [error, setError] = useState("");
 
-  const fetchOrders = async (pageNumber: number) => {
+  const fetchOrders = async (vendorID: string, pageNumber: number) => {
     setError("");
     try {
-        const response = await axiosInstance.get(`/order/${user?.id}`, {
+        const response = await axiosInstance.get("/order", {
         params: {
+          vendorId: vendorID,
           page: pageNumber + 1, // assuming backend pages are 1-indexed
           limit: 10,
         },
@@ -40,8 +41,8 @@ export function VendorOrders() {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchOrders(page);
+    if (user && user.vendor && user.vendor.id) {
+        fetchOrders(user.vendor.id, page);
     }
   }, [user, page]);
 
