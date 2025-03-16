@@ -22,13 +22,13 @@ export default function RecentOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [error, setError] = useState("");
 
-  const fetchRecentOrders = async () => {
+  const fetchRecentOrders = async (vendorID: string) => {
     setError("");
     try {
-      // Call your backend endpoint to fetch recent orders (for vendor)
-      const response = await axiosInstance.get(`/order/${user?.id}`, {
+      // Call backend endpoint to fetch recent orders (for vendor)
+      const response = await axiosInstance.get("/order", {
         params: {
-          vendorId: user?.id,
+            vendorId: vendorID,
           limit: 5,
           page: 1,
         },
@@ -41,8 +41,8 @@ export default function RecentOrders() {
   };
 
   useEffect(() => {
-    if (user) {
-      fetchRecentOrders();
+    if (user && user.vendor && user.vendor.id) {
+        fetchRecentOrders(user.vendor.id);
     }
   }, [user]);
 
