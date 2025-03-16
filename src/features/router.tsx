@@ -16,7 +16,6 @@ import CheckoutPage from "@/features/customer/pages/CheckoutPage";
 import {
   VendorLayout,
   VendorDashboard,
-  ManageProducts,
   CreateProduct,
 } from "@/features/vendor";
 
@@ -35,6 +34,7 @@ import AddressList from "@/features/customer/pages/AddressList";
 import AddAddress from "./customer/pages/AddAddress";
 import { MyOrder } from "./customer/pages/MyOrder";
 import { PersonalInfo } from "./customer/pages/PersonInfo";
+import ManageProducts  from "@/features/vendor/pages/ManageProducts";
 
 export const createAppRouter = () =>
   createBrowserRouter([
