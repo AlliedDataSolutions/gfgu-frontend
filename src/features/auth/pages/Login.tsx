@@ -60,6 +60,8 @@ export const Login = () => {
           navigate(paths.store.home.path, { replace: true });
         } else if (user.role === Role.vendor) {
           navigate(paths.vendor.dashboard.path, { replace: true });
+        } else if (user.role === Role.admin || Role.manager) {
+          navigate(paths.admin.dashboard.path, { replace: true });
         }
       }
     } catch (error) {

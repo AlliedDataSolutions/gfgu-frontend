@@ -20,7 +20,7 @@ export default function Header({ menuItems }: HeaderProps) {
 
   return (
     <div className="md:shadow-sm">
-      <header className="fixed top-0 left-0 w-full bg-white z-50  mx-auto min-h-14 md:min-h-16 flex items-center ">
+      <header className="border-b border-neutral-200 fixed top-0 left-0 w-full bg-white z-50  mx-auto min-h-14 md:min-h-16 flex items-center ">
         <div className="flex flex-grow items-center mx-auto container justify-between max-w-screen-xl px-4">
           <div>
             <a href={paths.landing.path} className="block w-12 h-12">

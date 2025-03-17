@@ -12,7 +12,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { paths } from "@/config/paths";
 
 interface SidebarProps {
@@ -104,10 +104,12 @@ export default function Sidebar({
         )}
       >
         <div className="p-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="bg-white rounded-full h-8 w-8"></div>
-            {isOpen && <span className="font-medium">Growing Ground</span>}
-          </div>
+          <Link to={paths.landing.path}>
+            <div className="flex items-center gap-3">
+              <div className="bg-white rounded-full h-8 w-8"></div>
+              {isOpen && <span className="font-medium">Growing Ground</span>}
+            </div>
+          </Link>
           {isOpen && (
             <Button
               variant="ghost"
@@ -115,11 +117,7 @@ export default function Sidebar({
               onClick={handleCollapse}
               className="text-white hover:bg-brand-700"
             >
-              {isMobile ? (
-                <X size={14} />
-              ) : (
-                <ChevronLeft size={14} />
-              )}
+              {isMobile ? <X size={14} /> : <ChevronLeft size={14} />}
             </Button>
           )}
         </div>

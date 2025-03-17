@@ -38,6 +38,7 @@ import { PersonalInfo } from "./customer/pages/PersonInfo";
 import { AdminProduct } from "./admin/pages/AdminProduct";
 import { AdminPayment } from "./admin/pages/AdminPayment";
 import { Profile } from "./admin/pages/Profile";
+import { Role } from "@/core/role";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -99,7 +100,7 @@ export const createAppRouter = () =>
     {
       path: paths.vendor.dashboard.path,
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute allowedRoles={[Role.vendor, Role.admin]}>
           <VendorLayout />
         </ProtectedRoute>
       ),
@@ -114,7 +115,7 @@ export const createAppRouter = () =>
     {
       path: paths.admin.dashboard.path,
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute allowedRoles={[Role.admin]}>
           <AdminLayout />
         </ProtectedRoute>
       ),

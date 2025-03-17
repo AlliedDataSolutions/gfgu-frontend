@@ -2,10 +2,16 @@ import { useState, useEffect } from "react";
 import Sidebar from "../components/AdminSidebar";
 import AdminHeader from "../components/AdminHeader";
 import { Outlet } from "react-router-dom";
+import { useAuth } from "@/features/context/AuthContext";
+import { Role } from "@/core/role";
 
 export function AdminLayout() {
   const [activeMenu, setActiveMenu] = useState("manage-users");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const { user } = useAuth();
+
+  const name = user?.firstName + " " + user?.lastName;
+  const role = user?.role ?? Role.admin;
 
   // Initialize sidebar state based on screen size and update on resize
   useEffect(() => {
@@ -45,8 +51,10 @@ export function AdminLayout() {
               : activeMenu.charAt(0).toUpperCase() + activeMenu.slice(1)
           }
           toggleSidebar={toggleSidebar}
+          name={name}
+          role={role}
         />
-        <main className="flex-1 overflow-y-auto p-4 bg-gray-100">
+        <main className="flex-1 overflow-y-auto p-4 bg-neutral-100">
           {/* {activeMenu === "manage-users" && <ManageUsers />} */}
           {/* Add other components for different menu items */}
           <Outlet />
