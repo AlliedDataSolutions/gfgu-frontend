@@ -69,7 +69,7 @@ export default function Header({ menuItems }: HeaderProps) {
 
                   {/* Badge - Shows only if cart has items */}
                   {totalItems > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-600 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+                    <span className="absolute -top-2 -right-2 bg-rose-600 text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
                       {totalItems}
                     </span>
                   )}

@@ -5,12 +5,12 @@ import { CartDataProvider } from "@/features/store/hooks/useCart";
 function App() {
   return (
     <div>
-      <CartDataProvider>
       <AuthProvider>
-        <AppRouter />
+        <CartDataProvider>
+          <AppRouter />
+        </CartDataProvider>
       </AuthProvider>
       <Toaster />
-      </CartDataProvider>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
+import { paths } from "@/config/paths";
 
 interface CartSummaryProps {
   subtotal: number;
@@ -39,8 +40,7 @@ export function CartSummary({
       {/* Proceed to Checkout Button */}
       <Button
         className="w-full bg-green-700 text-white hover:bg-green-800 border-none"
-        // onClick={onCheckout}
-        onClick={() => navigate("/checkout")}
+        onClick={() => navigate(paths.store.checkout.path)}
       >
         Proceed to Checkout
       </Button>
