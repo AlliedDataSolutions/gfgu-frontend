@@ -2,9 +2,7 @@ import { Bell, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Role } from "@/core/role";
-import { Link, useNavigate } from "react-router-dom";
 import { paths } from "@/config/paths";
-import { Navigate } from "react-router-dom";
 
 interface AdminHeaderProps {
   name: string;
