@@ -8,6 +8,8 @@ import { Filter, Download, Plus } from "lucide-react";
 import { PencilLine, Trash2 } from "lucide-react";
 import { useProductFilter } from "@/features/store/hooks/useProductFilter";
 import { Product } from "@/components/models/type";
+import { useNavigate } from "react-router-dom";
+import { paths } from "@/config/paths";
 
 const ManageProducts: FC = () => {
   const [colDef, setColDef] = useState<ColDef[]>([]);
@@ -17,7 +19,11 @@ const ManageProducts: FC = () => {
   const [limit, setLimit] = useState<number>(10);
   const [records, setRecords] = useState<Product[]>([]);
   const [totalRecords, setTotalRecords] = useState<number>(1);
-  
+  const navigate = useNavigate();
+
+  const addProduct = () => {
+    navigate(`${paths.vendor.addProduct.path}`);
+  };
 
   const ActionRenderer: FC<ICellRendererParams> = ({ data }) => {
     return (
@@ -43,22 +49,22 @@ const ManageProducts: FC = () => {
     setColDef(columns);
   }, []);
 
-  
-    const { filterProducts } = useProductFilter(
-      '',
-      '',
-      page + 1,
-      limit,
-      0,
-      1000
-    );
 
-    useEffect(() => {
-        if (filterProducts) {
-            setRecords(filterProducts.records);
-            setTotalRecords(filterProducts.count);
-        }
-    }, [filterProducts]);
+  const { filterProducts } = useProductFilter(
+    '',
+    '',
+    page + 1,
+    limit,
+    0,
+    1000
+  );
+
+  useEffect(() => {
+    if (filterProducts) {
+      setRecords(filterProducts.records);
+      setTotalRecords(filterProducts.count);
+    }
+  }, [filterProducts]);
 
   return (
     <div className="p-4 space-y-4">
@@ -78,24 +84,27 @@ const ManageProducts: FC = () => {
           <Button variant="outline" className="flex gap-1">
             <Download size={16} /> Export
           </Button>
-          <Button className="bg-green-700 text-white flex gap-1">
+          <Button className="bg-brand-700 text-white flex gap-1"
+            onClick={addProduct}
+          >
             <Plus size={16} /> Add Product
           </Button>
         </div>
       </div>
 
       {/* Data Grid */}
-      <div className="h-[calc(100vh-240px)] ag-theme-quartz mt-2 overflow-auto">
+      <div className="h-[calc(100vh-240px)] ag-theme-quartz mt-2 overflow-auto w-full">
+
         <AgGrid
           columnDefs={colDef}
           rowData={records}
-          /* pagination*/
           onPageChange={setPage}
           onLimitChange={setLimit}
           page={page}
           pageSize={limit}
           totalRecords={totalRecords}
         />
+
       </div>
     </div>
   );

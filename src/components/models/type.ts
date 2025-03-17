@@ -8,6 +8,7 @@ export interface ProductCategory {
 export interface ImageType {
   id: string;
   url: string;
+  file?: File;
 }
 
 export interface Product {
