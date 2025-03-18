@@ -29,7 +29,7 @@ export default function AddressList() {
   return (
     <div>
       {/* Top Tabs for "Personal Information" and "Address" */}
-      <div className="flex bg-gray-200 p-2 rounded mb-4">
+      <div className="flex bg-neutral-200 p-2 rounded mb-4">
         {/* Personal Info tab */}
         <Link
           to={paths.account.personalInfo.getHref()}
@@ -38,7 +38,7 @@ export default function AddressList() {
           Personal Information
         </Link>
         {/* Address tab (active) */}
-        <div className="flex-1 text-center py-2 bg-green-50 text-green-700 font-semibold rounded">
+        <div className="flex-1 text-center py-2 bg-brand-50 text-brand-700 font-semibold rounded">
           Address
         </div>
       </div>
@@ -47,7 +47,7 @@ export default function AddressList() {
       <div className="flex justify-end mb-4">
         <Link
           to={paths.account.addAddress.getHref()}
-          className="bg-green-700 hover:bg-green-800 text-white px-4 py-2 rounded"
+          className="bg-brand-700 hover:bg-brand-800 text-white px-4 py-2 rounded"
         >
           + Add Address
         </Link>
@@ -56,7 +56,7 @@ export default function AddressList() {
       {/* Address Table */}
       <div className="overflow-x-auto">
         <table className="min-w-full border text-left">
-          <thead className="border-b bg-gray-50">
+          <thead className="border-b bg-neutral-50">
             <tr>
               <th className="px-4 py-2 w-1/3">Address</th>
               <th className="px-4 py-2 w-1/4">Email Address</th>
@@ -73,7 +73,7 @@ export default function AddressList() {
                 <td className="px-4 py-2">
                   <div className="flex gap-3">
                     {/* Edit button */}
-                    <button className="text-black hover:text-green-700">
+                    <button className="text-black hover:text-brand-700">
                       <Pencil size={20} />
                     </button>
                     {/* Delete button */}
@@ -88,7 +88,7 @@ export default function AddressList() {
             {/* Example of a placeholder row if no addresses are fetched */}
             {addresses.length === 0 && (
               <tr>
-                <td colSpan={4} className="text-center py-4 text-gray-500">
+                <td colSpan={4} className="text-center py-4 text-neutral-500">
                   No addresses found.
                 </td>
               </tr>

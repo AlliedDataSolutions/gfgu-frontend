@@ -22,7 +22,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {icon && (
           <button
             type="button"
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-500 dark:text-neutral-400"
             onClick={onIconClick}
           >
             {icon}

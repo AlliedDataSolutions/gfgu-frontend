@@ -113,7 +113,7 @@ export const ManageUsers = () => {
       {/* Sticky Footer */}
       <div className="mt-auto">
         <div className="flex justify-between items-center">
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-neutral-500">
             {allUserData.page} of {allUserData.totalPages}
           </div>
           <div className="flex gap-1">

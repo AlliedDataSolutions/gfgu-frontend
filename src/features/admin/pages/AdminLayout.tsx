@@ -36,7 +36,7 @@ export function AdminLayout() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100 overflow-hidden">
+    <div className="flex h-screen bg-neutral-100 overflow-hidden">
       <Sidebar
         activeMenu={activeMenu}
         setActiveMenu={setActiveMenu}

@@ -1,9 +1,8 @@
-import { Bell, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Role } from "@/core/role";
 import { useNavigate } from "react-router-dom";
 import { paths } from "@/config/paths";
+import { Menu } from "lucide-react";
 
 interface AdminHeaderProps {
   name: string;
@@ -41,14 +40,14 @@ export default function AdminHeader({
         <Button variant="link" onClick={navigateToStore}>
           Store
         </Button>
-        <div className="relative">
+        {/* <div className="relative">
           <Button variant="ghost" size="icon">
             <Bell size={5} />
           </Button>
           <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500">
             2
           </Badge>
-        </div>
+        </div> */}
 
         <div className="flex items-center gap-3">
           {/* <Avatar>

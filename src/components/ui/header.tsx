@@ -2,9 +2,11 @@ import { useState } from "react";
 import { Menu, ShoppingCart, User, Search } from "lucide-react";
 import AppIcon from "@/assets/bee-logo.png";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Input } from "./input";
 import { paths } from "@/config/paths";
+import { Badge } from "./badge";
+import { useCartContext } from "@/features/store/hooks/CartContext";
 
 interface MenuItem {
   name: string;
@@ -17,6 +19,8 @@ interface HeaderProps {
 
 export default function Header({ menuItems }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { order } = useCartContext();
+  const navigate = useNavigate()
 
   return (
     <div className="md:shadow-sm">
@@ -49,8 +53,17 @@ export default function Header({ menuItems }: HeaderProps) {
                 icon={<Search size={18} />}
               />
 
-              <Button variant={"link"} className="p-0">
-                <ShoppingCart className="w-5 h-5" />
+              <Button variant={"link"} className="p-0"
+              onClick={() => navigate(paths.store.cartPage.path)}
+              >
+                <div className="relative">
+                  <Button variant="ghost" size="icon">
+                    <ShoppingCart size={5} />
+                  </Button>
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-rose-500">
+                    {order?.orderLines.length || 0}
+                  </Badge>
+                </div>
               </Button>
               <Button variant={"link"} className="p-0">
                 <Link to={paths.account.account.path}>

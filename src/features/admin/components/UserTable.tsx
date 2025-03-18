@@ -69,12 +69,12 @@ export default function UserTable({
   return (
     <div className="overflow-x-auto">
       <table className="w-full">
-        <thead className="bg-gray-50">
+        <thead className="bg-neutral-50">
           <tr>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
               Name
             </th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
               Account
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
@@ -90,7 +90,7 @@ export default function UserTable({
         </thead>
         <tbody className="bg-white divide-y divide-neutral-200">
           {users.map((user) => (
-            <tr key={user.id} className="hover:bg-gray-50">
+            <tr key={user.id} className="hover:bg-neutral-50">
               <td className="px-6 py-4 whitespace-nowrap">
                 <div className="text-sm font-medium text-neutral-900">
                   {user.firstName + " " + user.lastName}
