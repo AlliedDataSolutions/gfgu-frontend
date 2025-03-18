@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -19,13 +18,10 @@ import {
 } from "@/components/ui/select";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Link } from "react-router-dom";
 import Header from "@/components/ui/header";
 import Footer from "@/components/ui/footer";
-import { paths } from "@/config/paths";
 import axiosInstance from "@/core/axiosInstance";
 import { handleAxiosError } from "@/lib/handleAxiosError";
-import ErrorMessage from "@/components/ui/errormessage";
 import { menuItems, storeMenuItems } from "@/core/data";
 import { useCartContext } from "@/features/store/hooks/CartContext";
 import { OrderLine } from "@/core/order";
@@ -347,10 +343,7 @@ export default function CheckoutPage() {
                       </FormItem>
                     )}
                   />
-                  <Button
-                    type="submit"
-                    className="w-full"
-                  >
+                  <Button type="submit" className="w-full">
                     Pay Now
                   </Button>
                 </div>

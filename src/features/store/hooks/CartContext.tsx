@@ -88,7 +88,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const clearCart = () => {
     axiosInstance
       .delete("/order/delete")
-      .then((res) => {
+      .then((_) => {
         setOrder(null);
       })
       .catch((err) => {
