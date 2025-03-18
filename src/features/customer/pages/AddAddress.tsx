@@ -45,7 +45,7 @@ export default function AddAddress() {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         {/* Row 1: Street Address */}
         <div className="flex flex-col gap-1 h-20">
-          <label className="text-sm text-gray-700">Street Address</label>
+          <label className="text-sm text-neutral-700">Street Address</label>
           <Input
             {...register("streetName", {
               required: "Street Address is required",
@@ -58,7 +58,7 @@ export default function AddAddress() {
         {/* Row 2: City and Apartment/Suite/Unit */}
         <div className="flex gap-4 flex-col">
           <div className="flex-1">
-            <label className="text-sm text-gray-700">City</label>
+            <label className="text-sm text-neutral-700">City</label>
             <Input
               {...register("city", { required: "City is required" })}
               placeholder="Enter your city"
@@ -66,7 +66,7 @@ export default function AddAddress() {
             <ErrorMessage message={errors.city?.message} />
           </div>
           <div className="flex-1">
-            <label className="text-sm text-gray-700">
+            <label className="text-sm text-neutral-700">
               Apartment, Suite, Unit, etc. (Optional)
             </label>
             <Input
@@ -79,7 +79,7 @@ export default function AddAddress() {
         {/* Row 3: Province and Postal Code */}
         <div className="flex gap-4 flex-col sm:flex-row">
           <div className="flex-1">
-            <label className="text-sm text-gray-700">Province</label>
+            <label className="text-sm text-neutral-700">Province</label>
             <Input
               {...register("province", { required: "Province is required" })}
               placeholder="Enter your province"
@@ -87,7 +87,7 @@ export default function AddAddress() {
             <ErrorMessage message={errors.province?.message} />
           </div>
           <div className="flex-1">
-            <label className="text-sm text-gray-700">Postal Code</label>
+            <label className="text-sm text-neutral-700">Postal Code</label>
             <Input
               {...register("postalCode", {
                 required: "Postal Code is required",
@@ -100,7 +100,7 @@ export default function AddAddress() {
 
         {/* Row 4: Email Address */}
         <div className="flex flex-col gap-1 h-20">
-          <label className="text-sm text-gray-700">Email Address</label>
+          <label className="text-sm text-neutral-700">Email Address</label>
           <Input
             {...register("email", {
               required: "Email Address is required",

@@ -71,7 +71,7 @@ export const Register = () => {
           <h1 className="mb-2 text-center text-3xl font-semibold">
             Create Account
           </h1>
-          <p className="mb-8 text-center text-gray-600">
+          <p className="mb-8 text-center text-neutral-600">
             Create an account to buy, sell, and connect with trusted
             agricultural partners
           </p>
@@ -81,7 +81,7 @@ export const Register = () => {
           {/* Account Type Selection */}
           <div className="flex justify-center space-x-6 mt-10">
             <RadioGroup
-              className="grid-cols-2 gap-8 text-gray-600"
+              className="grid-cols-2 gap-8 text-neutral-600"
               value={accountType}
               onValueChange={setAccountType}
             >

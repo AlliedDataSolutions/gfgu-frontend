@@ -54,7 +54,7 @@ const Delivery = ({ deliveryDays }: DeliveryDayProps) => {
           </div>
 
           {/* Extra Delivery Information */}
-          <p className="mt-4 text-sm text-gray-600">
+          <p className="mt-4 text-sm text-neutral-600">
             If you live in the Edmonton Lethbridge corridor and you want a
             delivery, please contact us to sort something out. We are working on
             getting deliveries to Canmore. Currently delivering to Claresholm,

@@ -76,7 +76,7 @@ export const Login = () => {
           <h1 className="mb-2 text-center text-3xl font-semibold">
             Login to your account
           </h1>
-          <p className="mb-8 text-center text-gray-600">
+          <p className="mb-8 text-center text-neutral-600">
             Welcome back! Access your dashboard to manage your farm, shop, or
             orders
           </p>

@@ -46,7 +46,7 @@ export default function VendorChart() {
           </Select>
           <div className="mt-2">
             <span className="text-2xl font-bold">$11,642</span>
-            <span className="text-green-500 ml-2 text-sm">
+            <span className="text-brand-500 ml-2 text-sm">
               +3.4% from last period
             </span>
           </div>
@@ -62,7 +62,7 @@ export default function VendorChart() {
             <Button variant="ghost" size="sm">
               Month
             </Button>
-            <Button variant="ghost" size="sm" className="text-green-600">
+            <Button variant="ghost" size="sm" className="text-brand-600">
               Year
             </Button>
           </div>

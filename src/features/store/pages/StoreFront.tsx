@@ -52,7 +52,7 @@ export default function StoreFront() {
                 </h2>
                 <ProductGrid products={popularProducts.records} />
                 <div className="flex justify-center mt-12">
-                  <Button className="px-8 py-3 bg-green-700 text-white rounded-md hover:bg-green-600 transition-colors">
+                  <Button className="px-8 py-3 bg-brand-700 text-white rounded-md hover:bg-brand-600 transition-colors">
                     <Link to={paths.store.listing.path}>View all Products</Link>
                   </Button>
                 </div>

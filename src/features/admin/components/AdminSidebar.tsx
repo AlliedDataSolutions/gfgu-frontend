@@ -157,7 +157,7 @@ export default function Sidebar({
         <div className="p-4 mt-auto">
           <Button
             variant={"link"}
-            className="flex items-center text-white hover:text-gray-300 transition-colors"
+            className="flex items-center text-white hover:text-neutral-300 transition-colors"
           >
             <LogOut size={14} />
             {isOpen && <span className="ml-3">Log Out</span>}

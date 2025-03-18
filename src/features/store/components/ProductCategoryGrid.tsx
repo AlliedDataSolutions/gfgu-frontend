@@ -76,7 +76,7 @@ CategoryGridProps) {
             </button>
             <button
               onClick={() => scroll("right")}
-              className="p-2 rounded-full bg-brand-600 text-white hover:bg-green-700 transition-colors"
+              className="p-2 rounded-full bg-brand-600 text-white hover:bg-brand-700 transition-colors"
               aria-label="Scroll right"
             >
               <MoveRight size={14} />
@@ -95,7 +95,7 @@ CategoryGridProps) {
           <div
             key={index}
             className={cn(
-              "w-[250px] flex-shrink-0 border-t border-b border-r border-green-600",
+              "w-[250px] flex-shrink-0 border-t border-b border-r border-brand-600",
               index === 0 && "border-l",
               index === 0 && "rounded-l-lg",
               index === categories.length - 1 && "rounded-r-lg"

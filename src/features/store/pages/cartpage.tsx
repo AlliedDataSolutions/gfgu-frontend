@@ -1,135 +1,224 @@
 import { useState } from "react";
-import { CartSummary } from "@/components/ui/cartsummary";
 import Footer from "@/components/ui/footer";
 import Header from "@/components/ui/header";
 import { menuItems, storeMenuItems } from "@/core/data";
+import { Minus, Plus } from "lucide-react";
+import { useCartContext } from "../hooks/CartContext";
+import { OrderLine } from "@/core/order";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import { paths } from "@/config/paths";
 
 export default function CartPage() {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      name: "Organic Apples",
-      price: 3.99,
-      quantity: 4,
-      image: "/images/apples.png",
-      type: "Fresh",
-    },
-    {
-      id: 2,
-      name: "Fresh Carrots",
-      price: 2.49,
-      quantity: 2,
-      image: "/images/carrots.png",
-      type: "Fresh",
-    },
-    {
-      id: 3,
-      name: "Whole Milk",
-      price: 3.99,
-      quantity: 1,
-      image: "/images/milk.png",
-      type: "Fresh",
-    },
-  ]);
+  const navigate = useNavigate()
+  const { order, clearCart } = useCartContext();
+  const [orderLines, setOrderLines] = useState<OrderLine[] | undefined>(
+    order?.orderLines
+  );
 
-  const removeItem = (id: number) => {
-    setCartItems(cartItems.filter((item) => item.id !== id));
-  };
+  // Calculate totals
+  const subtotal = orderLines?.reduce(
+    (sum, line) => sum + line.quantity * Number.parseFloat(line.unitPrice),
+    0
+  );
+  const shipping: number = 0; // Free shipping
+  const total = subtotal;
 
-  const updateQuantity = (id: number, newQuantity: number) => {
+  // Update quantity
+  const updateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) return;
-    setCartItems(
-      cartItems.map((item) => (item.id === id ? { ...item, quantity: newQuantity } : item))
+
+    setOrderLines(
+      orderLines?.map((line) =>
+        line.id === id ? { ...line, quantity: newQuantity } : line
+      )
     );
   };
 
-  const clearCart = () => {
-    setCartItems([]);
+  // Remove item
+  const removeItem = (id: string) => {
+    setOrderLines(orderLines?.filter((line) => line.id !== id));
   };
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shipping = 0;
-  const total = subtotal + shipping;
-
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="pt-14 md:pt-16">
       <Header menuItems={storeMenuItems} />
-      <div className="flex-1 pt-10 px-6">
-        <div className="text-sm breadcrumbs mb-4">
-          <ul className="flex gap-2">
-            <li className="text-gray-500">Shop</li>
-            <li className="text-black font-bold">Cart</li>
-          </ul>
-        </div>
 
-        <div className="flex flex-col lg:flex-row gap-6">
-          <div className="flex-1">
-            {cartItems.length > 0 ? (
-              <div className="overflow-x-auto">
-                <table className="w-full border-collapse">
-                  <thead className="bg-gray-100 text-sm">
-                    <tr>
-                      <th className="text-left p-3 w-1/3">Product</th>
-                      <th className="text-center p-3 w-1/6">Price</th>
-                      <th className="text-center p-3 w-1/6">Qty</th>
-                      <th className="text-right p-3 w-1/6">Amount</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {cartItems.map((item) => (
-                      <tr key={item.id} className="border-b text-sm">
-                        <td className="p-3 flex items-center gap-4">
-                          <img src={item.image} alt={item.name} className="w-16 h-16 rounded-md bg-gray-200" />
-                          <div className="flex flex-col">
-                            <h3 className="font-medium">{item.name}</h3>
-                            <p className="text-xs text-gray-500">{item.type}</p>
-                            <button
-                              className="text-xs text-red-500 hover:underline"
-                              onClick={() => removeItem(item.id)}
-                            >
-                              Remove
-                            </button>
-                          </div>
-                        </td>
-                        <td className="p-3 text-center">${item.price.toFixed(2)}</td>
-                        <td className="p-3">
-                          <div className="flex items-center justify-center gap-2">
-                            <button
-                              className="border rounded-md px-2 py-1"
-                              onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                            >
-                              -
-                            </button>
-                            <span className="text-sm">{item.quantity}</span>
-                            <button
-                              className="border rounded-md px-2 py-1"
-                              onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                            >
-                              +
-                            </button>
-                          </div>
-                        </td>
-                        <td className="p-3 text-right">${(item.price * item.quantity).toFixed(2)}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+      <div className="max-w-5xl mx-auto px-8 py-6">
+        {/* Cart Content */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 ">
+          {/* Product List */}
+          <div className="lg:col-span-2">
+            {/* Header */}
+            <div className="grid grid-cols-12 gap-4 text-sm text-neutral-600 bg-neutral-50 p-3 mb-4 md:grid">
+              <div className="col-span-6">Product</div>
+              <div className="col-span-2 text-center">Price</div>
+              <div className="col-span-2 text-center">Qty</div>
+              <div className="col-span-2 text-right">Amount</div>
+            </div>
+
+            {/* Items */}
+            {orderLines?.map((line) => (
+              <div
+                key={line.id}
+                className="grid grid-cols-12 gap-4 py-4 items-center"
+              >
+                {/* Product */}
+                <div className="col-span-12 md:col-span-6 flex gap-4">
+                  <div className="w-20 h-20 bg-neutral-100 flex-shrink-0">
+                    <img
+                      src={
+                        line.product.images[0]?.url ||
+                        "/placeholder.svg?height=80&width=80"
+                      }
+                      alt={line.product.name}
+                      width={80}
+                      height={80}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <div className="text-neutral-900">{line.product.name}</div>
+                    <Button
+                      variant={"link"}
+                      className="text-rose-500 text-sm mt-1 p-0"
+                      onClick={() => removeItem(line.id)}
+                    >
+                      Remove
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Price - Mobile */}
+                <div className="col-span-4 md:hidden flex space-x-4">
+                  <span className="text-neutral-500">Price:</span>
+                  <span>${Number.parseFloat(line.unitPrice).toFixed(2)}</span>
+                </div>
+
+                {/* Qty - Mobile */}
+                <div className="col-span-4 md:hidden flex space-x-4">
+                  <span className="text-neutral-500">Qty:</span>
+                  <span>{line.quantity}</span>
+                </div>
+
+                {/* Amount - Mobile */}
+                <div className="col-span-4 md:hidden flex space-x-4">
+                  <span className="text-neutral-500">Amount:</span>
+                  <span>
+                    $
+                    {(
+                      line.quantity * Number.parseFloat(line.unitPrice)
+                    ).toFixed(2)}
+                  </span>
+                </div>
+
+                {/* Price - Desktop */}
+                <div className="hidden md:block md:col-span-2 text-center">
+                  ${Number.parseFloat(line.unitPrice).toFixed(2)}
+                </div>
+
+                {/* Quantity - Desktop */}
+                <div className="hidden md:flex md:col-span-2 justify-center items-center">
+                  <div className="flex items-center border rounded">
+                    <Button
+                      className="px-2 py-1 border-r"
+                      onClick={() => updateQuantity(line.id, line.quantity - 1)}
+                    >
+                      <Minus className="w-4 h-4" />
+                    </Button>
+                    <span className="px-4 py-1">
+                      {line.quantity.toString().padStart(2, "0")}
+                    </span>
+                    <Button
+                      className="px-2 py-1 border-l"
+                      onClick={() => updateQuantity(line.id, line.quantity + 1)}
+                    >
+                      <Plus className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Amount - Desktop */}
+                <div className="hidden md:block md:col-span-2 text-right">
+                  $
+                  {(line.quantity * Number.parseFloat(line.unitPrice)).toFixed(
+                    2
+                  )}
+                </div>
+
+                {/* Quantity Controls - Mobile */}
+                <div className="col-span-12 md:hidden flex justify-center mt-2">
+                  <div className="flex items-center border rounded">
+                    <button
+                      className="px-3 py-1 border-r"
+                      onClick={() => updateQuantity(line.id, line.quantity - 1)}
+                    >
+                      <Minus size={14} />
+                    </button>
+                    <span className="px-4 py-1">
+                      {line.quantity.toString().padStart(2, "0")}
+                    </span>
+                    <button
+                      className="px-3 py-1 border-l"
+                      onClick={() => updateQuantity(line.id, line.quantity + 1)}
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+                </div>
               </div>
-            ) : (
-              <div className="text-center py-6">
-                <h2 className="text-xl font-semibold mb-3">Your cart is empty</h2>
-              </div>
-            )}
+            ))}
           </div>
 
-          <div className="w-full lg:w-80">
-            <CartSummary subtotal={subtotal} shipping={shipping} total={total} onCheckout={() => alert("Proceeding to checkout...")} onclearCart={clearCart} />
+          {/* Order Summary */}
+          <div className="lg:col-span-1 max-w-80 justify-self-end">
+            <div className="border p-6 rounded">
+              <h2 className="text-md mb-4">Cart Total</h2>
+
+              <div className="space-y-2 mb-6 text-sm">
+                <div className="flex justify-between">
+                  <span className="text-neutral-600">Subtotal:</span>
+                  <span>${subtotal?.toFixed(2)}</span>
+                </div>
+
+                <div className="flex justify-between">
+                  <span className="text-neutral-600">Shipping:</span>
+                  <span>
+                    {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
+                  </span>
+                </div>
+
+                <div className="flex justify-between pt-2 border-t">
+                  <span className="text-neutral-600">Total:</span>
+                  <span>${total?.toFixed(2)}</span>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <Button 
+                onClick={() => navigate(paths.store.checkout.path)}
+                className="w-full">Proceed to Checkout</Button>
+
+                <Button
+                  onClick={() => {
+                    if (
+                      window.confirm("Are you sure you want to clear the cart?")
+                    ) {
+                      clearCart();
+                    }
+                  }}
+                  variant={"secondary"}
+                  className="w-full"
+                >
+                  Cancel Order
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-      <div className="mt-auto">
-        <Footer menuItems={menuItems} />
-      </div>
+
+      <Footer menuItems={menuItems} />
     </div>
   );
 }
