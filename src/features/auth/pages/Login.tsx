@@ -60,6 +60,8 @@ export const Login = () => {
           navigate(paths.store.home.path, { replace: true });
         } else if (user.role === Role.vendor) {
           navigate(paths.vendor.dashboard.path, { replace: true });
+        } else if (user.role === Role.admin || Role.manager) {
+          navigate(paths.admin.dashboard.path, { replace: true });
         }
       }
     } catch (error) {
@@ -74,7 +76,7 @@ export const Login = () => {
           <h1 className="mb-2 text-center text-3xl font-semibold">
             Login to your account
           </h1>
-          <p className="mb-8 text-center text-gray-600">
+          <p className="mb-8 text-center text-neutral-600">
             Welcome back! Access your dashboard to manage your farm, shop, or
             orders
           </p>

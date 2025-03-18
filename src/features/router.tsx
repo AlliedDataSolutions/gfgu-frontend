@@ -36,6 +36,10 @@ import AddressList from "@/features/customer/pages/AddressList";
 import AddAddress from "./customer/pages/AddAddress";
 import { MyOrder } from "./customer/pages/MyOrder";
 import { PersonalInfo } from "./customer/pages/PersonInfo";
+import { AdminProduct } from "./admin/pages/AdminProduct";
+import { AdminPayment } from "./admin/pages/AdminPayment";
+import { Profile } from "./admin/pages/Profile";
+import { Role } from "@/core/role";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -97,7 +101,7 @@ export const createAppRouter = () =>
     {
       path: paths.vendor.dashboard.path,
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute allowedRoles={[Role.vendor, Role.admin]}>
           <VendorLayout />
         </ProtectedRoute>
       ),
@@ -113,13 +117,16 @@ export const createAppRouter = () =>
     {
       path: paths.admin.dashboard.path,
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute allowedRoles={[Role.admin]}>
           <AdminLayout />
         </ProtectedRoute>
       ),
       children: [
         { path: "", element: <AdminDashboard /> },
+        { path: paths.admin.product.path, element: <AdminProduct /> },
+        { path: paths.admin.payment.path, element: <AdminPayment /> },
         { path: paths.admin.manageUsers.path, element: <ManageUsers /> },
+        { path: paths.admin.profile.path, element: <Profile /> },
         { path: paths.admin.salesReport.path, element: <SalesReport /> },
       ],
     },

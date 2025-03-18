@@ -26,9 +26,9 @@ export function VendorLayout() {
   const currentPageTitle = pageTitles[location.pathname] || "Vendor Panel";
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-neutral-100">
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex fixed top-0 left-0 w-[352px] h-screen bg-[#0A7110] border-r border-gray-200">
+      <aside className="hidden md:flex fixed top-0 left-0 w-[352px] h-screen bg-[#0A7110] border-r border-neutral-200">
         <div className="flex flex-col h-full justify-between">
           <div>
             <div className="flex items-center gap-3 p-8">
@@ -40,7 +40,7 @@ export function VendorLayout() {
                 to={paths.vendor.dashboard.getHref()}
                 end
                 className={({ isActive }) =>
-                  `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                  `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                 }
               >
                 Dashboard
@@ -48,7 +48,7 @@ export function VendorLayout() {
               <NavLink
                 to={paths.vendor.products.getHref()}
                 className={({ isActive }) =>
-                  `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                  `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                 }
               >
                 Products
@@ -56,7 +56,7 @@ export function VendorLayout() {
               <NavLink
                 to={paths.vendor.orders.getHref()}
                 className={({ isActive }) =>
-                  `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                  `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                 }
               >
                 Orders
@@ -64,7 +64,7 @@ export function VendorLayout() {
               <NavLink
                 to="/vendor/payment"
                 className={({ isActive }) =>
-                  `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                  `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                 }
               >
                 Payment
@@ -72,7 +72,7 @@ export function VendorLayout() {
               <NavLink
                 to="{paths.vendor.profile.getHref()}"
                 className={({ isActive }) =>
-                  `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                  `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                 }
               >
                 Profile
@@ -93,7 +93,7 @@ export function VendorLayout() {
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div className="md:hidden fixed inset-0 z-50 bg-black bg-opacity-50">
-          <aside className="fixed top-0 left-0 w-64 h-full bg-[#0A7110] border-r border-gray-200 p-8">
+          <aside className="fixed top-0 left-0 w-64 h-full bg-[#0A7110] border-r border-neutral-200 p-8">
             <div className="flex flex-col h-full justify-between">
               <div>
                 <div className="flex items-center justify-between mb-8">
@@ -110,7 +110,7 @@ export function VendorLayout() {
                     to={paths.vendor.dashboard.getHref()}
                     end
                     className={({ isActive }) =>
-                      `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                      `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                     }
                     onClick={() => setSidebarOpen(false)}
                   >
@@ -119,7 +119,7 @@ export function VendorLayout() {
                   <NavLink
                     to={paths.vendor.products.getHref()}
                     className={({ isActive }) =>
-                      `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                      `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                     }
                     onClick={() => setSidebarOpen(false)}
                   >
@@ -128,7 +128,7 @@ export function VendorLayout() {
                   <NavLink
                     to={paths.vendor.orders.getHref()}
                     className={({ isActive }) =>
-                      `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                      `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                     }
                     onClick={() => setSidebarOpen(false)}
                   >
@@ -137,7 +137,7 @@ export function VendorLayout() {
                   <NavLink
                     to="{paths.vendor.payment.getHref()}"
                     className={({ isActive }) =>
-                      `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                      `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                     }
                     onClick={() => setSidebarOpen(false)}
                   >
@@ -146,7 +146,7 @@ export function VendorLayout() {
                   <NavLink
                     to="{paths.vendor.profile.getHref()}"
                     className={({ isActive }) =>
-                      `block py-3 text-white rounded-md ${isActive ? "bg-green-700 font-bold" : "hover:bg-green-700"}`
+                      `block py-3 text-white rounded-md ${isActive ? "bg-brand-700 font-bold" : "hover:bg-brand-700"}`
                     }
                     onClick={() => setSidebarOpen(false)}
                   >
