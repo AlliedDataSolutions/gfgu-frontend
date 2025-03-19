@@ -17,15 +17,15 @@ export default function AccountLayout() {
           <nav className="text-sm mb-4">
             <Link to="/">Shop</Link>
             <span className="mx-1">/</span>
-            <span className="text-gray-600">Account</span>
+            <span className="text-neutral-600">Account</span>
           </nav>
 
           {/* Layout with Side Panel and Main Content */}
           <div className="flex gap-6">
             {/* Side Panel */}
-            <aside className="w-64 min-h-[524px] bg-green-800 text-white rounded p-4">
+            <aside className="w-64 min-h-[524px] bg-brand-800 text-white rounded p-4">
               {/* Profile Section */}
-              <div className="bg-green-900 rounded p-4 mb-4">
+              <div className="bg-brand-900 rounded p-4 mb-4">
                 <div className="flex items-center gap-4">
                   <div className="w-14 h-14 rounded-full bg-white overflow-hidden" />
                   <div>
@@ -38,13 +38,13 @@ export default function AccountLayout() {
               {/* Side Panel Menu */}
               <Link
                 to={paths.account.address.path}
-                className="block px-4 py-2 rounded mb-2 hover:bg-green-700"
+                className="block px-4 py-2 rounded mb-2 hover:bg-brand-700"
               >
                 Account Settings
               </Link>
               <Link
                 to={paths.account.orders.path}
-                className="block px-4 py-2 rounded hover:bg-green-700"
+                className="block px-4 py-2 rounded hover:bg-brand-700"
               >
                 My Orders
               </Link>

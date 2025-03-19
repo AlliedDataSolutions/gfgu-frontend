@@ -12,7 +12,7 @@ export default function LandingHeader({ menuItems }: LandingHeaderProps) {
 
   return (
     <div className="md:shadow-sm">
-      <header className="fixed top-0 left-0 w-full z-50 bg-white   min-h-14 md:min-h-16 flex items-center ">
+      <header className="border-b border-neutral-200 fixed top-0 left-0 w-full z-50 bg-white   min-h-14 md:min-h-16 flex items-center ">
         <div className="container mx-auto flex flex-grow items-center justify-between max-w-screen-xl px-4">
           <div>
             <a href="#home" className="block w-12 h-12">

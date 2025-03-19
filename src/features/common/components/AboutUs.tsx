@@ -8,7 +8,7 @@ export function AboutUs() {
   return (
     <section className="relative w-full" id="about">
       {/* Desktop Background overlay */}
-      <div className="hidden md:block absolute w-[1440px] h-[822px] bg-green-100 opacity-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
+      <div className="hidden md:block absolute w-[1440px] h-[822px] bg-brand-100 opacity-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
 
       {/* Main container: uses desktop layout on md+, mobile layout below */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-8">

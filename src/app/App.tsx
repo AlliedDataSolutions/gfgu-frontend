@@ -1,5 +1,6 @@
 import { AuthProvider } from "@/features/context/AuthContext";
 import { AppRouter } from "@/features/router";
+import { CartProvider } from "@/features/store/hooks/CartContext";
 import { Toaster } from "react-hot-toast";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
@@ -19,7 +20,9 @@ function App() {
   return (
     <div>
       <AuthProvider>
-        <AppRouter />
+        <CartProvider>
+          <AppRouter />
+        </CartProvider>
       </AuthProvider>
       <Toaster />
     </div>
@@ -27,16 +30,3 @@ function App() {
 }
 
 export default App;
-
-// Uncomment code below to test new components
-// import TestComponents from "./TestComponents";
-
-// function App() {
-//   return (
-//     <>
-//       <TestComponents />
-//     </>
-//   );
-// }
-
-// export default App;
