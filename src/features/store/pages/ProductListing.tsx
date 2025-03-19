@@ -9,8 +9,13 @@ import { useProductFilter } from "../hooks/useProductFilter";
 import { deliveryDays, menuItems, storeMenuItems } from "@/core/data";
 import Marquee from "react-fast-marquee";
 import { DeliveryDayComp } from "@/features/common/components/HeroSection";
+import { useCartContext } from "../hooks/CartContext";
+import InlineLoader from "@/components/ui/inlineloading";
+import { useParams } from "react-router-dom";
 
 export default function ProductListing() {
+  const { loading } = useCartContext();
+  const { categoryId } = useParams<{ categoryId?: string }>();
   interface Filters {
     categories: string[];
     vendors: string[];
@@ -40,13 +45,17 @@ export default function ProductListing() {
   };
 
   const { filterProducts } = useProductFilter(
-    appliedFilters.categories[0],
+    categoryId || appliedFilters.categories[0],
     appliedFilters.vendors[0],
     page + 1,
     limit,
     appliedFilters.priceRange[0],
     appliedFilters.priceRange[1]
   );
+
+  if (loading) {
+    return <InlineLoader loading={loading} children={<div></div>} />;
+  }
 
   return (
     <>
@@ -88,8 +97,8 @@ export default function ProductListing() {
           </div>
         </div>
 
-        <div className="flex flex-col md:flex-row gap-6">
-          <div className="w-full md:w-64 shrink-0 border px-6 pt-6 pb-20 rounded-md">
+        <div className="flex flex-col lg:flex-row gap-6">
+          <div className="w-full lg:w-64 shrink-0 border px-6 pt-6 pb-20 rounded-md">
             <FilterSidebar
               filters={pendingFilters}
               onFilterChange={setPendingFilters}
@@ -103,9 +112,6 @@ export default function ProductListing() {
               filterProducts={filterProducts.records}
               filters={appliedFilters}
               sortBy={sortBy}
-              onAddToCart={() => {
-                /* Add your onAddToCart logic here */
-              }}
             />
             <div className="mt-8">
               <Pagination

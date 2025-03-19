@@ -11,6 +11,7 @@ interface CategoryGridProps {
 
 export default function ProductCategoryGrid({
   categories,
+  selectCategory,
 }: //selectCategory,
 CategoryGridProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -94,6 +95,7 @@ CategoryGridProps) {
         {categories.map((category, index) => (
           <div
             key={index}
+            onClick={() => selectCategory(category)}
             className={cn(
               "w-[250px] flex-shrink-0 border-t border-b border-r border-brand-600",
               index === 0 && "border-l",
