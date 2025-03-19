@@ -1,7 +1,7 @@
 import { ProductCategory } from "@/components/models/type";
 import ProductGrid from "../components/ProductGrid";
 import { DeliveryDayComp } from "@/features/common/components/HeroSection";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { Button } from "@/components/ui/button";
 import { paths } from "@/config/paths";
@@ -15,6 +15,7 @@ import InlineLoader from "@/components/ui/inlineloading";
 
 export default function StoreFront() {
   const { loading, popularProducts, categories } = useStore();
+  const navigate = useNavigate();
 
   if (loading) {
     return <InlineLoader loading={loading} children={<div></div>} />;
@@ -41,7 +42,9 @@ export default function StoreFront() {
           {!loading && (
             <ProductCategoryGrid
               categories={categories}
-              selectCategory={function (_: ProductCategory): void {}}
+              selectCategory={function (category: ProductCategory): void {
+                navigate(`${paths.store.listing.path}/${category.id}`);
+              }}
             />
           )}
         </section>
