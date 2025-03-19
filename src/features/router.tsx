@@ -56,7 +56,7 @@ export const createAppRouter = () =>
       ),
     },
     {
-      path: paths.store.listing.path,
+      path: `${paths.store.listing.path}/:categoryId?`,
       element: (
         <ProtectedRoute>
           <ProductListing />

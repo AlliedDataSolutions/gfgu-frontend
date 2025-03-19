@@ -10,9 +10,12 @@ import { Product } from "@/components/models/type";
 import axiosInstance from "@/core/axiosInstance";
 import { Order } from "@/core/order";
 import { handleAxiosError } from "@/lib/handleAxiosError";
+import toast from "react-hot-toast";
 
+type ClearCartCallback = () => void;
 // Create the context and initial state
 interface CartContextType {
+  loading: boolean;
   order: Order | null;
   getOrder: () => Promise<void>;
   addOrderLine: (product: Product, quantity: number) => Promise<void>;
@@ -21,7 +24,7 @@ interface CartContextType {
     orderLineId: string,
     quantity: number
   ) => Promise<void>;
-  clearCart: () => void;
+  clearCart: (callback: ClearCartCallback) => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -29,6 +32,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 // CartProvider component
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [order, setOrder] = useState<Order | null>(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     getOrder();
@@ -36,36 +40,41 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 
   // Get the current order from the API
   const getOrder = async () => {
-    try {
-      const response = await axiosInstance.get("/order");
-      setOrder(response.data);
-    } catch (error) {
-      handleAxiosError(error);
-    }
+    axiosInstance
+      .get("/order")
+      .then((response) => {
+        setOrder(response.data);
+      })
+      .catch((error) => {
+        handleAxiosError(error);
+      });
   };
 
   // Add an order line
   const addOrderLine = async (product: Product, quantity: number) => {
     try {
-      const response = await axiosInstance.post("/order/add", {
+      setLoading(true);
+      await axiosInstance.post("/order/add", {
         productId: product.id,
         quantity,
       });
-      setOrder(response.data); // Update order with the new line
+      getOrder();
     } catch (error) {
       handleAxiosError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Remove an order line
   const removeOrderLine = async (orderLineId: string) => {
     try {
-      const response = await axiosInstance.delete(
-        `/order/remove/${orderLineId}`
-      );
-      setOrder(response.data); // Update order with the removed line
+      setLoading(true);
+      await axiosInstance.delete(`/order/remove/${orderLineId}`);
+      getOrder();
     } catch (error) {
       handleAxiosError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,31 +83,42 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     orderLineId: string,
     quantity: number
   ) => {
+    const data = {
+      orderLineId: orderLineId,
+      quantity: quantity,
+    };
     try {
-      const response = await axiosInstance.put(
-        `order/update-quantity/${orderLineId}`,
-        { quantity }
-      );
-      setOrder(response.data); // Update order with the new quantity
+      setLoading(true);
+      await axiosInstance.put(`order/update-quantity`, data);
+      getOrder();
     } catch (error) {
       handleAxiosError(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const clearCart = () => {
+  const clearCart = (callback: ClearCartCallback) => {
+    setLoading(true);
     axiosInstance
-      .delete("/order/delete")
-      .then((_) => {
+      .delete("/order/clear")
+      .then((response) => {
+        toast.success(response.data.message);
         setOrder(null);
+        callback();
       })
       .catch((err) => {
         handleAxiosError(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
 
   return (
     <CartContext.Provider
       value={{
+        loading,
         order,
         getOrder,
         addOrderLine,
