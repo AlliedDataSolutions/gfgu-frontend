@@ -47,7 +47,7 @@ export const CreateProduct: FC = () => {
     },
   });
 
-  const { handleSubmit, setValue, control, watch } = form;
+  const { handleSubmit, setValue, control } = form;
 
   useEffect(() => {
     if (productId && productId !== "null") {
@@ -81,7 +81,7 @@ export const CreateProduct: FC = () => {
     { value: "inactive", label: "Inactive" },
   ];
 
-  const handleImageUpload = (index: number, file: File) => {
+  const handleImageUpload = (file: File) => {
     if(file && file.size > 2000000) {
       toast.error("Image size should be less than 2MB");
       return;
@@ -92,7 +92,7 @@ export const CreateProduct: FC = () => {
     formData.append("upload_preset", "gfgu");
 
     // Upload image to cloudinary
-    uploadImage("", formData)
+    uploadImage( formData)
 
   };
 

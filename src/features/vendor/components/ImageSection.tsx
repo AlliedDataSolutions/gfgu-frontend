@@ -4,15 +4,15 @@ import UploadImage from "../../../assets/ImgUpload.png";
 
 
 interface ImageSectionProps {
-  onImageUpload?: (index: number, file: File) => void;
+  onImageUpload?: ( file: File) => void;
 }
 
 export const ImageSection: React.FC<ImageSectionProps> = ({
   onImageUpload,
 }) => {
-  const handleImageUpload = (index: number) => (file: File) => {
+  const handleImageUpload = () => (file: File) => {
     if (onImageUpload) {
-      onImageUpload(index, file);
+      onImageUpload(file);
     }
   };
 
@@ -25,22 +25,22 @@ export const ImageSection: React.FC<ImageSectionProps> = ({
         <ImageUpload
           title="Photo 1"
           icon={UploadImage}
-          onImageUpload={handleImageUpload(0)}
+          onImageUpload={handleImageUpload()}
         />
         <ImageUpload
           title="Photo 2"
           icon={UploadImage}
-          onImageUpload={handleImageUpload(1)}
+          onImageUpload={handleImageUpload()}
         />
         <ImageUpload
           title="Photo 3"
           icon={UploadImage}
-          onImageUpload={handleImageUpload(2)}
+          onImageUpload={handleImageUpload()}
         />
         <ImageUpload
           title="Photo 4"
           icon={UploadImage}
-          onImageUpload={handleImageUpload(3)}
+          onImageUpload={handleImageUpload()}
         />
       </div>
     </div>
