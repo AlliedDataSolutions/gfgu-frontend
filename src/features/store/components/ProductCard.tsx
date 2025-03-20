@@ -24,7 +24,12 @@ export default function ProductCard({
   return (
     <div
       className="overflow-hidden w-[160px] h-[350px] sm:w-[200px] sm:h-[370px] md:w-[230px]"
-      onClick={handleNavigation}
+      onClick={(e) => {
+        if ((e.target as HTMLElement).closest("button")) {
+          return; // Prevent navigation if a button is clicked
+        }
+        handleNavigation(); // Navigate only if it's not a button click
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -37,7 +42,12 @@ export default function ProductCard({
         {isHovered && (
           <div className="w-full mt-2 absolute inset-0 flex items-end justify-center z-50 transition-opacity">
             <Button
-              onClick={onClickAddToCart}
+              onClick={(e) => {
+                e.stopPropagation();
+                if (onClickAddToCart) {
+                  onClickAddToCart(); // Ensure the function executes
+                }
+              }}
               className="w-full py-2 rounded-t-none bg-black hover:bg-black text-white"
             >
               Add to Cart

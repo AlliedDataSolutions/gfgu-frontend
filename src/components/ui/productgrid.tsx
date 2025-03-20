@@ -1,3 +1,4 @@
+import { useCartContext } from "@/features/store/hooks/CartContext";
 import { Product } from "../models/type";
 import ProductCard from "@/features/store/components/ProductCard";
 
@@ -11,14 +12,11 @@ export interface ProductGridProps {
   filters: Filters;
   sortBy: string;
   filterProducts: Product[];
-  onAddToCart: (product: Product) => void;
 }
 
-export function ProductGrid({
-  sortBy,
-  onAddToCart,
-  filterProducts,
-}: ProductGridProps) {
+export function ProductGrid({ sortBy, filterProducts }: ProductGridProps) {
+  const { addOrderLine } = useCartContext();
+
   const sortedProducts = [...filterProducts].sort((a, b) => {
     switch (sortBy) {
       case "price-low-high":
@@ -33,10 +31,12 @@ export function ProductGrid({
   });
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6 justify-items-center">
+    <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4  gap-4 justify-items-center items-center">
       {sortedProducts.map((product) => (
         <ProductCard
-          onClickAddToCart={() => onAddToCart(product)}
+          onClickAddToCart={() => {
+            addOrderLine(product, 1);
+          }}
           key={product.id}
           product={product}
         />
