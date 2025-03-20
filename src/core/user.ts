@@ -1,12 +1,5 @@
 import { Role } from "./role";
 
-export interface Vendor {
-  id: string;
-  businessName: string;
-  vendor: Vendor;
-}
-
-
 export interface User {
   id: string;
   firstName: string;
@@ -14,7 +7,6 @@ export interface User {
   email: string;
   isConfirmed?: boolean;
   role: Role;
-  vendor: Vendor;
   phoneNumber?: string;
   createdDate: Date;
   modifiedDate: Date;
