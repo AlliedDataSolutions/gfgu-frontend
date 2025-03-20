@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import { ChevronDown } from "lucide-react";
 
 interface DropdownOption {
   value: string;
@@ -52,22 +53,20 @@ export const Dropdown: React.FC<DropdownProps> = ({
           )}
           onClick={() => setIsOpen(!isOpen)}
         >
-          <div className={selectedOption ? "text-black" : "text-grey-200"}>
+          <div className={selectedOption ? "text-black" : "text-neutral-400"}>
             {selectedOption ? selectedOption.label : placeholder}
           </div>
-          <img
-            src="https://cdn.builder.io/api/v1/image/assets/TEMP/1dd7c5fa0d7fd7dc8eef3b5b42d58d1c82248defc1b76e4a4f1f4c9fefff7fae?placeholderIfAbsent=true"
-            className="aspect-[1] object-contain w-5 shrink-0"
-            alt="Dropdown arrow"
+          <ChevronDown
+            className="text-neutral-400 aspect-[1] object-contain w-5 shrink-0"
           />
         </div>
 
         {isOpen && (
-          <div className="absolute z-10 w-full mt-1 bg-white border border-[#D1D1D1] rounded-md shadow-lg">
+          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-100 rounded-md shadow-lg">
             {options.map((option) => (
               <div
                 key={option.value}
-                className="px-3 py-2 hover:bg-[#F6F6F6] cursor-pointer"
+                className="px-3 py-2 hover:bg-gray-50 cursor-pointer"
                 onClick={() => handleSelect(option)}
               >
                 {option.label}

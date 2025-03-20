@@ -85,7 +85,7 @@ const ManageProducts: FC = () => {
           />
         </div>
         <div className="flex gap-2">
-          <Button variant="outline" className="flex gap-1">
+          <Button variant="outline" className="flex gap-1" disabled>
             <Filter size={16} /> Filter
           </Button>
           <Button variant="outline" className="flex gap-1">
