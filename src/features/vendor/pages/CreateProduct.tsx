@@ -81,18 +81,32 @@ export const CreateProduct: FC = () => {
     { value: "inactive", label: "Inactive" },
   ];
 
-  const handleImageUpload = (file: File) => {
+  const handleImageUpload = async (index: number, file: File) => {
     if(file && file.size > 2000000) {
-      toast.error("Image size should be less than 2MB");
+      toast.error("Image size should be less than 3MB");
       return;
     }
 
     const formData = new FormData(); 
     formData.append("file", file);
-    formData.append("upload_preset", "gfgu");
+    formData.append("product_mages", "gfgu");
 
     // Upload image to cloudinary
-    uploadImage( formData)
+    const imageToBeUpload = await uploadImage( formData)
+    if(imageToBeUpload) {
+      if(index + 1 < (form?.getValues()?.images?.length ?? 0)) {
+        const images = form?.getValues()?.images;
+        if(images){
+          images[index] = {
+            id: imageToBeUpload.asset_id,
+            url: imageToBeUpload.secure_url,
+          };
+        }
+        setValue("images", images);
+      } else {
+        setValue("images", [...(form?.getValues()?.images ?? []), {  id: imageToBeUpload.asset_id, url: imageToBeUpload.secure_url, }]);
+      }
+    }
 
   };
 
@@ -245,7 +259,7 @@ export const CreateProduct: FC = () => {
 
             {/* Save Product Button */}
             <div className="flex justify-end w-full mt-12 max-md:mt-10">
-              <Button type="submit" className="w-[193px] max-w-full min-h-14 gap-2">
+              <Button type="submit">
                 {productId && productId !== "null" ? "Update Product" : "Save Product"}
               </Button>
             </div>

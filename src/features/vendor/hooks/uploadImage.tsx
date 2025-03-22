@@ -1,11 +1,16 @@
-import { Product,  } from "@/components/models/type";
 import axiosInstance from "@/core/axiosInstance";
 import { handleAxiosError } from "@/lib/handleAxiosError";
 
+interface ImageUploadResponse {
+  url : string;
+  secure_url : string;
+  asset_id: string;
+}
 
-  export const uploadImage = async (imageData:FormData): Promise<Product | null> => {
+
+  export const uploadImage = async (imageData:FormData): Promise< ImageUploadResponse | null> => {
     try {
-      const response = await axiosInstance.get(`https://api.cloudinary.com/v1_1/da1ekxybq/image/upload`, {
+      const response = await axiosInstance.get(`https://api.cloudinary.com/v1_1/da1ekxybq/upload`, {
         data: imageData,
       });
       return response.data; // Returning product details
