@@ -57,25 +57,25 @@ export default function VendorSidebar({
       id: "product",
       label: "Product",
       icon: <Box size={16} />,
-    //   path: paths.vendor.product.path,
+      path: paths.vendor.products.path,
     },
     {
       id: "order",
       label: "Order",
       icon: <ShoppingCart size={16} />,
-    //   path: paths.vendor.order.path,
+      path: paths.vendor.orders.path,
     },
     {
       id: "payment",
       label: "Payment",
       icon: <CreditCard size={16} />,
-    //   path: paths.vendor.payment.path,
+      path: paths.vendor.orders.path
     },
     {
       id: "profile",
       label: "Profile",
       icon: <User size={16} />,
-    //   path: paths.vendor.profile.path,
+      path: paths.vendor.orders.path
     },
   ];
 
@@ -128,7 +128,7 @@ export default function VendorSidebar({
             {menuItems.map((item) => (
               <li key={item.id}>
                 <NavLink
-                  to={item.path ?? "/"}
+                  to={item.path}
                   onClick={() => {
                     setActiveMenu(item.id);
                     if (isMobile) setIsOpen(false);
