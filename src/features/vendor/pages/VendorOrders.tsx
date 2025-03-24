@@ -4,9 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Filter } from "lucide-react";
 import axiosInstance from "@/core/axiosInstance";
 import VendorOrderTable, { VendorOrder } from "../components/VendorOrderTable";
-import VendorOrderFilter, {
-  VendorOrderFilterData,
-} from "../components/VendorOrderFilter";
+import VendorOrderFilter, { VendorOrderFilterData,} from "../components/VendorOrderFilter";
 
 const ITEMS_PER_PAGE = 8;
 
