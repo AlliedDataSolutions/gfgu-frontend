@@ -17,6 +17,7 @@ import {
   VendorLayout,
   VendorDashboard,
   CreateProduct,
+  VendorOrders,
 } from "@/features/vendor";
 import ManageProducts from "./vendor/pages/ManageProducts";
 
@@ -106,6 +107,7 @@ export const createAppRouter = () =>
       ),
       children: [
         { path: "", element: <VendorDashboard /> },
+        { path: paths.vendor.orders.path, element: <VendorOrders /> },
         { path: paths.vendor.products.path, element: <ManageProducts /> },
         { path: paths.vendor.addProduct.path+"/:id", element: <CreateProduct /> },
 
