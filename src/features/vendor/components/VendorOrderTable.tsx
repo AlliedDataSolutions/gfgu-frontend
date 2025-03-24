@@ -17,9 +17,9 @@ export interface VendorOrder {
 
 interface VendorOrderTableProps {
   orders: VendorOrder[];
-  pageCount: number;
-  currentPage: number;
-  onPageChange: (data: { selected: number }) => void;
+  pageCount?: number;
+  currentPage?: number;
+  onPageChange?: (data: { selected: number }) => void;
 }
 
 export default function VendorOrderTable({
@@ -29,45 +29,71 @@ export default function VendorOrderTable({
   onPageChange,
 }: VendorOrderTableProps) {
   if (orders.length === 0) {
-    return <p className="mt-4 text-sm text-neutral-600">No orders found.</p>;
+    return <p className="mt-4 text-center">No orders found.</p>;
   }
 
   return (
-    <div className="mt-4">
-      {/* Table header */}
-      <div className="hidden md:flex bg-neutral-50 border-b border-neutral-200">
-        <div className="px-3 py-2 w-40 text-sm text-neutral-600">Order</div>
-        <div className="px-3 py-2 w-52 text-sm text-neutral-600">Product</div>
-        <div className="px-3 py-2 w-20 text-sm text-neutral-600">Qty</div>
-        <div className="px-3 py-2 w-44 text-sm text-neutral-600">Date</div>
-        <div className="px-3 py-2 w-28 text-sm text-neutral-600">Amount</div>
-        <div className="px-3 py-2 w-28 text-sm text-neutral-600">Status</div>
+    <div>
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead className="bg-neutral-50">
+            <tr>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                Order ID
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                Product
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                Qty
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                Amount
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-neutral-200">
+            {orders.map((order) => (
+              <tr key={order.id} className="hover:bg-neutral-50">
+                <td className="px-6 py-4 whitespace-nowrap text-sm">{order.id}</td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  {order.product.name}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  {order.quantity}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  ${order.totalAmount.toFixed(2)}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span
+                    className={`px-2 py-1 rounded text-xs font-medium ${
+                      order.status === "pending"
+                        ? "bg-rose-50 text-rose-600"
+                        : "bg-green-50 text-green-600"
+                    }`}
+                  >
+                    {order.status}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
-      {/* Table rows */}
-      {orders.map((order) => (
-        <div
-          key={order.id}
-          className="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-neutral-200 py-2"
-        >
-          <div className="px-3 w-40 text-sm text-neutral-600">{order.id}</div>
-          <div className="px-3 w-52 text-sm text-neutral-600">{order.product.name}</div>
-          <div className="px-3 w-20 text-sm text-neutral-600">{order.quantity}</div>
-          <div className="px-3 w-44 text-sm text-neutral-600">{order.orderDate || "N/A"}</div>
-          <div className="px-3 w-28 text-sm text-neutral-600">${order.totalAmount.toFixed(2)}</div>
-          <div className="px-3 w-28">
-            <span
-              className={`px-2 py-1 rounded text-xs font-medium ${
-                order.status === "pending"
-                  ? "bg-rose-50 text-rose-600"
-                  : "bg-green-50 text-green-600"
-              }`}
-            >
-              {order.status}
-            </span>
-          </div>
-        </div>
-      ))}
+      {pageCount && currentPage !== undefined && onPageChange && (
+        <div className="mt-4">
+          
+      {/* Pagination */}
       <Pagination pageCount={pageCount} handlePageClick={onPageChange} />
     </div>
+      )}
+    </div>
   );
+
+
+
 }
