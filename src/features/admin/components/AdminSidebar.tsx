@@ -59,6 +59,12 @@ export default function Sidebar({
       path: paths.admin.product.path,
     },
     {
+      id: "order",
+      label: "Order",
+      icon: <Store size={16} />,
+      path: paths.admin.order.path,
+    },
+    {
       id: "payment",
       label: "Payment",
       icon: <CreditCard size={16} />,

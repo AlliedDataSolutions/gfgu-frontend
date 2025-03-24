@@ -39,6 +39,7 @@ import { AdminProduct } from "./admin/pages/AdminProduct";
 import { AdminPayment } from "./admin/pages/AdminPayment";
 import { Profile } from "./admin/pages/Profile";
 import { Role } from "@/core/role";
+import { AdminOrder } from "./admin/pages/AdminOrder";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -124,6 +125,7 @@ export const createAppRouter = () =>
         { path: "", element: <AdminDashboard /> },
         { path: paths.admin.product.path, element: <AdminProduct /> },
         { path: paths.admin.payment.path, element: <AdminPayment /> },
+        { path: paths.admin.order.path, element: <AdminOrder /> },
         { path: paths.admin.manageUsers.path, element: <ManageUsers /> },
         { path: paths.admin.profile.path, element: <Profile /> },
         { path: paths.admin.salesReport.path, element: <SalesReport /> },

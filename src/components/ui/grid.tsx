@@ -33,15 +33,14 @@ const AgGrid: FC<IGrid> = ({
         // onPaginationChanged={onPaginationChanged}
         {...rest}
       />
-          <Pagination pageCount={pageSize} handlePageClick={(data: {
-              selected: number;
-          }) => { 
-                onPageChange(data.selected + 1);
-          }} />
-      </>
+      {/* <Pagination
+        pageCount={pageSize}
+        handlePageClick={(data: { selected: number }) => {
+          onPageChange(data.selected + 1);
+        }}
+      /> */}
+    </>
   );
 };
-
-
 
 export default AgGrid;
