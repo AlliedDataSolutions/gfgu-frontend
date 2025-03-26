@@ -1,6 +1,6 @@
 import StatsCard from "../components/StatsCard";
 import VendorChart from "../components/VendorChart";
-
+import RecentOrders from "../components/RecentOrders";
 export function VendorDashboard() {
   return (
     <div className="p-6 min-h-screen bg-neutral-50">
@@ -33,6 +33,8 @@ export function VendorDashboard() {
         {/* Chart Section */}
 
         <VendorChart />
+
+        <RecentOrders />
       </main>
     </div>
   );

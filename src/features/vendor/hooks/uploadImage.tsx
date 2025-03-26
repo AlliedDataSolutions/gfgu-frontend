@@ -10,7 +10,7 @@ interface ImageUploadResponse {
 
   export const uploadImage = async (imageData:FormData): Promise< ImageUploadResponse | null> => {
     try {
-      const response = await axiosInstance.get(`https://api.cloudinary.com/v1_1/da1ekxybq/upload`, {
+      const response = await axiosInstance.post(`https://api.cloudinary.com/v1_1/da1ekxybq/upload`, {
         data: imageData,
       });
       return response.data; // Returning product details
