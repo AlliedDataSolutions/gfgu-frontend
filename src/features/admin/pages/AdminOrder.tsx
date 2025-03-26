@@ -6,9 +6,7 @@ import {
 } from "lucide-react";
 import OrderTable from "../components/OrderTable";
 import { Input } from "@/components/ui/input";
-import InlineLoader from "@/components/ui/inlineloading";
 import OrderFilter from "../components/OrderFilter";
-import { format } from "date-fns";
 import useAdminOrder from "../hooks/useAdminOrder";
 import { useState } from "react";
 
@@ -104,10 +102,6 @@ export function AdminOrder() {
         <OrderTable
           loading={loading}
           orders={allOrdersData.records}
-          handleDelete={function (order: any): void {
-            //TODO: implement delete order
-            console.log("deleteOrder", order.id);
-          }}
           handleAction={updateOrderLineStatus}
         />
       </div>
