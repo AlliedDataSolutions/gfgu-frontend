@@ -1,7 +1,7 @@
 import { useState } from "react";
-import React from 'react';
+import React from "react";
 import { format } from "date-fns";
-import { MoreVertical, ChevronDown, ChevronUp } from "lucide-react";
+import { MoreVertical, ChevronDown, ChevronUp, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import UserDetailCard from "./UserDetailCard";
 import {
@@ -34,14 +34,25 @@ const getAdminActions = (order: any): string[] => {
   return actions;
 };
 
-const OrderLine = ({ orderLine, handleAction, loading }: { orderLine: any; handleAction: any, loading: boolean }) => {
+const OrderLine = ({
+  orderLine,
+  handleAction,
+  loading,
+}: {
+  orderLine: any;
+  handleAction: any;
+  loading: boolean;
+}) => {
   return (
     <tr key={orderLine.id} className="hover:bg-neutral-50">
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="text-sm font-medium text-neutral-900 flex items-center gap-1">
           {orderLine.id.slice(-12)}
-          <button className="text-sm p-1 rounded-md hover:bg-neutral-200" onClick={() => navigator.clipboard.writeText(orderLine.id)}>
-            <span>Copy</span>
+          <button
+            className="text-sm p-1 rounded-md hover:bg-neutral-200"
+            onClick={() => navigator.clipboard.writeText(orderLine.id)}
+          >
+            <Copy size={14} />
           </button>
         </div>
       </td>
@@ -52,7 +63,9 @@ const OrderLine = ({ orderLine, handleAction, loading }: { orderLine: any; handl
         <div className="text-sm ">{orderLine.quantity}</div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm ">{format(new Date(orderLine.createdDate), "MMM dd, yyyy 'at' hh:mm a")}</div>
+        <div className="text-sm ">
+          {format(new Date(orderLine.createdDate), "MMM dd, yyyy 'at' hh:mm a")}
+        </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="text-sm ">{orderLine.unitPrice}</div>
@@ -60,7 +73,7 @@ const OrderLine = ({ orderLine, handleAction, loading }: { orderLine: any; handl
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="text-sm ">{orderLine.status}</div>
       </td>
-       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
         <div className="flex items-center gap-2 justify-end">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -69,7 +82,13 @@ const OrderLine = ({ orderLine, handleAction, loading }: { orderLine: any; handl
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              {["pending", "confirmed", "shipped", "delivered", "cancelled"].map((action, index) => (
+              {[
+                "pending",
+                "confirmed",
+                "shipped",
+                "delivered",
+                "cancelled",
+              ].map((action, index) => (
                 <DropdownMenuItem
                   key={index}
                   onClick={() => {
@@ -86,7 +105,7 @@ const OrderLine = ({ orderLine, handleAction, loading }: { orderLine: any; handl
       </td>
     </tr>
   );
-}
+};
 
 export default function OrderTable({
   loading,
@@ -122,7 +141,7 @@ export default function OrderTable({
             <th className="px-4 py-2 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
               Status
             </th>
-             <th className="px-4 py-2 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
+            <th className="px-4 py-2 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
               Action
             </th>
           </tr>
@@ -134,38 +153,70 @@ export default function OrderTable({
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm font-medium text-neutral-900 flex items-center gap-1">
                     {order.id.slice(-12)}
-                    <button className="text-sm p-1 rounded-md hover:bg-neutral-200" onClick={() => {navigator.clipboard.writeText(order.id); alert("Copied order ID!")}}>
-                      <span>Copy</span>
+                    <button
+                      className="text-sm p-1 rounded-md hover:bg-neutral-200"
+                      onClick={() => {
+                        navigator.clipboard.writeText(order.id);
+                        alert("Copied order ID!");
+                      }}
+                    >
+                      <Copy size={14} />
                     </button>
                   </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm ">
-                    <UserDetailCard user={order.user} orderAddress={order.orderAddress}>
+                    <UserDetailCard
+                      user={order.user}
+                      orderAddress={order.orderAddress}
+                    >
                       {order.user.firstName} {order.user.lastName}
                     </UserDetailCard>
                   </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
-                  <div className="text-sm ">{format(new Date(order.orderDate), "MMM dd, yyyy 'at' hh:mm a")}</div>
-                </td>
-                 <td className="px-4 py-3 whitespace-nowrap">
-                  <div className="text-sm ">{order.requiredDate ? format(new Date(order.requiredDate), "MMM dd, yyyy 'at' hh:mm a") : ''}</div>
+                  <div className="text-sm ">
+                    {format(
+                      new Date(order.orderDate),
+                      "MMM dd, yyyy 'at' hh:mm a"
+                    )}
+                  </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
-                  <div className="text-sm ">{order.shippedDate ? format(new Date(order.shippedDate), "MMM dd, yyyy 'at' hh:mm a") : ''}</div>
+                  <div className="text-sm ">
+                    {order.requiredDate
+                      ? format(
+                          new Date(order.requiredDate),
+                          "MMM dd, yyyy 'at' hh:mm a"
+                        )
+                      : ""}
+                  </div>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">
+                  <div className="text-sm ">
+                    {order.shippedDate
+                      ? format(
+                          new Date(order.shippedDate),
+                          "MMM dd, yyyy 'at' hh:mm a"
+                        )
+                      : ""}
+                  </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm ">{order.status}</div>
                 </td>
-                 <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
+                <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
                   <div className="flex items-center gap-2 justify-end">
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => toggleRow(order.id)}
                     >
-                      {expandedRow === order.id ? <ChevronUp /> : <ChevronDown />}
+                      {expandedRow === order.id ? (
+                        <ChevronUp />
+                      ) : (
+                        <ChevronDown />
+                      )}
                     </Button>
                   </div>
                 </td>
@@ -201,7 +252,12 @@ export default function OrderTable({
                       </thead>
                       <tbody className="bg-white divide-y divide-neutral-200">
                         {order.orderLines.map((orderLine: any) => (
-                          <OrderLine key={orderLine.id} orderLine={orderLine} handleAction={handleAction} loading={loading} />
+                          <OrderLine
+                            key={orderLine.id}
+                            orderLine={orderLine}
+                            handleAction={handleAction}
+                            loading={loading}
+                          />
                         ))}
                       </tbody>
                     </table>
