@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
 interface ImageUploadProps {
@@ -6,6 +6,7 @@ interface ImageUploadProps {
   icon: string;
   className?: string;
   onImageUpload?: (file: File) => void;
+  value?:string;
 }
 
 export const ImageUpload: React.FC<ImageUploadProps> = ({
@@ -13,6 +14,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   icon,
   className,
   onImageUpload,
+  value
 }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -35,6 +37,12 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
       }
     }
   };
+
+  useEffect(()=>{
+    if(value){
+    setPreview(value)
+    }
+  },[value])
 
   return (
     <div

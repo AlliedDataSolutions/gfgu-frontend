@@ -16,7 +16,7 @@ const ManageProducts: FC = () => {
 
   /* pagination */
   const [page, setPage] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(10);
+  const [limit, setLimit] = useState<number>(30);
   const [records, setRecords] = useState<Product[]>([]);
   const [totalRecords, setTotalRecords] = useState<number>(1);
   const navigate = useNavigate();

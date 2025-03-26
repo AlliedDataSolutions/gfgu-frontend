@@ -86,26 +86,29 @@ export const CreateProduct: FC = () => {
       toast.error("Image size should be less than 3MB");
       return;
     }
+    const reader = new FileReader();
 
-    const formData = new FormData(); 
-    formData.append("file", file);
-    formData.append("product_mages", "gfgu");
+    form.setValue(`images.${index}`, { file, url: "", id : "1"});
+    if (reader !== undefined && file !== undefined) {
+      reader.onloadend = async (): Promise<void> => {
+    
+        const result = await uploadImage({file : reader.result?.toString(), filename : file.name});
 
-    // Upload image to cloudinary
-    const imageToBeUpload = await uploadImage( formData)
-    if(imageToBeUpload) {
-      if(index + 1 < (form?.getValues()?.images?.length ?? 0)) {
-        const images = form?.getValues()?.images;
-        if(images){
-          images[index] = {
-            id: imageToBeUpload.asset_id,
-            url: imageToBeUpload.secure_url,
-          };
+        if(result && result.data && result.data.secure_url) {
+          const images = form?.getValues()?.images;
+          if(images){
+            images[index] = {
+              id: result.data.asset_id,
+              url: result.data.secure_url,
+            };
+          }
+          setValue("images", images);
         }
-        setValue("images", images);
-      } else {
-        setValue("images", [...(form?.getValues()?.images ?? []), {  id: imageToBeUpload.asset_id, url: imageToBeUpload.secure_url, }]);
-      }
+        else{
+          toast.error("Failed to upload image");
+        }
+      };
+      reader.readAsDataURL(file);
     }
 
   };
@@ -117,7 +120,7 @@ export const CreateProduct: FC = () => {
       price: Number(formData.price),
       stockLevel: Number(formData.stockLevel),
       categoryIds: formData.category ? [formData.category] : [],
-      imageUrls: ["https://images.immediate.co.uk/production/volatile/sites/30/2020/08/fruit_and_veg-fcb7b38.jpg?quality=90&webp=true&resize=600,545"],
+      imageUrls: formData.images?.map((image) => image.url) || [],
     };
 
     try {
@@ -255,7 +258,7 @@ export const CreateProduct: FC = () => {
             />
 
             {/* Image Upload */}
-            <ImageSection onImageUpload={handleImageUpload} />
+            <ImageSection images={form.getValues().images?.map(ele => ele.url) || []} onImageUpload={handleImageUpload} />
 
             {/* Save Product Button */}
             <div className="flex justify-end w-full mt-12 max-md:mt-10">
