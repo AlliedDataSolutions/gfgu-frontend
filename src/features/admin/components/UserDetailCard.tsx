@@ -3,9 +3,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 interface UserDetailCardProps {
   user: any;
   orderAddress: any;
+  children: React.ReactNode;
 }
 
-const UserDetailCard = ({ user, orderAddress }: UserDetailCardProps) => {
+const UserDetailCard = ({ user, orderAddress, children }: UserDetailCardProps) => {
   const formattedAddress = orderAddress
     ? `${orderAddress.street}, ${orderAddress.city}, ${orderAddress.state} ${orderAddress.zip}`
     : "No address available";
@@ -13,7 +14,7 @@ const UserDetailCard = ({ user, orderAddress }: UserDetailCardProps) => {
   return (
     <Popover>
       <PopoverTrigger className="cursor-pointer">
-        {user.firstName} {user.lastName}
+        {children}
       </PopoverTrigger>
       <PopoverContent className="w-80">
         <div className="space-y-2">
