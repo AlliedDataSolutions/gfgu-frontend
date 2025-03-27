@@ -18,45 +18,59 @@ const useAdminOrder = (filters: FilterOrders) => {
   });
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchOrders = async () => {
-      setLoading(true);
-      try {
-        const orderDateStr = filters.orderDate
-          ? format(filters.orderDate, "yyyy-MM-dd")
-          : undefined;
+  const fetchOrders = async () => {
+    setLoading(true);
+    try {
+      const orderDateStr = filters.orderDate
+        ? format(filters.orderDate, "yyyy-MM-dd")
+        : undefined;
 
-        let url = `/admin/all-orders?page=${filters.page}&limit=${filters.limit}`;
-        if (filters.productName) {
-          url += `&productName=${filters.productName}`;
-        }
-        if (filters.productDescription) {
-          url += `&productDescription=${filters.productDescription}`;
-        }
-        if (filters.vendorId) {
-          url += `&vendorId=${filters.vendorId}`;
-        }
-        if (orderDateStr) {
-          url += `&orderDate=${orderDateStr}`;
-        }
-
-        const response = await axiosInstance.get(url);
-        setAllOrdersData(response.data);
-      } catch (error) {
-        console.error("Error fetching orders:", error);
-      } finally {
-        setLoading(false);
+      let url = `/admin/all-orders?page=${filters.page}&limit=${filters.limit}`;
+      if (filters.productName) {
+        url += `&productName=${filters.productName}`;
       }
-    };
+      if (filters.productDescription) {
+        url += `&productDescription=${filters.productDescription}`;
+      }
+      if (filters.vendorId) {
+        url += `&vendorId=${filters.vendorId}`;
+      }
+      if (orderDateStr) {
+        url += `&orderDate=${orderDateStr}`;
+      }
 
+      const response = await axiosInstance.get(url);
+      setAllOrdersData(response.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchOrders();
   }, [filters]);
+
+  const updateOrderLineStatus = async (orderLineId: string, status: string) => {
+    try {
+      setLoading(true);
+      await axiosInstance.put(`/admin/update-order`, { orderLineId, status });
+      await fetchOrders();
+    } catch (error) {
+      console.error("Error updating order line status:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return {
     allOrdersData,
     loading,
     setAllOrdersData,
     setLoading,
+    fetchOrders,
+    updateOrderLineStatus,
   };
 };
 

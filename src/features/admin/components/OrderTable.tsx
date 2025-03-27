@@ -14,7 +14,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { formatDate } from "@/lib/utils";
-import axiosInstance from "@/core/axiosInstance";
 
 interface OrderTableProps {
   loading: boolean;
@@ -114,22 +113,9 @@ export default function OrderTable({
   fetchOrders,
 }: OrderTableProps) {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
-  const [updatingStatus, setUpdatingStatus] = useState(false);
 
   const toggleRow = (id: string) => {
     setExpandedRow(expandedRow === id ? null : id);
-  };
-
-  const updateOrderLineStatus = async (orderLineId: string, status: string) => {
-    try {
-      setUpdatingStatus(true);
-      await axiosInstance.put(`/admin/update-order`, { orderLineId, status });
-      await fetchOrders();
-    } catch (error) {
-      console.error("Error updating order line status:", error);
-    } finally {
-      setUpdatingStatus(false);
-    }
   };
 
   return (
@@ -161,7 +147,7 @@ export default function OrderTable({
           </tr>
         </thead>
         <tbody className="bg-white divide-y divide-neutral-200">
-          {orders.map((order) => (
+          {orders?.map((order) => (
             <React.Fragment key={order.id}>
               <tr className="hover:bg-neutral-50">
                 <td className="px-4 py-3 whitespace-nowrap">
@@ -184,13 +170,11 @@ export default function OrderTable({
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm ">
-                    {order.requiredDate ? formatDate(order.requiredDate) : ""}
-                  </div>
+                    {order.requiredDate ? formatDate(order.requiredDate) : ""}</div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm ">
-                    {order.shippedDate ? formatDate(order.shippedDate) : ""}
-                  </div>
+                    {order.shippedDate ? formatDate(order.shippedDate) : ""}</div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm ">{order.status}</div>

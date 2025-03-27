@@ -33,7 +33,7 @@ export function AdminOrder() {
   });
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { allOrdersData, loading, fetchOrders } = useAdminOrder(filters);
+  const { allOrdersData, loading, fetchOrders, updateOrderLineStatus } = useAdminOrder(filters);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
@@ -57,11 +57,6 @@ export function AdminOrder() {
       ...prev,
       page: (prev.page ?? 1) - 1,
     }));
-  };
-
-  const updateOrderLineStatus = async (orderLineId: string, status: string) => {
-    //TODO: implement delete order
-    console.log("updateOrderLineStatus", orderLineId, status);
   };
 
   return (
