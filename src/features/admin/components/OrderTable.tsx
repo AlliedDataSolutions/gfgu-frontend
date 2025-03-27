@@ -1,7 +1,10 @@
 import { useState } from "react";
 import React from "react";
-import { format } from "date-fns";
-import { MoreVertical, ChevronDown, ChevronUp, Copy } from "lucide-react";
+import {
+  MoreVertical,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import UserDetailCard from "./UserDetailCard";
 import {
@@ -10,11 +13,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { formatDate } from "@/lib/utils";
+import axiosInstance from "@/core/axiosInstance";
 
 interface OrderTableProps {
   loading: boolean;
   orders: any[];
+  handleDelete: (order: any) => void;
   handleAction: (orderLineId: string, action: string) => void;
+  fetchOrders: () => Promise<void>;
 }
 
 const getStatus = (order: any): string[] => {
@@ -46,14 +53,8 @@ const OrderLine = ({
   return (
     <tr key={orderLine.id} className="hover:bg-neutral-50">
       <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm font-medium text-neutral-900 flex items-center gap-1">
+        <div className="text-sm font-medium text-neutral-900">
           {orderLine.id.slice(-12)}
-          <button
-            className="text-sm p-1 rounded-md hover:bg-neutral-200"
-            onClick={() => navigator.clipboard.writeText(orderLine.id)}
-          >
-            <Copy size={14} />
-          </button>
         </div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
@@ -63,9 +64,7 @@ const OrderLine = ({
         <div className="text-sm ">{orderLine.quantity}</div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm ">
-          {format(new Date(orderLine.createdDate), "MMM dd, yyyy 'at' hh:mm a")}
-        </div>
+        <div className="text-sm ">{formatDate(orderLine.createdDate)}</div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
         <div className="text-sm ">{orderLine.unitPrice}</div>
@@ -110,12 +109,27 @@ const OrderLine = ({
 export default function OrderTable({
   loading,
   orders,
+  handleDelete,
   handleAction,
+  fetchOrders,
 }: OrderTableProps) {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
+  const [updatingStatus, setUpdatingStatus] = useState(false);
 
   const toggleRow = (id: string) => {
     setExpandedRow(expandedRow === id ? null : id);
+  };
+
+  const updateOrderLineStatus = async (orderLineId: string, status: string) => {
+    try {
+      setUpdatingStatus(true);
+      await axiosInstance.put(`/admin/update-order`, { orderLineId, status });
+      await fetchOrders();
+    } catch (error) {
+      console.error("Error updating order line status:", error);
+    } finally {
+      setUpdatingStatus(false);
+    }
   };
 
   return (
@@ -151,17 +165,8 @@ export default function OrderTable({
             <React.Fragment key={order.id}>
               <tr className="hover:bg-neutral-50">
                 <td className="px-4 py-3 whitespace-nowrap">
-                  <div className="text-sm font-medium text-neutral-900 flex items-center gap-1">
+                  <div className="text-sm font-medium text-neutral-900">
                     {order.id.slice(-12)}
-                    <button
-                      className="text-sm p-1 rounded-md hover:bg-neutral-200"
-                      onClick={() => {
-                        navigator.clipboard.writeText(order.id);
-                        alert("Copied order ID!");
-                      }}
-                    >
-                      <Copy size={14} />
-                    </button>
                   </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
@@ -175,31 +180,16 @@ export default function OrderTable({
                   </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
+                  <div className="text-sm ">{formatDate(order.orderDate)}</div>
+                </td>
+                <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm ">
-                    {format(
-                      new Date(order.orderDate),
-                      "MMM dd, yyyy 'at' hh:mm a"
-                    )}
+                    {order.requiredDate ? formatDate(order.requiredDate) : ""}
                   </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm ">
-                    {order.requiredDate
-                      ? format(
-                          new Date(order.requiredDate),
-                          "MMM dd, yyyy 'at' hh:mm a"
-                        )
-                      : ""}
-                  </div>
-                </td>
-                <td className="px-4 py-3 whitespace-nowrap">
-                  <div className="text-sm ">
-                    {order.shippedDate
-                      ? format(
-                          new Date(order.shippedDate),
-                          "MMM dd, yyyy 'at' hh:mm a"
-                        )
-                      : ""}
+                    {order.shippedDate ? formatDate(order.shippedDate) : ""}
                   </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
