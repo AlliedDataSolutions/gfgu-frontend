@@ -361,7 +361,7 @@ export default function CheckoutPage() {
                       className="flex items-center justify-between mb-2"
                     >
                       <div className="flex items-center gap-2">
-                        {orderLine.product.images[0].url ? (
+                        {orderLine.product.images[0]?.url ? (
                           <img
                             src={orderLine.product.images[0].url}
                             alt={orderLine.product.name}
