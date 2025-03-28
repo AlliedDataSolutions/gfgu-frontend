@@ -53,18 +53,14 @@ export default function Header({ menuItems }: HeaderProps) {
                 icon={<Search size={18} />}
               />
 
-              <Button variant={"link"} className="p-0"
-              onClick={() => navigate(paths.store.cartPage.path)}
-              >
-                <div className="relative">
-                  <Button variant="ghost" size="icon">
+              <div className="relative">
+                  <Button variant="ghost" size="icon" onClick={() => navigate(paths.store.cartPage.path)}>
                     <ShoppingCart size={5} />
                   </Button>
                   <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-rose-500">
                     {order?.orderLines.length || 0}
                   </Badge>
                 </div>
-              </Button>
               <Button variant={"link"} className="p-0">
                 <Link to={paths.account.account.path}>
                   <User className="w-5 h-5" />
