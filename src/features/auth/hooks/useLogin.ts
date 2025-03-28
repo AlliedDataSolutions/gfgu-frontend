@@ -16,12 +16,13 @@ export const useLogin = () => {
     try {
       setLoading(true);
       const loginResponse = await axiosInstance.post("/auth/login", data);
-      const { token } = loginResponse.data;
+      const { token, refreshToken } = loginResponse.data;
       if (token) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('refreshToken', refreshToken);
+
         // extra check if cookies has token
-        const userProfileResponse = await axiosInstance.get("/user/profile", {
-          withCredentials: true, // Ensures the request includes cookies
-        });
+        const userProfileResponse = await axiosInstance.get("/user/profile");
         return userProfileResponse.data as User;
       } else {
         throw new Error("Login unsuccessful");

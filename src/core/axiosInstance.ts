@@ -8,6 +8,24 @@ const axiosInstance = axios.create({
   },
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const publicRoutes = ['/auth/login', '/auth/register'];
+    if (config.url && publicRoutes.includes(config.url)) {
+      return config;
+    }
+
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
 axios.interceptors.response.use(
   (response) => {
     // Return response if status is in the range of 2xx
