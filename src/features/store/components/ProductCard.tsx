@@ -2,9 +2,7 @@ import { useState } from "react";
 import { Product } from "@/components/models/type";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import Apple from "@/assets/apple.png";
 import { paths } from "@/config/paths";
-import { Link } from "react-router-dom";
 
 interface ProductCardProps {
   product: Product;
