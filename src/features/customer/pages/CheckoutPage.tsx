@@ -5,20 +5,21 @@ import useAddress from "../../customer/hooks/useAddress";
 import AddressCard from "../../customer/components/AddressCard";
 import AddAddress from "../../customer/pages/AddAddress";
 import { Button } from "@/components/ui/button";
-import { Ghost } from "lucide-react";
 import { OrderSummary } from "../components/OrderSummary";
+import { useState } from "react";
 
 export default function CheckoutPage() {
-  const { addresses, loading, error, showAddressForm, toggleAddressForm } =
+  const { addresses, loading, showAddressForm, toggleAddressForm } =
     useAddress();
+  const [selectedAddressId, setSelectedAddressId] = useState<string | null>(null);
 
   if (loading) {
     return <div>Loading addresses...</div>;
   }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const handleAddressSelected = (id: string) => {
+    setSelectedAddressId(id);
+  };
 
   return (
     <>
@@ -41,7 +42,12 @@ export default function CheckoutPage() {
                 <div>No addresses found.</div>
               ) : (
                 addresses.map((address) => (
-                  <AddressCard key={address.id} address={address} />
+                  <AddressCard
+                    key={address.id}
+                    address={address}
+                    isSelected={address.id === selectedAddressId}
+                    onAddressSelected={handleAddressSelected}
+                  />
                 ))
               )}
             </div>

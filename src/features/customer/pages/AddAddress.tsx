@@ -34,7 +34,7 @@ export default function AddAddress() {
   };
 
   const handleCancel = () => {
-    navigate(paths.account.address.path, { replace: true });
+    navigate(-1);
   };
 
   return (
