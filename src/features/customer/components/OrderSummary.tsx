@@ -1,22 +1,18 @@
-import { OrderLine } from "@/core/order";
-import { useCartContext } from "@/features/store/hooks/CartContext";
+import { Order } from "@/core/order";
 
-const total = (orderLines?: OrderLine[]) => {
-  return orderLines
-    ?.reduce(
-      (sum, orderLine) =>
-        sum + Number(orderLine.unitPrice) * orderLine.quantity,
-      0
-    )
-    .toFixed(2);
-};
+interface OrderSummaryProps {
+  order: Order | undefined;
+  totalAmount: string;
+}
 
-export const OrderSummary = () => {
-  const { order } = useCartContext();
+export const OrderSummary: React.FC<OrderSummaryProps> = ({
+  order,
+  totalAmount,
+}) => {
   return (
     <div className="w-full md:w-[350px] lg:w-[400px] space-y-4">
       <div className="bg-neutral-50 p-4 md:p-6 rounded-md">
-        <h2 className="text-xl font-medium text-brand-900 mb-4">Your Order</h2>
+        <h2 className="text-lg text-brand-900 mb-4">Your Order</h2>
         {order?.orderLines.map((orderLine) => (
           <div
             key={orderLine.id}
@@ -44,7 +40,7 @@ export const OrderSummary = () => {
         <hr className="my-4" />
         <div className="flex justify-between py-1 text-sm">
           <span>Subtotal:</span>
-          <span>${total(order?.orderLines)}</span>
+          <span>${totalAmount}</span>
         </div>
         <div className="flex justify-between py-1  text-sm">
           <span>Shipping:</span>
@@ -53,7 +49,7 @@ export const OrderSummary = () => {
         <hr className="my-4" />
         <div className="flex justify-between font-medium  text-sm">
           <span>Total:</span>
-          <span>${total(order?.orderLines)}</span>
+          <span>${totalAmount}</span>
         </div>
       </div>
     </div>

@@ -16,7 +16,7 @@ const AddressCard: React.FC<AddressCardProps> = ({
   const addressLabel = AddressLabel(address.addressType); // Type assertion not needed
 
   return (
-    <div className="bg-white p-6 mb-4 md:mb-0">
+    <div className="p-6 mb-4 md:mb-0 w-full border md:border-none rounded">
       <label className="flex items-center">
         <input
           type="radio"

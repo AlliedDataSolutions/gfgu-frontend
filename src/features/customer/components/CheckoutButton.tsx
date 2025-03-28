@@ -1,12 +1,19 @@
 import axiosInstance from "@/core/axiosInstance";
 import { PayPalButtons, PayPalScriptProvider } from "@paypal/react-paypal-js";
 
-const Checkout = ({ amount }) => {
+interface CheckoutProps {
+  amount: string;
+}
+
+const Checkout: React.FC<CheckoutProps> = ({ amount }) => {
+  const clientID = import.meta.env.VITE_REACT_APP_PAYPAL_CLIENT_ID || "";
   return (
-    <PayPalScriptProvider options={{ "client-id": "YOUR_PAYPAL_CLIENT_ID" }}>
+    <PayPalScriptProvider options={{ clientId: clientID }}>
       <PayPalButtons
         createOrder={async () => {
-          const res = await axiosInstance.post("/api/paypal/create-order", { amount });
+          const res = await axiosInstance.post("/api/paypal/create-order", {
+            amount,
+          });
           return res.data.id;
         }}
         onApprove={async (data) => {
@@ -19,3 +26,5 @@ const Checkout = ({ amount }) => {
     </PayPalScriptProvider>
   );
 };
+
+export default Checkout;
