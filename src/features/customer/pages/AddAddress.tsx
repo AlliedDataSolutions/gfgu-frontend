@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axiosInstance from "@/core/axiosInstance";
 import { paths } from "@/config/paths";
 import ErrorMessage from "@/components/ui/errormessage";
+import { handleAxiosError } from "@/lib/handleAxiosError";
 
 interface AddAddressFormInputs {
   streetName: string;
@@ -25,13 +26,10 @@ export default function AddAddress() {
 
   const onSubmit: SubmitHandler<AddAddressFormInputs> = async (data) => {
     try {
-      // Call the API to save the address
-      const res = await axiosInstance.post("/address", data);
-      console.log("Address saved:", res.data);
-      // Redirect back to the address list
+      await axiosInstance.post("/address", data);
       navigate(paths.account.address.path);
     } catch (error) {
-      console.error("Error saving address:", error);
+      handleAxiosError(error)
     }
   };
 
