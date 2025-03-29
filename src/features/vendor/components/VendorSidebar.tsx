@@ -15,6 +15,8 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { paths } from "@/config/paths";
+import { useAuth } from "@/features/context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   activeMenu: string;
@@ -30,6 +32,8 @@ export default function VendorSidebar({
   setIsOpen,
 }: SidebarProps) {
   const [isMobile, setIsMobile] = useState(false);
+  const navigate = useNavigate();
+  const { logout } = useAuth();
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -156,6 +160,10 @@ export default function VendorSidebar({
           <Button
             variant={"link"}
             className="flex items-center text-white hover:text-neutral-300 transition-colors"
+            onClick={() => {
+              logout();
+              navigate(paths.landing.path, { replace: true });
+            }}
           >
             <LogOut size={14} />
             {isOpen && <span className="ml-3">Log Out</span>}
