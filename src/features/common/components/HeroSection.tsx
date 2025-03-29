@@ -38,8 +38,9 @@ export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
       </div>
       <div className="bg-brand-700 py-5">
         <Marquee speed={50}>
-          {deliveryDays.map((item) => (
+          {deliveryDays.map((item, index) => (
             <DeliveryDayComp
+            key={index}
               location={item.location}
               dayOfWeek={item.dayOfWeek}
             />
