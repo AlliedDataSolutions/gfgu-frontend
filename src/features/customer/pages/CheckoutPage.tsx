@@ -10,6 +10,7 @@ import Checkout from "@/features/customer/components/CheckoutButton";
 import { useCartContext } from "@/features/store/hooks/CartContext"; // Import useCartContext
 import { OrderSummary } from "../components/OrderSummary";
 import { OrderLine } from "@/core/order";
+import InlineLoader from "@/components/ui/inlineloading";
 
 const total = (orderLines?: OrderLine[]) => {
   return orderLines
@@ -30,7 +31,7 @@ export default function CheckoutPage() {
   const { order } = useCartContext();
 
   if (loading) {
-    return <div>Loading addresses...</div>;
+    return <InlineLoader loading={loading} children={undefined} />;
   }
 
   const handleAddressSelected = (id: string) => {
