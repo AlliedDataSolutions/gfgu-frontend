@@ -27,12 +27,19 @@ export const ProtectedRoute = ({
     );
   }
 
-  // Allow admins and vendors to access the store and other allowed routes
-  if (
-    (user.role as Role) === Role.admin ||
-    (user.role as Role) === Role.vendor
-  ) {
+  const isAdminRoute = location.pathname.startsWith(paths.admin.dashboard.path);
+  const isVendorRoute = location.pathname.startsWith(paths.vendor.dashboard.path);
+
+  if ((user.role as Role) === Role.admin || (user.role as Role) === Role.manager) {
     return children;
+  }
+
+  if ((user.role as Role) === Role.vendor && isAdminRoute) {
+    return <Navigate to={paths.store.home.path} replace />;
+  }
+
+  if ((user.role as Role) === Role.customer && (isAdminRoute || isVendorRoute)) {
+    return <Navigate to={paths.store.home.path} replace />;
   }
 
   // Restrict access based on allowedRoles for customers and others

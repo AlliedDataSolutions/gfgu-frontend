@@ -46,7 +46,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     setUser(null);
-    // Optionally clear cookies or localStorage
+    localStorage.clear();
   };
 
   return (

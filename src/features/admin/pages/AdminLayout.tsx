@@ -6,7 +6,7 @@ import { useAuth } from "@/features/context/AuthContext";
 import { Role } from "@/core/role";
 
 export function AdminLayout() {
-  const [activeMenu, setActiveMenu] = useState("manage-users");
+  const [activeMenu, setActiveMenu] = useState("dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { user } = useAuth();
 
