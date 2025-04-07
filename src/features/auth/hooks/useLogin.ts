@@ -23,6 +23,9 @@ export const useLogin = () => {
 
         // extra check if cookies has token
         const userProfileResponse = await axiosInstance.get("/user/profile");
+        if(userProfileResponse.data.vendorId) {
+          localStorage.setItem('vendorId', userProfileResponse.data.vendorId)
+        } 
         return userProfileResponse.data as User;
       } else {
         throw new Error("Login unsuccessful");

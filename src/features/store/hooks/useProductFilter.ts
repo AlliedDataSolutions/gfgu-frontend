@@ -30,11 +30,14 @@ export const useProductFilter = (
         url = url + `&category=${category}`;
       }
       if (vendorId) {
-        url = url + `&vendor=${vendorId}`;
-      }
-
+        url = url + `&vendorId=${vendorId}`;
+      } else {
+        const storage = localStorage.getItem("vendorId")
+        if (storage) {
+          url = url + `&vendorId=${storage}`;
+        }
+      }    
       const reponse = await axiosInstance.get(url);
-      console.log(reponse);
 
       setProductFilterDetails(reponse.data);
     } catch (error) {

@@ -31,3 +31,13 @@ export const createProduct = async (productData: Partial<Product>) => {
       return null;
     }
   };
+
+    // Delete function
+  export const deleteProduct = async (productId: string) => {
+    try {
+      const response = await axiosInstance.delete(`/product/${productId}`);
+      return response.data;
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
