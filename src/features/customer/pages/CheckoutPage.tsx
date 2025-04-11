@@ -76,7 +76,7 @@ export default function CheckoutPage() {
                   ))
                 )}
               </div>
-              <Checkout amount={totalAmount || "0"} />
+              <Checkout amount={totalAmount || "0"} selectedAddressId={selectedAddressId} />
             </div>
             <div className="order-1 lg:order-2">
               <OrderSummary
