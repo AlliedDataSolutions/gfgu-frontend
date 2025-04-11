@@ -6,32 +6,49 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter, Download, Plus } from "lucide-react";
 import { PencilLine, Trash2 } from "lucide-react";
-import { useProductFilter } from "@/features/store/hooks/useProductFilter";
 import { Product } from "@/components/models/type";
 import { useNavigate } from "react-router-dom";
 import { paths } from "@/config/paths";
+import { deleteProduct, useProductFilter } from "../hooks/useProduct"; // Import deleteProduct
+import toast from "react-hot-toast";
 
 const ManageProducts: FC = () => {
   const [colDef, setColDef] = useState<ColDef[]>([]);
 
   /* pagination */
   const [page, setPage] = useState<number>(0);
-  const [limit, setLimit] = useState<number>(30);
+  const [limit, setLimit] = useState<number>(10);
   const [records, setRecords] = useState<Product[]>([]);
   const [totalRecords, setTotalRecords] = useState<number>(1);
   const navigate = useNavigate();
+  const [vendorId] = useState<string>('');
 
   const addProduct = () => {
     navigate(`${paths.vendor.addProduct.path}/null`);
   };
 
   const editProduct = (id: string) => {
-    console.log(id);
-    
-    navigate(paths.vendor.addProduct.path+`/${id}`); // Navigating to the update path with productId
+    navigate(`${paths.vendor.addProduct.path}/${id}`);
   };
-  
 
+  // Handler to delete a product
+  const handleDeleteProduct = async (id: string) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this product?");
+    if (!confirmDelete) return;
+    try {
+      // await deleteProduct(id);
+      const deleteProd = await deleteProduct(id);
+      // Update local state to remove the deleted product from the grid
+      if(deleteProd && deleteProd.message){
+      setRecords((prevRecords) => prevRecords.filter((product) => product.id !== id));
+      toast.success(deleteProd.message);
+      }
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
+  // Custom Action Renderer including edit and delete buttons
   const ActionRenderer: FC<ICellRendererParams> = ({ data }) => {
     return (
       <div
@@ -40,8 +57,8 @@ const ManageProducts: FC = () => {
         <Button variant="ghost" size="icon" onClick={() => editProduct(data.id)}>
           <PencilLine size={20} />
         </Button>
-        <Button variant="ghost" size="icon">
-          <Trash2 size={20} className=" text-rose-600" />
+        <Button variant="ghost" size="icon" onClick={() => handleDeleteProduct(data.id)}>
+          <Trash2 size={20} className="text-rose-600" />
         </Button>
       </div>
     );
@@ -59,7 +76,7 @@ const ManageProducts: FC = () => {
 
   const { filterProducts } = useProductFilter(
     '',
-    '',
+    vendorId,
     page + 1,
     limit,
     0,
@@ -86,32 +103,31 @@ const ManageProducts: FC = () => {
         </div>
         <div className="flex gap-2">
           <Button variant="outline" className="flex gap-1" disabled>
-            <Filter size={16} /> Filter
-          </Button>
-          <Button variant="outline" className="flex gap-1">
             <Download size={16} /> Export
           </Button>
-          <Button className="bg-brand-700 text-white flex gap-1"
-            onClick={addProduct}
-          >
-            <Plus size={16} /> Add Product
-          </Button>
+              <Button variant="outline" className="flex gap-1" disabled>
+                <Filter size={16} /> Filter
+              </Button>
+              <Button
+                className="bg-brand-700 text-white flex gap-1"
+                onClick={addProduct}
+              >
+                <Plus size={16} /> Add Product
+              </Button>
         </div>
       </div>
 
       {/* Data Grid */}
       <div className="h-[calc(100vh-240px)] ag-theme-quartz mt-2 overflow-auto w-full">
-
         <AgGrid
           columnDefs={colDef}
           rowData={records}
-          onPageChange={setPage}
-          onLimitChange={setLimit}
           page={page}
           pageSize={limit}
           totalRecords={totalRecords}
+          onPageChange={setPage}
+          onLimitChange={setLimit}
         />
-
       </div>
     </div>
   );

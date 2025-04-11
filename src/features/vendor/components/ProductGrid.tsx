@@ -2,6 +2,12 @@ import { ColDef } from "ag-grid-community";
 
 export const columns: ColDef[] = [
   {
+    headerName: "Vendor Name",
+    filter: true,
+    flex: 1,
+    valueGetter: (params) => params.data.vendor ? params.data.vendor.businessName : ''
+  },
+  {
     field: "name",
     headerName: "Product Name",
     filter: true,

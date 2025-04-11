@@ -30,11 +30,9 @@ export const useProductFilter = (
         url = url + `&category=${category}`;
       }
       if (vendorId) {
-        url = url + `&vendor=${vendorId}`;
-      }
-
+        url = url + `&vendorId=${vendorId}`;
+      }    
       const reponse = await axiosInstance.get(url);
-      console.log(reponse);
 
       setProductFilterDetails(reponse.data);
     } catch (error) {

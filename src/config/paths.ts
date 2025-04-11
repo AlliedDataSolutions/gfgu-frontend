@@ -51,6 +51,7 @@ export const paths = {
   admin: {
     dashboard: { path: "/admin", getHref: () => "/admin" },
     product: { path: "/admin/product", getHref: () => "/admin/product" },
+    editProduct: { path: "/admin/product/edit", getHref: () => "/admin/product/edit" },
     payment: { path: "/admin/payment", getHref: () => "/admin/payment" },
     manageUsers: { path: "/admin/users", getHref: () => "/admin/users" },
     profile: { path: "/admin/profile", getHref: () => "/admin/profile" },
