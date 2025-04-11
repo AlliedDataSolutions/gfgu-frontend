@@ -31,11 +31,6 @@ export const useProductFilter = (
       }
       if (vendorId) {
         url = url + `&vendorId=${vendorId}`;
-      } else {
-        const storage = localStorage.getItem("vendorId")
-        if (storage) {
-          url = url + `&vendorId=${storage}`;
-        }
       }    
       const reponse = await axiosInstance.get(url);
 

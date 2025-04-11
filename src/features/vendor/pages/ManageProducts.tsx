@@ -9,16 +9,8 @@ import { PencilLine, Trash2 } from "lucide-react";
 import { Product } from "@/components/models/type";
 import { useNavigate } from "react-router-dom";
 import { paths } from "@/config/paths";
-import { deleteProduct } from "../hooks/useProduct"; // Import deleteProduct
+import { deleteProduct, useProductFilter } from "../hooks/useProduct"; // Import deleteProduct
 import toast from "react-hot-toast";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { useStore } from "@/features/store/hooks/useStore";
-import { useProductFilter } from "@/features/store/hooks/useProductFilter";
 
 const ManageProducts: FC = () => {
   const [colDef, setColDef] = useState<ColDef[]>([]);
@@ -29,9 +21,7 @@ const ManageProducts: FC = () => {
   const [records, setRecords] = useState<Product[]>([]);
   const [totalRecords, setTotalRecords] = useState<number>(1);
   const navigate = useNavigate();
-  const [isDropdownOpen, setIsDropdownOpen] = useState<boolean>(false);
-  const [vendorId, setvendorId] = useState<string>('');
-  const { vendors } = useStore();
+  const [vendorId] = useState<string>('');
 
   const addProduct = () => {
     navigate(`${paths.vendor.addProduct.path}/null`);
@@ -100,8 +90,6 @@ const ManageProducts: FC = () => {
     }
   }, [filterProducts]);
 
-  const isVendor = Boolean(localStorage.getItem("vendorId"));
-
   return (
     <div className="p-4 space-y-4">
       {/* Header Controls */}
@@ -117,8 +105,6 @@ const ManageProducts: FC = () => {
           <Button variant="outline" className="flex gap-1" disabled>
             <Download size={16} /> Export
           </Button>
-          {isVendor ? (
-            <>
               <Button variant="outline" className="flex gap-1" disabled>
                 <Filter size={16} /> Filter
               </Button>
@@ -128,32 +114,6 @@ const ManageProducts: FC = () => {
               >
                 <Plus size={16} /> Add Product
               </Button>
-            </>
-          ) : (
-            <DropdownMenu
-              open={isDropdownOpen}
-              onOpenChange={setIsDropdownOpen}
-            >
-              <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="flex items-center gap-1">
-                  <Filter size={16} /> Filter Vendor
-                </Button>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent align="end">
-                {vendors?.map((vendor, index) => (
-                  <DropdownMenuItem
-                    key={index}
-                    onClick={() => {
-                      setvendorId(vendor.id);
-                    }}
-                  >
-                    {vendor.businessName}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
-          )}
         </div>
       </div>
 
