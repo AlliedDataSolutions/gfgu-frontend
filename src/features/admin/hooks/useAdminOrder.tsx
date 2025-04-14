@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import axiosInstance from "@/core/axiosInstance";
+import { handleAxiosError } from "@/lib/handleAxiosError";
 
 interface FilterOrders {
   page: number;
@@ -58,7 +59,7 @@ const useAdminOrder = (filters: FilterOrders) => {
       await axiosInstance.put(`/admin/update-order`, { orderLineId, status });
       await fetchOrders();
     } catch (error) {
-      console.error("Error updating order line status:", error);
+      handleAxiosError(error)
     } finally {
       setLoading(false);
     }

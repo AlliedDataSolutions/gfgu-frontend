@@ -1,10 +1,6 @@
 import { useState } from "react";
 import React from "react";
-import {
-  MoreVertical,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { MoreVertical, ChevronDown, ChevronUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import UserDetailCard from "./UserDetailCard";
 import {
@@ -18,25 +14,38 @@ import { formatDate } from "@/lib/utils";
 interface OrderTableProps {
   loading: boolean;
   orders: any[];
-  handleDelete: (order: any) => void;
   handleAction: (orderLineId: string, action: string) => void;
-  fetchOrders: () => Promise<void>;
 }
 
-const getStatus = (order: any): string[] => {
-  let actions: string[] = [];
-  actions.push(order.status);
-  return actions;
+const getStatusMessage = (status: any): string => {
+  let messageStatus = "";
+  if (status == "interacPayment") {
+    messageStatus = "Unconfirmed payment";
+  } else {
+    messageStatus = status;
+  }
+
+  return messageStatus;
 };
 
-const getAdminActions = (order: any): string[] => {
+const getAdminActions = (status: string): string[] => {
   let actions: string[] = [];
 
-  if (order.status === "pending") {
+  if (status === "interacPayment") {
     actions.push("confirm");
-  } else {
-    actions.push("pending");
+    actions.push("shipped");
+    actions.push("delivered");
+    actions.push("canceled");
+  } else if (status === "confirmed") {
+    // actions.push("pending"); is there a case an order is taken back to pending?
+    actions.push("shipped");
+    actions.push("delivered");
+    actions.push("canceled");
+  } else if (status === "shipped") {
+    actions.push("delivered");
+    actions.push("canceled");
   }
+
   return actions;
 };
 
@@ -69,7 +78,7 @@ const OrderLine = ({
         <div className="text-sm ">{orderLine.unitPrice}</div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap">
-        <div className="text-sm ">{orderLine.status}</div>
+        <div className="text-sm ">{getStatusMessage(orderLine.status)}</div>
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
         <div className="flex items-center gap-2 justify-end">
@@ -80,13 +89,7 @@ const OrderLine = ({
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              {[
-                "pending",
-                "confirmed",
-                "shipped",
-                "delivered",
-                "cancelled",
-              ].map((action, index) => (
+              {getAdminActions(orderLine.status).map((action, index) => (
                 <DropdownMenuItem
                   key={index}
                   onClick={() => {
@@ -108,9 +111,7 @@ const OrderLine = ({
 export default function OrderTable({
   loading,
   orders,
-  handleDelete,
   handleAction,
-  fetchOrders,
 }: OrderTableProps) {
   const [expandedRow, setExpandedRow] = useState<string | null>(null);
 
@@ -170,14 +171,18 @@ export default function OrderTable({
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm ">
-                    {order.requiredDate ? formatDate(order.requiredDate) : ""}</div>
+                    {order.requiredDate ? formatDate(order.requiredDate) : ""}
+                  </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
                   <div className="text-sm ">
-                    {order.shippedDate ? formatDate(order.shippedDate) : ""}</div>
+                    {order.shippedDate ? formatDate(order.shippedDate) : ""}
+                  </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap">
-                  <div className="text-sm ">{order.status}</div>
+                  <div className="text-sm ">
+                    {getStatusMessage(order.status)}
+                  </div>
                 </td>
                 <td className="px-4 py-3 whitespace-nowrap text-right text-sm font-medium">
                   <div className="flex items-center gap-2 justify-end">
