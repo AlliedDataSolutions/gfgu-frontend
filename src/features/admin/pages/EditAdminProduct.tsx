@@ -3,9 +3,7 @@ import { Dropdown } from "@/components/ui/dropdown";
 import { Input } from "@/components/ui/input";
 import { paths } from "@/config/paths";
 import { FC, useEffect } from "react";
-import { ImageSection } from "../components/ImageSection";
 import { useStore } from "@/features/store/hooks/useStore";
-import { createProduct, updateProduct, getProductById } from "../hooks/useProduct";
 import { useForm } from "react-hook-form";
 import {
   Form,
@@ -17,8 +15,11 @@ import {
 } from "@/components/ui/form";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import toast from "react-hot-toast"; // Import toast
-import { uploadImage } from "../hooks/uploadImage";
 import { ProductCategory } from "@/components/models/type";
+import { ImageSection } from "@/features/vendor/components/ImageSection";
+import { uploadImage } from "@/features/vendor/hooks/uploadImage";
+import { getProductById, updateProduct } from "@/features/vendor/hooks/useProduct";
+// import { getProductById, updateProduct } from "../hooks/useAdminProduct";
 
 interface ProductForm {
   id?: string;
@@ -31,7 +32,7 @@ interface ProductForm {
   status: string;
 }
 
-export const CreateProduct: FC = () => {
+export const EditAdminProduct: FC = () => {
   const { categories } = useStore();
   const navigate = useNavigate();
   const { id:productId } = useParams(); // Get product ID from URL params
@@ -128,11 +129,11 @@ export const CreateProduct: FC = () => {
         await updateProduct(productId, productPayload);
         toast.success("Product updated successfully!");
       } else {
-        await createProduct(productPayload);
+        await EditAdminProduct(productPayload);
         toast.success("Product created successfully!");
       }
 
-      navigate(paths.vendor.products.getHref());
+      navigate(paths.admin.product.getHref());
     } catch (error) {
       toast.error("Something went wrong!");
     }
@@ -146,11 +147,11 @@ export const CreateProduct: FC = () => {
             Products
           </Link>
           <span>/</span>
-          <span className="font-bold">{productId && productId !== "null" ? "Edit" : "Add"}</span>
+          <span className="font-bold">Edit</span>
         </nav>
       </div>
       <div className="max-w-7xl mx-auto w-full bg-white p-20 pt-10 rounded-lg shadow-md">
-        <h2 className="text-lg font-bold text-gray-800">{productId && productId !== "null" ? "Edit Product" : "Add Product"}</h2>
+        <h2 className="text-lg font-bold text-gray-800">Edit Product</h2>
 
         <Form {...form}>
           <form onSubmit={handleSubmit(onSubmit)} className="mt-6 space-y-4">

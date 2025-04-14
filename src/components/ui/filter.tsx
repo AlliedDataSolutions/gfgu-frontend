@@ -83,14 +83,14 @@ export function FilterSidebar({ filters, onFilterChange }: FilterSidebarProps) {
         <div className="space-y-1">
           {vendors.map((vendor) => (
             <label
-              key={vendor.businessName}
+              key={vendor.id}
               className="flex items-center gap-2"
             >
               <input
                 type="checkbox"
                 className="rounded"
-                checked={localFilters.vendors.includes(vendor.businessName)}
-                onChange={() => handleVendorChange(vendor.businessName)}
+                checked={localFilters.vendors.includes(vendor.id)}
+                onChange={() => handleVendorChange(vendor.id)}
               />
               <span className="text-sm">{vendor.businessName}</span>
             </label>
