@@ -6,7 +6,7 @@ import { Minus, Plus } from "lucide-react";
 import { useCartContext } from "../hooks/CartContext";
 import { OrderLine } from "@/core/order";
 import { Button } from "@/components/ui/button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { paths } from "@/config/paths";
 import InlineLoader from "@/components/ui/inlineloading";
 
@@ -244,6 +244,14 @@ export default function CartPage() {
                     className="w-full"
                   >
                     Cancel Order
+                  </Button>
+
+                  <Button
+                    variant={"link"}
+                    onClick={() => navigate(paths.store.home.path)}
+                    className="w-full"
+                  >
+                    Return to store
                   </Button>
                 </div>
               </div>

@@ -19,7 +19,7 @@ interface OrderTableProps {
 
 const getStatusMessage = (status: any): string => {
   let messageStatus = "";
-  if (status == "interacPayment") {
+  if (status == "offlinePayment") {
     messageStatus = "Unconfirmed payment";
   } else {
     messageStatus = status;
@@ -31,7 +31,7 @@ const getStatusMessage = (status: any): string => {
 const getAdminActions = (status: string): string[] => {
   let actions: string[] = [];
 
-  if (status === "interacPayment") {
+  if (status === "offlinePayment") {
     actions.push("confirm");
     actions.push("shipped");
     actions.push("delivered");

@@ -8,7 +8,7 @@ interface UserDetailCardProps {
 
 const UserDetailCard = ({ user, orderAddress, children }: UserDetailCardProps) => {
   const formattedAddress = orderAddress
-    ? `${orderAddress.street}, ${orderAddress.city}, ${orderAddress.state} ${orderAddress.zip}`
+    ? `${orderAddress.streetName}, ${orderAddress.town}, ${orderAddress.province} ${orderAddress.postalCode}`
     : "No address available";
 
   return (
