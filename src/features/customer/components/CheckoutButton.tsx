@@ -43,6 +43,7 @@ const Checkout: React.FC<CheckoutProps> = ({ amount, selectedAddressId }) => {
             className="w-full"
             disabled={loading}
             onClick={async () => {
+              setLoading(true);
               try {
                 await axiosInstance.post("/payment/offline-pay", {
                   amount,
@@ -53,6 +54,8 @@ const Checkout: React.FC<CheckoutProps> = ({ amount, selectedAddressId }) => {
                 navigate(paths.store.home.path);
               } catch (error) {
                 handleAxiosError(error);
+              } finally {
+                setLoading(false);
               }
             }}
           >

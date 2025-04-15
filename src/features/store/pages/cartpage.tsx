@@ -6,7 +6,7 @@ import { Minus, Plus } from "lucide-react";
 import { useCartContext } from "../hooks/CartContext";
 import { OrderLine } from "@/core/order";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { paths } from "@/config/paths";
 import InlineLoader from "@/components/ui/inlineloading";
 
