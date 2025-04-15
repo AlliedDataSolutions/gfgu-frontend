@@ -53,13 +53,20 @@ const useAdminOrder = (filters: FilterOrders) => {
     fetchOrders();
   }, [filters]);
 
-  const updateOrderLineStatus = async (orderLineId: string, status: string) => {
+  const updateOrderLineStatus = async (orderLineId: string, inputStatus: string) => {
+    let status = inputStatus;
+    if (inputStatus == "confirm") {
+      status = "confirmed";
+    }
     try {
       setLoading(true);
-      await axiosInstance.put(`/admin/update-order`, { orderLineId, status });
+      await axiosInstance.put(`/admin/update-order`, {
+        orderLineId,
+        status,
+      });
       await fetchOrders();
     } catch (error) {
-      handleAxiosError(error)
+      handleAxiosError(error);
     } finally {
       setLoading(false);
     }
