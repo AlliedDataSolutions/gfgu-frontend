@@ -245,6 +245,14 @@ export default function CartPage() {
                   >
                     Cancel Order
                   </Button>
+
+                  <Button
+                    variant={"link"}
+                    onClick={() => navigate(paths.store.home.path)}
+                    className="w-full"
+                  >
+                    Return to store
+                  </Button>
                 </div>
               </div>
             </div>

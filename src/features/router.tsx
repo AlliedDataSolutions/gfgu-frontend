@@ -40,6 +40,7 @@ import  AdminProduct  from "./admin/pages/AdminProduct";
 import { AdminPayment } from "./admin/pages/AdminPayment";
 import { Profile } from "./admin/pages/Profile";
 import { Role } from "@/core/role";
+import { AdminOrder } from "./admin/pages/AdminOrder";
 import { EditAdminProduct } from "./admin/pages/EditAdminProduct";
 
 export const createAppRouter = () =>
@@ -128,6 +129,7 @@ export const createAppRouter = () =>
         { path: paths.admin.product.path, element: <AdminProduct /> },
         { path: paths.admin.editProduct.path+"/:id", element: <EditAdminProduct /> },
         { path: paths.admin.payment.path, element: <AdminPayment /> },
+        { path: paths.admin.order.path, element: <AdminOrder /> },
         { path: paths.admin.manageUsers.path, element: <ManageUsers /> },
         { path: paths.admin.profile.path, element: <Profile /> },
         { path: paths.admin.salesReport.path, element: <SalesReport /> },

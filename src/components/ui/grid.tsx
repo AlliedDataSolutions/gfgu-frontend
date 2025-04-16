@@ -41,6 +41,4 @@ const AgGrid: FC<IGrid> = ({
   );
 };
 
-
-
 export default AgGrid;

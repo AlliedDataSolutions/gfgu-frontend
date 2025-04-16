@@ -40,7 +40,7 @@ export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
         <Marquee speed={50}>
           {deliveryDays.map((item, index) => (
             <DeliveryDayComp
-            key={index}
+              key={index}
               location={item.location}
               dayOfWeek={item.dayOfWeek}
             />
