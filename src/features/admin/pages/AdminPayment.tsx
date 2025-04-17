@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export const AdminPayment = () => {
   const [skip, setSkip] = useState(0);
-  const [take, setTake] = useState(10);
+  const [take, _] = useState(10);
   const {
     data: transactions,
     count,
@@ -12,7 +12,7 @@ export const AdminPayment = () => {
     error,
   } = useTransaction("/admin/transaction", skip, take);
 
-  const handlePageChange = (skip: number, take: number) => {
+  const handlePageChange = (skip: number, _: number) => {
     setSkip(skip);
   };
 

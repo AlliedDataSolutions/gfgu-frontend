@@ -36,7 +36,7 @@ import AddressList from "@/features/customer/pages/AddressList";
 import AddAddress from "./customer/pages/AddAddress";
 import { MyOrder } from "./customer/pages/MyOrder";
 import { PersonalInfo } from "./customer/pages/PersonInfo";
-import  AdminProduct  from "./admin/pages/AdminProduct";
+import AdminProduct from "./admin/pages/AdminProduct";
 import { AdminPayment } from "./admin/pages/AdminPayment";
 import { Profile } from "./admin/pages/Profile";
 import { Role } from "@/core/role";
@@ -113,8 +113,11 @@ export const createAppRouter = () =>
         { path: paths.vendor.orders.path, element: <VendorOrders /> },
         { path: paths.vendor.payment.path, element: <VendorPayment /> },
         { path: paths.vendor.products.path, element: <ManageProducts /> },
-        { path: paths.vendor.addProduct.path+"/:id", element: <CreateProduct /> },
-
+        {
+          path: paths.vendor.addProduct.path + "/:id",
+          element: <CreateProduct />,
+        },
+        { path: paths.vendor.profile.path, element: <div>Vendor Profile</div> },
       ],
     },
 
@@ -129,7 +132,10 @@ export const createAppRouter = () =>
       children: [
         { path: "", element: <AdminDashboard /> },
         { path: paths.admin.product.path, element: <AdminProduct /> },
-        { path: paths.admin.editProduct.path+"/:id", element: <EditAdminProduct /> },
+        {
+          path: paths.admin.editProduct.path + "/:id",
+          element: <EditAdminProduct />,
+        },
         { path: paths.admin.payment.path, element: <AdminPayment /> },
         { path: paths.admin.order.path, element: <AdminOrder /> },
         { path: paths.admin.manageUsers.path, element: <ManageUsers /> },
