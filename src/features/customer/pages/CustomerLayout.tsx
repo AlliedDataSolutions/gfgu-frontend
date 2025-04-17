@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import CustomerSidebar from "@/features/customer/components/CustomerSidebar"; // Using alias path
 import { Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "@/features/context/AuthContext";
-import { Role } from "@/core/role";
 import { Menu } from "lucide-react"; // Import Menu icon for toggle
 import { Button } from "@/components/ui/button"; // Import Button for toggle
 import { paths } from "@/config/paths"; // Import paths for title logic
@@ -23,7 +22,6 @@ export function CustomerLayout() {
   const location = useLocation(); // Get current location
 
   const name = user ? `${user.firstName} ${user.lastName}` : "Customer";
-  const role = user?.role ?? Role.customer; // Assuming customer role if not specified
   const title = getTitleFromPath(location.pathname); // Get title based on current path
 
   // Initialize sidebar state based on screen size and update on resize

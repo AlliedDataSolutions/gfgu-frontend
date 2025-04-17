@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink} from "react-router-dom";
 import { paths } from "@/config/paths";
 import { useAuth } from "@/features/context/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -22,9 +22,7 @@ interface SidebarProps {
 
 export default function CustomerSidebar({ isOpen, setIsOpen }: SidebarProps) {
   const [isMobile, setIsMobile] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(""); // State to track active menu
   const navigate = useNavigate();
-  const location = useLocation(); // Get current location
   const { logout } = useAuth();
 
   useEffect(() => {
@@ -35,19 +33,6 @@ export default function CustomerSidebar({ isOpen, setIsOpen }: SidebarProps) {
     window.addEventListener("resize", checkIfMobile);
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
-
-  // Update activeMenu based on current path
-  useEffect(() => {
-    const currentPath = location.pathname;
-    const menuItem = menuItems.find(item => currentPath.startsWith(item.path));
-    if (menuItem) {
-      setActiveMenu(menuItem.id);
-    } else {
-      // Default or fallback active menu item if needed
-      // Example: Set the first item as active if no match
-      // setActiveMenu(menuItems[0]?.id || '');
-    }
-  }, [location.pathname]); // Re-run effect when path changes
 
   const menuItems = [
     {
@@ -120,12 +105,6 @@ export default function CustomerSidebar({ isOpen, setIsOpen }: SidebarProps) {
               <li key={item.id}>
                 <NavLink
                   to={item.path}
-                  onClick={() => {
-                    setActiveMenu(item.id); // Update active menu on click
-                    if (isMobile) {
-                      setIsOpen(false);
-                    }
-                  }}
                   className={({ isActive }) => // Use isActive from NavLink
                     cn(
                       "flex items-center mx-4 px-2 rounded-lg py-3 text-left transition-colors",
