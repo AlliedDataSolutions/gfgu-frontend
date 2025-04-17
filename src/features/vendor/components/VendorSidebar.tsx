@@ -4,11 +4,11 @@ import {
   Box,
   ShoppingCart,
   CreditCard,
-  User,
   X,
   ChevronLeft,
   ChevronRight,
   LogOut,
+  User,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -73,13 +73,13 @@ export default function VendorSidebar({
       id: "payment",
       label: "Payment",
       icon: <CreditCard size={16} />,
-      path: paths.vendor.orders.path
+      path: paths.vendor.payment.path
     },
     {
       id: "profile",
       label: "Profile",
       icon: <User size={16} />,
-      path: paths.vendor.orders.path
+      path: paths.vendor.profile.path
     },
   ];
 

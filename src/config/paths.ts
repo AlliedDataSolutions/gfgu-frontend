@@ -46,6 +46,8 @@ export const paths = {
       getHref: () => "/vendor/analytics",
     },
     orders: { path: "/vendor/orders", getHref: () => "/vendor/orders" },
+    payment: { path: "/vendor/payment", getHref: () => "/vendor/payment" },
+    profile: { path: "/vendor/profile", getHref: () => "/vendor/profile" }
   },
 
   admin: {
