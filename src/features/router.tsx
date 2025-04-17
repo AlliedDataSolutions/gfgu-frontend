@@ -42,6 +42,7 @@ import { Profile } from "./admin/pages/Profile";
 import { Role } from "@/core/role";
 import { AdminOrder } from "./admin/pages/AdminOrder";
 import { EditAdminProduct } from "./admin/pages/EditAdminProduct";
+import { VendorPayment } from "./vendor/pages/VendorPayment";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -110,6 +111,7 @@ export const createAppRouter = () =>
       children: [
         { path: "", element: <VendorDashboard /> },
         { path: paths.vendor.orders.path, element: <VendorOrders /> },
+        { path: paths.vendor.payment.path, element: <VendorPayment /> },
         { path: paths.vendor.products.path, element: <ManageProducts /> },
         { path: paths.vendor.addProduct.path+"/:id", element: <CreateProduct /> },
 

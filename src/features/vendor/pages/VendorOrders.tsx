@@ -4,7 +4,9 @@ import { Input } from "@/components/ui/input";
 import { Filter } from "lucide-react";
 import axiosInstance from "@/core/axiosInstance";
 import VendorOrderTable, { VendorOrder } from "../components/VendorOrderTable";
-import VendorOrderFilter, { VendorOrderFilterData,} from "../components/VendorOrderFilter";
+import VendorOrderFilter, {
+  VendorOrderFilterData,
+} from "../components/VendorOrderFilter";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -20,9 +22,7 @@ export function VendorOrders() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const response = await axiosInstance.get("/order/vendor/orderline/", {
-        withCredentials: true,
-      });
+      const response = await axiosInstance.get("/order/vendor/orderline");
       // Backend returns an array of order lines.
       setAllOrders(response.data);
     } catch (error) {
