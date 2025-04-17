@@ -46,11 +46,15 @@ export const paths = {
       getHref: () => "/vendor/analytics",
     },
     orders: { path: "/vendor/orders", getHref: () => "/vendor/orders" },
+    payment: { path: "/vendor/payment", getHref: () => "/vendor/payment" },
+    profile: { path: "/vendor/profile", getHref: () => "/vendor/profile" }
   },
 
   admin: {
     dashboard: { path: "/admin", getHref: () => "/admin" },
     product: { path: "/admin/product", getHref: () => "/admin/product" },
+    order: { path: "/admin/order", getHref: () => "/admin/order" },
+    editProduct: { path: "/admin/product/edit", getHref: () => "/admin/product/edit" },
     payment: { path: "/admin/payment", getHref: () => "/admin/payment" },
     manageUsers: { path: "/admin/users", getHref: () => "/admin/users" },
     profile: { path: "/admin/profile", getHref: () => "/admin/profile" },

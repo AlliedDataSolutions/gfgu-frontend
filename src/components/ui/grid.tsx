@@ -3,9 +3,7 @@ import { FC } from "react";
 import { AgGridReact, AgGridReactProps } from "ag-grid-react";
 import { Pagination } from "./pagination";
 
-interface IGrid extends AgGridReactProps, IPagination {}
-
-interface IPagination {
+interface IGrid extends AgGridReactProps {
   page: number;
   pageSize: number;
   totalRecords: number;
@@ -30,18 +28,17 @@ const AgGrid: FC<IGrid> = ({
           },
         }}
         pagination={false}
-        // onPaginationChanged={onPaginationChanged}
         {...rest}
       />
-          <Pagination pageCount={pageSize} handlePageClick={(data: {
-              selected: number;
-          }) => { 
-                onPageChange(data.selected + 1);
-          }} />
+      <Pagination
+        pageCount={Math.ceil(totalRecords / pageSize)} // Use totalRecords/pageSize
+        handlePageClick={(data) => {
+          // data.selected is zero-based
+          onPageChange(data.selected);
+        }}
+       />
       </>
   );
 };
-
-
 
 export default AgGrid;
