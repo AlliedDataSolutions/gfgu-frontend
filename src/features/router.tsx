@@ -31,7 +31,9 @@ import ProductDetails from "./store/pages/ProductDetails";
 import ProductListing from "./store/pages/ProductListing";
 import StoreFront from "./store/pages/StoreFront";
 
-import AccountLayout from "@/features/customer/pages/AccountLayout";
+// Import the new CustomerLayout
+import { CustomerLayout } from "@/features/customer/pages/CustomerLayout";
+// Removed AccountLayout import
 import AddressList from "@/features/customer/pages/AddressList";
 import AddAddress from "./customer/pages/AddAddress";
 import { MyOrder } from "./customer/pages/MyOrder";
@@ -148,7 +150,8 @@ export const createAppRouter = () =>
       path: paths.account.account.path,
       element: (
         <ProtectedRoute>
-          <AccountLayout />
+          {/* Use the new CustomerLayout */}
+          <CustomerLayout />
         </ProtectedRoute>
       ),
       children: [
