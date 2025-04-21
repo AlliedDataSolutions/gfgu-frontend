@@ -40,11 +40,16 @@ import { MyOrder } from "./customer/pages/MyOrder";
 import { PersonalInfo } from "./customer/pages/PersonInfo";
 import AdminProduct from "./admin/pages/AdminProduct";
 import { AdminPayment } from "./admin/pages/AdminPayment";
-import { Profile } from "./admin/pages/Profile";
 import { Role } from "@/core/role";
 import { AdminOrder } from "./admin/pages/AdminOrder";
 import { EditAdminProduct } from "./admin/pages/EditAdminProduct";
 import { VendorPayment } from "./vendor/pages/VendorPayment";
+
+
+import { ProfilePage } from "@/features/common/pages/ProfilePage";
+import { EditName } from "@/features/common/pages/EditName";
+import { EditEmail } from "@/features/common/pages/EditEmail";
+import { EditPassword } from "@/features/common/pages/EditPassword";
 
 export const createAppRouter = () =>
   createBrowserRouter([
@@ -119,7 +124,24 @@ export const createAppRouter = () =>
           path: paths.vendor.addProduct.path + "/:id",
           element: <CreateProduct />,
         },
-        { path: paths.vendor.profile.path, element: <div>Vendor Profile</div> },
+        {
+          path: paths.vendor.profile.path,
+          element: <ProfilePage />,
+        },
+        {
+          path: `${paths.vendor.profile.path}/name`,
+          element: <EditName />,
+        },
+        {
+          path: `${paths.vendor.profile.path}/email`,
+          element: <EditEmail />,
+        },
+        {
+          path: `${paths.vendor.profile.path}/password`,
+          element: <EditPassword />,
+        },
+        
+        
       ],
     },
 
@@ -141,7 +163,24 @@ export const createAppRouter = () =>
         { path: paths.admin.payment.path, element: <AdminPayment /> },
         { path: paths.admin.order.path, element: <AdminOrder /> },
         { path: paths.admin.manageUsers.path, element: <ManageUsers /> },
-        { path: paths.admin.profile.path, element: <Profile /> },
+        {
+          path: paths.admin.profile.path,
+          element: <ProfilePage />,
+        },
+        {
+          path: `${paths.admin.profile.path}/name`,
+          element: <EditName />,
+        },
+        {
+          path: `${paths.admin.profile.path}/email`,
+          element: <EditEmail />,
+        },
+        {
+          path: `${paths.admin.profile.path}/password`,
+          element: <EditPassword />,
+        },
+        
+        
         { path: paths.admin.salesReport.path, element: <SalesReport /> },
       ],
     },
@@ -150,7 +189,6 @@ export const createAppRouter = () =>
       path: paths.account.account.path,
       element: (
         <ProtectedRoute>
-          {/* Use the new CustomerLayout */}
           <CustomerLayout />
         </ProtectedRoute>
       ),
@@ -176,6 +214,22 @@ export const createAppRouter = () =>
         {
           path: paths.account.personalInfo.path,
           element: <PersonalInfo />,
+        },
+        {
+          path: paths.account.personalInfo.path,
+          element: <ProfilePage />,
+        },
+        {
+          path: `${paths.account.personalInfo.path}/name`,
+          element: <EditName />,
+        },
+        {
+          path: `${paths.account.personalInfo.path}/email`,
+          element: <EditEmail />,
+        },
+        {
+          path: `${paths.account.personalInfo.path}/password`,
+          element: <EditPassword />,
         },
       ],
     },
