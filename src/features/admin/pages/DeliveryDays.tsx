@@ -3,7 +3,7 @@ import DeliveryDaysTable from "../components/DeliveryDaysTable";
 import CreateDeliveryDayDialog from "../components/CreateDeliveryDayDialog";
 
 const DeliveryDays = () => {
-  const { data: deliveryDays, loading, deleteDeliveryDay, createDeliveryDay } = useDeliveryDays();
+  const { data: deliveryDays, loading, deleteDeliveryDay, createDeliveryDay, onGridReady } = useDeliveryDays();
 
   if (loading) {
     return <div>Loading...</div>;
@@ -14,7 +14,7 @@ const DeliveryDays = () => {
       <div className="flex justify-end mb-4">
         <CreateDeliveryDayDialog createDeliveryDay={createDeliveryDay} />
       </div>
-      <DeliveryDaysTable deliveryDays={deliveryDays} deleteDeliveryDay={deleteDeliveryDay} />
+      <DeliveryDaysTable deliveryDays={deliveryDays} deleteDeliveryDay={deleteDeliveryDay} onGridReady={onGridReady}/>
     </div>
   );
 };

@@ -13,6 +13,7 @@ const useDeliveryDays = () => {
   const [data, setData] = useState<DeliveryDay[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [gridApi, setGridApi] = useState<any>(null);
 
   const fetchData = async () => {
     setLoading(true);
@@ -34,7 +35,10 @@ const useDeliveryDays = () => {
   const deleteDeliveryDay = async (id: string) => {
     try {
       await axiosInstance.delete(`/admin/location/${id}`);
-      setData(data.filter((item) => item.id !== id));
+      if (gridApi) {
+        gridApi.applyTransaction({ remove: [{ id: id }] });
+      }
+      fetchData();
     } catch (e: any) {
       handleAxiosError(e);
     } finally {
@@ -53,12 +57,17 @@ const useDeliveryDays = () => {
     }
   };
 
+  const onGridReady = (params: any) => {
+    setGridApi(params.api);
+  };
+
   return {
     data,
     loading,
     error,
     deleteDeliveryDay,
     createDeliveryDay,
+    onGridReady,
   };
 };
 

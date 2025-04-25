@@ -15,11 +15,13 @@ interface DeliveryDay {
 interface DeliveryDaysTableProps {
   deliveryDays: DeliveryDay[];
   deleteDeliveryDay: (id: string) => void;
+  onGridReady: (params: any) => void;
 }
 
 const DeliveryDaysTable: React.FC<DeliveryDaysTableProps> = ({
   deliveryDays,
   deleteDeliveryDay,
+  onGridReady,
 }) => {
   const gridRef = useRef<AgGridReact>(null);
   const [columnDefs] = useState([
@@ -38,7 +40,9 @@ const DeliveryDaysTable: React.FC<DeliveryDaysTableProps> = ({
           variant="ghost"
           size="icon"
           className="text-rose-500 hover:text-rose-700 hover:bg-rose-50"
-          onClick={() => deleteDeliveryDay(params.data.id)}
+          onClick={() => {
+            deleteDeliveryDay(params.data.id);
+          }}
         >
           <Trash2 className="h-5 w-5" />
         </Button>
@@ -62,6 +66,7 @@ const DeliveryDaysTable: React.FC<DeliveryDaysTableProps> = ({
         rowData={deliveryDays}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
+        onGridReady={onGridReady}
       />
     </div>
   );
