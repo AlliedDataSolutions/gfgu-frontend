@@ -59,6 +59,7 @@ export const paths = {
     manageUsers: { path: "/admin/users", getHref: () => "/admin/users" },
     profile: { path: "/admin/profile", getHref: () => "/admin/profile" },
     salesReport: { path: "/admin/sales", getHref: () => "/admin/sales" },
+    deliverydays: { path: "/admin/deliverydays", getHref: () => "/admin/deliverydays" },
   },
 
   error: {
