@@ -11,9 +11,12 @@ import Banner from "@/features/store/components/Storebanner";
 export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
   const { data: deliveryLocations } = useDeliveryLocations();
   return (
-    <section className="relative" id="home">
+    <section
+      className="relative bg-gradient-to-r from-[#24601F] to-[#53DE48]"
+      id="home"
+    >
       <Banner />
-      <div className="bg-brand-700 py-5">
+      <div className=" py-5">
         {deliveryLocations && deliveryLocations.length > 0 && (
           <Marquee speed={50}>
             {deliveryDays.map((item, index) => (
