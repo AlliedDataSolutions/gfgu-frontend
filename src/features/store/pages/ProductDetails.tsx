@@ -18,10 +18,12 @@ import Header from "@/components/ui/header";
 import Marquee from "react-fast-marquee";
 import { DeliveryDayComp } from "@/features/common/components/HeroSection";
 import Footer from "@/components/ui/footer";
-import { deliveryDays, menuItems, storeMenuItems } from "@/core/data";
+import { menuItems } from "@/core/data";
 import ProductGrid from "../components/ProductGrid";
 import { paths } from "@/config/paths";
 import { useCartContext } from "../hooks/CartContext";
+import useDeliveryLocations from "@/features/common/hooks/useDeliveryLocations";
+import { DeliveryDay } from "@/components/models/deliveryDays";
 
 export default function ProductView() {
   const { addOrderLine } = useCartContext();
@@ -36,6 +38,8 @@ export default function ProductView() {
     params.id
   );
 
+  const { data: deliveryLocations} = useDeliveryLocations();
+
   const decreaseQuantity = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
@@ -48,19 +52,21 @@ export default function ProductView() {
 
   return (
     <div>
-      <Header menuItems={storeMenuItems} />
+      <Header menuItems={menuItems} />
       <div className="bg-black py-4 mt-16">
         {" "}
         {/* Adjust margin as needed */}
-        <Marquee speed={50}>
-          {deliveryDays.map((item, index) => (
-            <DeliveryDayComp
-              key={index}
-              location={item.location}
-              dayOfWeek={item.dayOfWeek}
-            />
-          ))}
-        </Marquee>
+        {deliveryLocations && deliveryLocations.length > 0 && (
+          <Marquee speed={50}>
+            {deliveryLocations?.map((item: DeliveryDay, index) => (
+              <DeliveryDayComp
+                key={index}
+                location={item.location}
+                dayOfWeek={item.dayOfWeek}
+              />
+            ))}
+          </Marquee>
+        )}
       </div>
       {productDetails && (
         <div className="container mx-auto px-4 py-8">

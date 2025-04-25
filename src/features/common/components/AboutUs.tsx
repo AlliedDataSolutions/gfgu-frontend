@@ -3,12 +3,13 @@ import AboutUsAboutUsElipses from "@/assets/AboutUsElipses.png";
 import AboutUsVeggies from "@/assets/AboutUsVeggies.png";
 import AboutUsBananas from "@/assets/AboutUsBananas.png";
 import AboutUsApples from "@/assets/AboutUsApples.png";
+import { useNavigate } from "react-router-dom";
+import { paths } from "@/config/paths";
 
 export function AboutUs() {
+  const navigate = useNavigate();
   return (
     <section className="relative w-full" id="about">
-      {/* Desktop Background overlay */}
-      <div className="hidden md:block absolute w-[1440px] h-[822px] bg-brand-100 opacity-10 left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
 
       {/* Main container: uses desktop layout on md+, mobile layout below */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-8">
@@ -39,10 +40,12 @@ export function AboutUs() {
           </div>
 
           {/* Right side: Text content (desktop) */}
-          <div className="flex flex-col items-start gap-[161px] w-[460px] h-[472px]">
+          <div className="flex flex-col justify-evenly  w-[460px] h-[472px]">
             <div className="flex flex-row items-center gap-2">
               <div className="w-3 h-3 bg-rose-600 rounded-full" />
-              <span className="text-lg font-semibold text-neutral-900">ABOUT US</span>
+              <span className="text-lg font-semibold text-neutral-900">
+                ABOUT US
+              </span>
             </div>
             <div className="flex flex-col gap-9 w-full">
               <div className="flex flex-col gap-4">
@@ -50,7 +53,10 @@ export function AboutUs() {
                   Alberta Farm to Table Membership Club
                 </h2>
                 <p className="text-base leading-6 text-neutral-800">
-                  We are a membership club connecting farmers, producers, and local businesses to you! As a community member you have access to special pricing and, of course, the best the farming community has to offer!
+                  We are a membership club connecting farmers, producers, and
+                  local businesses to you! As a community member you have access
+                  to special pricing and, of course, the best the farming
+                  community has to offer!
                 </p>
               </div>
               <Button>Join Us</Button>
@@ -84,17 +90,24 @@ export function AboutUs() {
           <div className="flex flex-col items-start gap-4">
             <div className="flex flex-row items-center gap-2">
               <div className="w-3 h-3 bg-rose-600 rounded-full" />
-              <span className="text-lg font-semibold text-neutral-900">ABOUT US</span>
+              <span className="text-lg font-semibold text-neutral-900">
+                ABOUT US
+              </span>
             </div>
             <div className="flex flex-col gap-4">
               <h2 className="text-2xl sm:text-3xl font-semibold text-neutral-900 leading-tight">
                 Alberta Farm to Table Membership Club
               </h2>
               <p className="text-base sm:text-lg leading-6 text-neutral-800">
-                We are a membership club connecting farmers, producers, and local businesses to you! As a community member you have access to special pricing and, of course, the best the farming community has to offer!
+                We are a membership club connecting farmers, producers, and
+                local businesses to you! As a community member you have access
+                to special pricing and, of course, the best the farming
+                community has to offer!
               </p>
             </div>
-            <Button>Join Us</Button>
+            <Button onClick={() => navigate(paths.auth.register.path)}>
+              Join Us
+            </Button>
           </div>
         </div>
       </div>

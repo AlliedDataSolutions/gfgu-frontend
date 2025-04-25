@@ -1,15 +1,24 @@
-import { Button } from "@/components/ui/button"
-
+import { Button } from "@/components/ui/button";
+import { paths } from "@/config/paths";
+import { useNavigate } from "react-router-dom";
 export default function HowItWorks() {
+  const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-[url('/vegetable1.jpg')] bg-cover bg-center relative">
-      <div className="absolute inset-0 bg-yellow-50/50"></div>
+    <div
+      className="bg-cover bg-center relative"
+      style={{ backgroundImage: `url('/src/assets/vegetable-all.png')` }}
+    >
+      {/* <div className="absolute inset-0 bg-yellow-50/50"></div> */}
 
-      <div className="relative z-10 container mx-auto px-4 py-16">
-        <div className="bg-yellow-100 p-6 rounded-3xl shadow-lg mx-auto max-w-5xl">
+      <div className="relative z-10 container mx-auto px-4 py-24">
+        <div className="bg-yellow-100 opacity-80 p-6 rounded-3xl mx-auto max-w-5xl">
           <div className="text-center mb-12">
-            <span className="text-sm font-medium text-emerald-700">HOW IT WORKS</span>
-            <h1 className="text-4xl font-bold text-neutral-900 mt-2">What You Need to Do</h1>
+            <span className="text-sm font-medium text-emerald-700">
+              HOW IT WORKS
+            </span>
+            <h1 className="text-4xl text-neutral-900 mt-2">
+              What You Need to Do
+            </h1>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -22,6 +31,7 @@ export default function HowItWorks() {
             <Button
               variant="default"
               className="bg-teal-700 hover:bg-teal-800 text-white font-medium px-8 py-3 rounded-md transition-colors"
+              onClick={() => navigate(paths.auth.register.path)}
             >
               Join Us
             </Button>
@@ -29,26 +39,33 @@ export default function HowItWorks() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 interface StepProps {
-  number: number
-  title: string
-  description: string
-  bgColor: string
-  textColor: string
-  rotate?: string
+  number: number;
+  title: string;
+  description: string;
+  bgColor: string;
+  textColor: string;
+  rotate?: string;
 }
 
-function StepCard({ number, title, description, bgColor, textColor, rotate }: StepProps) {
+function StepCard({
+  number,
+  title,
+  description,
+  bgColor,
+  textColor,
+  rotate,
+}: StepProps) {
   return (
     <div className={`${bgColor} p-6 rounded-lg shadow-lg ${rotate || ""}`}>
       <div className={`text-2xl font-bold ${textColor} mb-3`}>{number}</div>
       <h3 className="font-medium mb-2">{title}</h3>
       <p className="text-sm text-neutral-600">{description}</p>
     </div>
-  )
+  );
 }
 
 const steps: StepProps[] = [
@@ -78,5 +95,4 @@ const steps: StepProps[] = [
     textColor: "text-brand-600",
     rotate: "transform rotate-[2deg]",
   },
-]
-
+];

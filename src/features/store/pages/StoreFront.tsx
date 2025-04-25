@@ -12,10 +12,12 @@ import Footer from "@/components/ui/footer";
 import { deliveryDays, menuItems, storeMenuItems } from "@/core/data";
 import { useStore } from "../hooks/useStore";
 import InlineLoader from "@/components/ui/inlineloading";
+import useDeliveryLocations from "@/features/common/hooks/useDeliveryLocations";
 
 export default function StoreFront() {
   const { loading, popularProducts, categories } = useStore();
   const navigate = useNavigate();
+  const { data: deliveryLocations } = useDeliveryLocations();
 
   if (loading) {
     return <InlineLoader loading={loading} children={<div></div>} />;
@@ -27,15 +29,17 @@ export default function StoreFront() {
       <div>
         <Banner />
         <div className="bg-black py-4">
-          <Marquee speed={50}>
-            {deliveryDays.map((item, index) => (
-              <DeliveryDayComp
-                key={index}
-                location={item.location}
-                dayOfWeek={item.dayOfWeek}
-              />
-            ))}
-          </Marquee>
+          {deliveryLocations && deliveryLocations.length > 0 && (
+            <Marquee speed={50}>
+              {deliveryDays.map((item, index) => (
+                <DeliveryDayComp
+                  key={index}
+                  location={item.location}
+                  dayOfWeek={item.dayOfWeek}
+                />
+              ))}
+            </Marquee>
+          )}
         </div>
 
         <section className="bg-yellow-50 py-10">

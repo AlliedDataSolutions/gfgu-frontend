@@ -25,7 +25,12 @@ const DeliveryDaysTable: React.FC<DeliveryDaysTableProps> = ({
 }) => {
   const gridRef = useRef<AgGridReact>(null);
   const [columnDefs] = useState([
-    { headerName: "ID", field: "id", sortable: true, filter: true },
+    {
+      headerName: "ID",
+      field: "id",
+      sortable: true,
+      filter: false,
+    },
     { headerName: "City", field: "city", sortable: true, filter: true },
     {
       headerName: "Delivery Day",
