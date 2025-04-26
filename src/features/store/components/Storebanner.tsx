@@ -2,7 +2,7 @@ import ShopBgImg from "@/assets/ShopBgImg.png";
 
 export default function Banner() {
   return (
-    <div className="relative w-full bg-gradient-to-r from-[#24601F] to-[#53DE48] overflow-hidden">
+    <div className="relative w-full overflow-hidden">
       {/* Mobile background image with overlay */}
       <div className="md:hidden absolute inset-0 z-0">
         <img
@@ -32,6 +32,5 @@ export default function Banner() {
         </div>
       </div>
     </div>
-  )
+  );
 }
-

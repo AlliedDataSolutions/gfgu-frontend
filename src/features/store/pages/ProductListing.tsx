@@ -12,6 +12,7 @@ import { DeliveryDayComp } from "@/features/common/components/HeroSection";
 import { useCartContext } from "../hooks/CartContext";
 import InlineLoader from "@/components/ui/inlineloading";
 import { useParams } from "react-router-dom";
+import useDeliveryLocations from "@/features/common/hooks/useDeliveryLocations";
 
 export default function ProductListing() {
   const { loading } = useCartContext();
@@ -21,6 +22,8 @@ export default function ProductListing() {
     vendors: string[];
     priceRange: [number, number];
   }
+
+  const { data: deliveryLocations } = useDeliveryLocations();
 
   const [page, setPage] = useState<number>(0);
   const limit = 10;
@@ -62,17 +65,19 @@ export default function ProductListing() {
       <Header menuItems={storeMenuItems} />
 
       {/* delivery days */}
-      <div className="bg-black py-4 mt-16">
-        <Marquee speed={50}>
-          {deliveryDays.map((item, index) => (
-            <DeliveryDayComp
-              key={index}
-              location={item.location}
-              dayOfWeek={item.dayOfWeek}
-            />
-          ))}
-        </Marquee>
-      </div>
+      {deliveryLocations && deliveryLocations.length > 0 && (
+        <div className="bg-black py-4 mt-16">
+          <Marquee speed={50}>
+            {deliveryDays.map((item, index) => (
+              <DeliveryDayComp
+                key={index}
+                location={item.location}
+                dayOfWeek={item.dayOfWeek}
+              />
+            ))}
+          </Marquee>
+        </div>
+      )}
 
       <div className="container mx-auto py-8 px-4 mt-4 sm:mt-8">
         <div className="flex flex-col sm:flex-row space-y-4 sm:justify-between sm:items-center mb-6">
