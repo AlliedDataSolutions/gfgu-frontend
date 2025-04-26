@@ -65,8 +65,8 @@ export default function ProductListing() {
       <Header menuItems={storeMenuItems} />
 
       {/* delivery days */}
-      <div className="bg-black py-4 mt-16">
-        {deliveryLocations && deliveryLocations.length > 0 && (
+      {deliveryLocations && deliveryLocations.length > 0 && (
+        <div className="bg-black py-4 mt-16">
           <Marquee speed={50}>
             {deliveryDays.map((item, index) => (
               <DeliveryDayComp
@@ -76,8 +76,8 @@ export default function ProductListing() {
               />
             ))}
           </Marquee>
-        )}
-      </div>
+        </div>
+      )}
 
       <div className="container mx-auto py-8 px-4 mt-4 sm:mt-8">
         <div className="flex flex-col sm:flex-row space-y-4 sm:justify-between sm:items-center mb-6">

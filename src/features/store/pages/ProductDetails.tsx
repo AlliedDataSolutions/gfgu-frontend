@@ -38,7 +38,7 @@ export default function ProductView() {
     params.id
   );
 
-  const { data: deliveryLocations} = useDeliveryLocations();
+  const { data: deliveryLocations } = useDeliveryLocations();
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
@@ -53,10 +53,10 @@ export default function ProductView() {
   return (
     <div>
       <Header menuItems={menuItems} />
-      <div className="bg-black py-4 mt-16">
-        {" "}
-        {/* Adjust margin as needed */}
-        {deliveryLocations && deliveryLocations.length > 0 && (
+      {deliveryLocations && deliveryLocations.length > 0 && (
+        <div className="bg-black py-4 mt-16">
+          {" "}
+          {/* Adjust margin as needed */}
           <Marquee speed={50}>
             {deliveryLocations?.map((item: DeliveryDay, index) => (
               <DeliveryDayComp
@@ -66,8 +66,8 @@ export default function ProductView() {
               />
             ))}
           </Marquee>
-        )}
-      </div>
+        </div>
+      )}
       {productDetails && (
         <div className="container mx-auto px-4 py-8">
           {/* Product Details */}

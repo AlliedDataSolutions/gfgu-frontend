@@ -27,9 +27,12 @@ export default function StoreFront() {
     <div className="pt-14 md:pt-16">
       <Header menuItems={storeMenuItems} />
       <div>
-        <Banner />
-        <div className="bg-black py-4">
-          {deliveryLocations && deliveryLocations.length > 0 && (
+        <div className="bg-gradient-to-r from-[#24601F] to-[#53DE48]">
+          <Banner />
+        </div>
+
+        {deliveryLocations && deliveryLocations.length > 0 && (
+          <div className="bg-black py-4">
             <Marquee speed={50}>
               {deliveryDays.map((item, index) => (
                 <DeliveryDayComp
@@ -39,9 +42,8 @@ export default function StoreFront() {
                 />
               ))}
             </Marquee>
-          )}
-        </div>
-
+          </div>
+        )}
         <section className="bg-yellow-50 py-10">
           {!loading && (
             <ProductCategoryGrid

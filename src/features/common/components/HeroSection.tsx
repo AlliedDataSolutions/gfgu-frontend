@@ -16,8 +16,8 @@ export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
       id="home"
     >
       <Banner />
-      <div className=" py-5">
-        {deliveryLocations && deliveryLocations.length > 0 && (
+      {deliveryLocations && deliveryLocations.length > 0 && (
+        <div className=" py-5">
           <Marquee speed={50}>
             {deliveryDays.map((item, index) => (
               <DeliveryDayComp
@@ -27,8 +27,8 @@ export default function HeroSection({ deliveryDays }: DeliveryDayProps) {
               />
             ))}
           </Marquee>
-        )}
-      </div>
+        </div>
+      )}
     </section>
   );
 }
