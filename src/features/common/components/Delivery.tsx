@@ -5,7 +5,10 @@ import { DeliveryDayProps } from "@/components/models/deliveryDays";
 
 const Delivery = ({ deliveryDays }: DeliveryDayProps) => {
   return (
-    <div className="relative w-full min-h-screen bg-gradient-to-b from-white to-[#2EEF76A6] flex justify-center items-center p-6" id="deliveryDays">
+    <div
+      className="relative w-full pb-32 pt-10 bg-gradient-to-b from-white to-[#2EEF76A6] flex justify-center items-center p-6"
+      id="deliveryDays"
+    >
       {/* Background Image */}
       <div className="absolute bottom-0 right-0 w-full h-1/3 md:h-1/2 flex justify-end">
         <img
@@ -30,24 +33,24 @@ const Delivery = ({ deliveryDays }: DeliveryDayProps) => {
 
         {/* Right Side - Delivery Details */}
         <div className="w-full md:w-1/2 mt-6 md:mt-0 md:ml-6">
-          <h2 className="text-2xl font-semibold tracking-widest md:tracking-[1rem]">
+          <h2 className="text-2xl tracking-widest md:tracking-[0.5rem]">
             DELIVERY DAYS
           </h2>
 
           {/* Delivery Schedule */}
           <div className="mt-2 bg-[#35736E2E] p-2 rounded-md shadow-sm ">
-            <img src={DeliveryImg} alt="Delivery Icon" className="w-14 h-14" />
+            <img src={DeliveryImg} alt="Delivery Icon" className="w-14 h-20" />
 
             <div className="space-y-3 ">
               {deliveryDays.map((item, index) => (
                 <div
                   key={index}
-                  className="flex justify-between items-center border-neutral-600  p-3 rounded-md border"
+                  className="flex text-xs text-neutral-600 justify-between items-center border-neutral-400  p-3 rounded-md border"
                 >
-                  <span>{item.location.toUpperCase()}</span>
-                  <span>
+                  <h4>{item.location.toUpperCase()}</h4>
+                  <h4>
                     {item.dayOfWeek.toUpperCase()} {item.timeOfDay ?? ""}
-                  </span>
+                  </h4>
                 </div>
               ))}
             </div>

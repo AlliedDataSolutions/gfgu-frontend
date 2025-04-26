@@ -8,6 +8,8 @@ import {
   X,
   ChevronLeft,
   Store,
+  CalendarDays,
+  ShoppingCart,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -65,7 +67,7 @@ export default function Sidebar({
     {
       id: "order",
       label: "Order",
-      icon: <Store size={16} />,
+      icon: <ShoppingCart size={16} />,
       path: paths.admin.order.path,
     },
     {
@@ -79,6 +81,12 @@ export default function Sidebar({
       label: "Manage Users",
       icon: <Users size={16} />,
       path: paths.admin.manageUsers.path,
+    },
+    {
+      id: "deliverydays",
+      label: "Delivery Days",
+      icon: <CalendarDays size={16} />,
+      path: paths.admin.deliverydays.path,
     },
     {
       id: "profile",
