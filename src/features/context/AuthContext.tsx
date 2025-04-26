@@ -13,6 +13,7 @@ interface AuthContextType {
   loading: boolean;
   login: (user: User) => void;
   logout: () => void;
+  fetchUserProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,6 +21,19 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await axiosInstance.get("/user/profile", {
+        withCredentials: true,
+      });
+      const data = response.data;
+      setUser(data);
+    } catch (error) {
+      setUser(null);
+    }
+  };
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -50,7 +64,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, login, logout, fetchUserProfile }}>
       {children}
     </AuthContext.Provider>
   );

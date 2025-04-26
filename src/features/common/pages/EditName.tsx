@@ -1,7 +1,11 @@
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import axios from '@/core/axiosInstance';
-import toast from 'react-hot-toast';
+// src/features/common/pages/EditName.tsx
+
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "@/core/axiosInstance";
+import toast from "react-hot-toast";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormField,
@@ -10,36 +14,46 @@ import {
   FormControl,
   FormMessage,
   FormDescription,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/features/context/AuthContext";
 
-interface NameForm {
-  firstName: string;
-  lastName: string;
-}
+const schema = z.object({
+  firstName: z.string().min(2, "First name is too short"),
+  lastName: z.string().min(2, "Last name is too short"),
+});
+
+type NameForm = z.infer<typeof schema>;
 
 export const EditName = () => {
   const navigate = useNavigate();
+  const { fetchUserProfile } = useAuth();
+
   const form = useForm<NameForm>({
-    defaultValues: { firstName: '', lastName: '' },
+    resolver: zodResolver(schema),
+    mode: "onChange",
   });
+
   const { control, handleSubmit } = form;
 
   const onSubmit = async (data: NameForm) => {
-    await axios.put('/user/profile/name', {
-      firstName: data.firstName,
-      lastName: data.lastName,
-    });
-    toast.success('Name updated successfully');
-    navigate(-1);
+    try {
+      await axiosInstance.put("/user/profile/name", data);
+      await fetchUserProfile();
+      toast.success("Name updated successfully");
+      navigate(-1);
+    } catch (err: any) {
+      const message = err?.response?.data?.message || "Failed to update name";
+      toast.error(message);
+    }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <FormDescription>
-          Enter the name you want displayed on your account. Click Save Changes when done.
+          Update the name associated with your account.
         </FormDescription>
 
         <FormField
@@ -49,7 +63,7 @@ export const EditName = () => {
             <FormItem>
               <FormLabel>First Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input type="text" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -63,7 +77,7 @@ export const EditName = () => {
             <FormItem>
               <FormLabel>Last Name</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <Input type="text" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

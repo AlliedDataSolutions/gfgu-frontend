@@ -1,7 +1,11 @@
-import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import axios from '@/core/axiosInstance';
-import toast from 'react-hot-toast';
+// src/features/common/pages/EditEmail.tsx
+
+import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import axiosInstance from "@/core/axiosInstance";
+import toast from "react-hot-toast";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormField,
@@ -10,30 +14,45 @@ import {
   FormControl,
   FormMessage,
   FormDescription,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/features/context/AuthContext";
 
-interface EmailForm {
-  newEmail: string;
-}
+const schema = z.object({
+  newEmail: z.string().email("Invalid email format"),
+});
+
+type EmailForm = z.infer<typeof schema>;
 
 export const EditEmail = () => {
   const navigate = useNavigate();
-  const form = useForm<EmailForm>({ defaultValues: { newEmail: '' } });
+  const { fetchUserProfile } = useAuth();
+
+  const form = useForm<EmailForm>({
+    resolver: zodResolver(schema),
+    mode: "onChange",
+  });
+
   const { control, handleSubmit } = form;
 
   const onSubmit = async (data: EmailForm) => {
-    await axios.put('/user/profile/email', { newEmail: data.newEmail });
-    toast.success('Email updated successfully');
-    navigate(-1);
+    try {
+      await axiosInstance.put("/user/profile/email", { newEmail: data.newEmail });
+      await fetchUserProfile();
+      toast.success("Email updated successfully");
+      navigate(-1);
+    } catch (err: any) {
+      const message = err?.response?.data?.message || "Failed to update email";
+      toast.error(message);
+    }
   };
 
   return (
     <Form {...form}>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <FormDescription>
-          Provide a new email address. We’ll send an OTP to confirm it.
+          Provide a new email address. An OTP will be sent to confirm it.
         </FormDescription>
 
         <FormField
