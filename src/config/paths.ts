@@ -28,6 +28,7 @@ export const paths = {
     },
     checkout: { path: "/checkout", getHref: () => "/checkout" },
     payment: { path: "/payment", getHref: () => "/payment" },
+    checkoutSuccess: { path: "/checkout/success/:orderId", getHref: (orderId: string) => `/checkout/success/${orderId}` },
     cartPage: { path: "/cart", getHref: () => "/cart" },
   },
 

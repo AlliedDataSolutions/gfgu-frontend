@@ -56,7 +56,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                 toast.success(
                   "We will review your payment. You can track your order in your profile"
                 );
-                navigate(paths.store.home.path);
+                navigate(paths.store.checkoutSuccess.getHref(orderId) + `?paymentMethod=${paymentMethod}`);
               } catch (error) {
                 handleAxiosError(error);
               } finally {
@@ -88,10 +88,7 @@ const Checkout: React.FC<CheckoutProps> = ({
                   await axiosInstance.post("/payment/capture-payment", {
                     paypalOrderId: data.orderID,
                   });
-                  toast.success(
-                    "Payment captured, track your order in your profile"
-                  );
-                  navigate(paths.store.home.path);
+                  navigate(paths.store.checkoutSuccess.getHref(orderId) + `?paymentMethod=${paymentMethod}`);
                 } catch (error) {
                   handleAxiosError(error);
                 }

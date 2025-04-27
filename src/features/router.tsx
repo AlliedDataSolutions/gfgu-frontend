@@ -3,6 +3,7 @@ import {
   RouterProvider,
   Navigate,
 } from "react-router-dom";
+import CheckoutSuccessPage from "./customer/pages/CheckoutSuccessPage";
 import { paths } from "@/config/paths";
 import { ProtectedRoute } from "@/lib/auth";
 
@@ -89,6 +90,14 @@ export const createAppRouter = () =>
       element: (
         <ProtectedRoute>
           <Payment />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: paths.store.checkoutSuccess.path,
+      element: (
+        <ProtectedRoute>
+          <CheckoutSuccessPage />
         </ProtectedRoute>
       ),
     },
