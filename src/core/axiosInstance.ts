@@ -1,7 +1,13 @@
 import axios from "axios";
 
+const baseURL = 
+  import.meta.env.DEV
+    ? "http://localhost:5000/api"        // local when running vite
+    : "https://gfgu-backend.vercel.app/api";
+
 const axiosInstance = axios.create({
-  baseURL: "https://gfgu-backend.vercel.app/api",
+  baseURL,
+  // baseURL: "https://gfgu-backend.vercel.app/api",
   // baseURL: "http://localhost:5000/api",
   withCredentials: true,
   headers: {

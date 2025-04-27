@@ -11,8 +11,10 @@ import {
 interface AuthContextType {
   user: User | null;
   loading: boolean;
+  token: string | null;
   login: (user: User) => void;
   logout: () => void;
+  fetchUserProfile: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -20,6 +22,20 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState<string | null>(null);
+
+  const fetchUserProfile = async () => {
+    try {
+      const response = await axiosInstance.get("/user/profile", {
+        withCredentials: true,
+      });
+      const data = response.data;
+      setUser(data);
+    } catch (error) {
+      setUser(null);
+    }
+  };
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -45,12 +61,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = () => {
-    setUser(null);
-    localStorage.clear();
+    localStorage.removeItem("token"); 
+    setUser(null); 
+    setToken(null);
+    window.location.href = "/auth/login";
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, login, logout }}>
+    <AuthContext.Provider value={{ user, loading, token, login, logout, fetchUserProfile }}>
       {children}
     </AuthContext.Provider>
   );

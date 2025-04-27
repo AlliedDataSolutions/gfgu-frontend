@@ -1,8 +1,8 @@
 "use client";
 import {
-  Package, // Icon for Orders
-  MapPin, // Icon for Addresses
-  Lock, // Icon for Login & Security
+  Package, 
+  MapPin, 
+  Lock,
   LogOut,
   X,
   ChevronLeft,
