@@ -11,10 +11,15 @@ import { Button } from "@/components/ui/button";
 
 interface CheckoutProps {
   amount: string;
+  orderId: string;
   selectedAddressId?: string | null;
 }
 
-const Checkout: React.FC<CheckoutProps> = ({ amount, selectedAddressId }) => {
+const Checkout: React.FC<CheckoutProps> = ({
+  amount,
+  orderId,
+  selectedAddressId,
+}) => {
   const clientID = import.meta.env.VITE_REACT_APP_PAYPAL_CLIENT_ID || "";
   const merchantId = import.meta.env.VITE_REACT_APP_ADMIN_PAYPAL_EMAIL || "";
   const [paymentMethod, setPaymentMethod] = useState("paypal"); // Default to Interac
@@ -73,14 +78,15 @@ const Checkout: React.FC<CheckoutProps> = ({ amount, selectedAddressId }) => {
             <PayPalButtons
               createOrder={async () => {
                 const res = await axiosInstance.post("/payment/init", {
-                  amount,
+                  orderId: orderId,
+                  selectedAddressId: selectedAddressId,
                 });
                 return res.data.id;
               }}
               onApprove={async (data) => {
                 try {
                   await axiosInstance.post("/payment/capture-payment", {
-                    orderID: data.orderID,
+                    paypalOrderId: data.orderID,
                   });
                   toast.success(
                     "Payment captured, track your order in your profile"
