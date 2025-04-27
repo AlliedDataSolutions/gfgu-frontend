@@ -37,7 +37,6 @@ import { CustomerLayout } from "@/features/customer/pages/CustomerLayout";
 import AddressList from "@/features/customer/pages/AddressList";
 import AddAddress from "./customer/pages/AddAddress";
 import { MyOrder } from "./customer/pages/MyOrder";
-import { PersonalInfo } from "./customer/pages/PersonInfo";
 import AdminProduct from "./admin/pages/AdminProduct";
 import { AdminPayment } from "./admin/pages/AdminPayment";
 import { Role } from "@/core/role";
