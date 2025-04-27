@@ -1,5 +1,3 @@
-// src/features/common/pages/ProfilePage.tsx
-
 import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import axios from "@/core/axiosInstance";
