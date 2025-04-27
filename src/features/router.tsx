@@ -215,10 +215,6 @@ export const createAppRouter = () =>
         },
         {
           path: paths.account.personalInfo.path,
-          element: <PersonalInfo />,
-        },
-        {
-          path: paths.account.personalInfo.path,
           element: <ProfilePage />,
         },
         {
