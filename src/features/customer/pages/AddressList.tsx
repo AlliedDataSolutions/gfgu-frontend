@@ -1,101 +1,63 @@
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import axiosInstance from "@/core/axiosInstance";
-import { paths } from "@/config/paths";
-import { Pencil, Trash2 } from "lucide-react";
-
-// Example of what an address might look like
-interface AddressData {
-  id: string;
-  addressLine1: string;
-  city: string;
-  email?: string; 
-}
+import  useAddress  from "../hooks/useAddress";
+import { useNavigate } from "react-router-dom";
+import InlineLoader from "@/components/ui/inlineloading";
+import { Button } from "@/components/ui/button";
 
 export default function AddressList() {
-  const [addresses, setAddresses] = useState<AddressData[]>([]);
+  const { addresses, loading, removeAddress } = useAddress();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    axiosInstance
-      .get("/address") 
-      .then((res) => {
-        setAddresses(res.data);
-      })
-      .catch((err) => {
-        console.error("Error fetching addresses:", err);
-      });
-  }, []);
+  const handleDelete = (id: string) => {
+    const confirmed = window.confirm("Are you sure you want to delete this address?");
+    if (confirmed) {
+      removeAddress(id);
+    }
+  };
 
   return (
-    <div>
-      {/* Top Tabs for "Personal Information" and "Address" */}
-      <div className="flex bg-neutral-200 p-2 rounded mb-4">
-        {/* Personal Info tab */}
-        <Link
-          to={paths.account.personalInfo.getHref()}
-          className="flex-1 text-center py-2"
-        >
-          Personal Information
-        </Link>
-        {/* Address tab (active) */}
-        <div className="flex-1 text-center py-2 bg-brand-50 text-brand-700 font-semibold rounded">
-          Address
+    <InlineLoader loading={loading}>
+      <div className="p-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {/* Add Address Card */}
+          <div
+            className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-8 cursor-pointer hover:border-gray-400"
+            onClick={() => navigate("/account/add-address")}
+          >
+            <span className="text-6xl text-gray-400">+</span>
+            <p className="mt-2 text-gray-500">Add Address</p>
+          </div>
+
+          {/* Address Cards */}
+          {addresses.map((address) => (
+            <div
+              key={address.id}
+              className="border rounded-lg shadow-md p-6 flex flex-col justify-between"
+            >
+              <div className="mb-4">
+                <h2 className="font-bold">{address.streetName}</h2>
+                <p>{address.town}, {address.province}</p>
+                <p>{address.postalCode}</p>
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => navigate(`/account/edit-address/${address.id}`)}
+                >
+                  Edit
+                </Button>
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  onClick={() => handleDelete(address.id)}
+                >
+                  Remove
+                </Button>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
-
-      {/* "Add Address" button */}
-      <div className="flex justify-end mb-4">
-        <Link
-          to={paths.account.addAddress.getHref()}
-          className="bg-brand-700 hover:bg-brand-800 text-white px-4 py-2 rounded"
-        >
-          + Add Address
-        </Link>
-      </div>
-
-      {/* Address Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full border text-left">
-          <thead className="border-b bg-neutral-50">
-            <tr>
-              <th className="px-4 py-2 w-1/3">Address</th>
-              <th className="px-4 py-2 w-1/4">Email Address</th>
-              <th className="px-4 py-2 w-1/4">City</th>
-              <th className="px-4 py-2 w-1/6">Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {addresses.map((item) => (
-              <tr key={item.id} className="border-b">
-                <td className="px-4 py-2">{item.addressLine1}</td>
-                <td className="px-4 py-2">{item.email || "john@123"}</td>
-                <td className="px-4 py-2">{item.city}</td>
-                <td className="px-4 py-2">
-                  <div className="flex gap-3">
-                    {/* Edit button */}
-                    <button className="text-black hover:text-brand-700">
-                      <Pencil size={20} />
-                    </button>
-                    {/* Delete button */}
-                    <button className="text-red-500 hover:text-red-700">
-                      <Trash2 size={20} />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-
-            {/* Example of a placeholder row if no addresses are fetched */}
-            {addresses.length === 0 && (
-              <tr>
-                <td colSpan={4} className="text-center py-4 text-neutral-500">
-                  No addresses found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
+    </InlineLoader>
   );
 }
