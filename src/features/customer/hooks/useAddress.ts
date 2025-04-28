@@ -28,6 +28,35 @@ const useAddress = () => {
     }
   };
 
+  const addAddress = async (addressData: Partial<Address>) => {
+    try {
+      const response = await axiosInstance.post<Address>("/address", addressData);
+      setAddresses((prev) => [...prev, response.data]);
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
+
+  const updateAddress = async (id: string, addressData: Partial<Address>) => {
+    try {
+      const response = await axiosInstance.put<Address>(`/address/${id}`, addressData);
+      setAddresses((prev) =>
+        prev.map((addr) => (addr.id === id ? response.data : addr))
+      );
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
+
+  const removeAddress = async (id: string) => {
+    try {
+      await axiosInstance.delete(`/address/${id}`);
+      setAddresses((prev) => prev.filter((addr) => addr.id !== id));
+    } catch (error) {
+      handleAxiosError(error);
+    }
+  };
+
   useEffect(() => {
     fetchAddresses();
   }, []);
@@ -38,6 +67,9 @@ const useAddress = () => {
     showAddressForm,
     toggleAddressForm,
     refetchAddresses: fetchAddresses,
+    addAddress,
+    updateAddress,
+    removeAddress,
   };
 };
 
