@@ -14,9 +14,7 @@ export const Landing = () => {
     <>
       <div className="pt-14 md:pt-16">
         <LandingHeader menuItems={menuItems} />
-        {deliveryLocations && deliveryLocations.length > 0 && (
-          <HeroSection deliveryDays={deliveryLocations} />
-        )}
+        <HeroSection deliveryDays={deliveryLocations} />
         <AboutUs />
       </div>
       <Need />
