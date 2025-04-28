@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Filter } from "lucide-react";
+import { Filter,Download } from "lucide-react";
 import axiosInstance from "@/core/axiosInstance";
 import VendorOrderTable, { VendorOrder } from "../components/VendorOrderTable";
 import VendorOrderFilter, {
   VendorOrderFilterData,
 } from "../components/VendorOrderFilter";
+import { onExport } from "@/lib/utils";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -116,6 +117,16 @@ export function VendorOrders() {
     setCurrentPage(data.selected);
   };
 
+  const columnMapping = {
+    "id": "Order ID",
+    "customerName": "Customer Name",
+    "customerPhoneNumber": "Customer Phone Number",
+    "productName": "Product Name",
+    "productPrice": "Product Price",
+    "qty": "Qty",
+    "status": "Status",
+  }
+
   return (
     <div className="p-4 bg-white h-full flex flex-col gap-4">
       {/* Search and Filter Controls */}
@@ -131,6 +142,29 @@ export function VendorOrders() {
           }}
           onKeyDown={handleKeyDown}
         />
+
+        <Button variant={"outline"} className="flex gap-1 border-neutral-500"
+          onClick={() => {
+            const excelRecord: any[] = [];
+            paginatedOrders.forEach((element: any) => {
+              excelRecord.push({
+                id: element.id,
+                customerName: `${element.user.firstName} ${element.user.lastName}`,
+                customerPhoneNumber: element.user.phoneNumber ? element.user.phoneNumber : "-",
+                customerEmail: element.user.email,
+                productName: element.product.name,
+                productPrice: element.unitPrice,
+                qty: element.quantity,
+                status: element.status,
+              });
+            });
+
+            onExport(columnMapping, excelRecord, "Vendor_Order_Report.xlsx");
+          }}
+        >
+          <Download size={16} /> Export
+        </Button>
+
         <Button
           variant="outline"
           onClick={() => setShowFilter(true)}

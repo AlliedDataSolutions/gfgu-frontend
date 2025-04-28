@@ -3,12 +3,14 @@ import {
   Filter,
   SquareChevronLeft,
   SquareChevronRight,
+  Download
 } from "lucide-react";
 import OrderTable from "../components/OrderTable";
 import { Input } from "@/components/ui/input";
 import OrderFilter from "../components/OrderFilter";
 import useAdminOrder from "../hooks/useAdminOrder";
 import { useState } from "react";
+import { onExport } from "@/lib/utils";
 
 interface FilterOrders {
   page: number;
@@ -57,6 +59,19 @@ export function AdminOrder() {
     }));
   };
 
+  
+  const columnMapping = {
+    "id" : "Order ID",
+    "customer": "Customer",
+    "orderAddress" : "Order Address",
+    "orderDate" : "Order Date",
+    "phoneNumber" : "Phone Number",
+    "vendorName" : "Vendor Name",
+    "productName" : "Product",
+    "productPrice" : "Price",
+    "qty" : "Qty",
+    "status" : "Status",
+  }
   return (
     <div className="flex flex-col p-3 bg-white gap-4 h-full min-h-screen">
       {/* Search and filter */}
@@ -74,6 +89,37 @@ export function AdminOrder() {
           }}
           onKeyDown={handleKeyDown}
         />
+
+        <Button variant={"outline"} className="flex gap-1 border-neutral-500"
+
+          onClick={() => {
+            const excelRecord: any[] = [];
+            allOrdersData.records.forEach((element: any) => {
+              element.orderLines.forEach((orderLineEle: any, index: number) => {
+                excelRecord.push({
+                  id: !index ? element.id : "",
+                  customer: !index ? `${element.user.firstName} ${element.user.lastName}` : "",
+                  orderAddress: !index
+                    ? `${element.orderAddress.province} , ${element.orderAddress.streetName} , ${element.orderAddress.town} , ${element.orderAddress.postalCode}`
+                    : "",
+                  orderDate: !index ? element.orderDate : "",
+                  phoneNumber: !index ? element.user.phoneNumber : "",
+                  email: !index ? element.user.email : "",
+                  vendorName: orderLineEle.product.vendor.businessName,
+                  productName: orderLineEle.product.name,
+                  productPrice: orderLineEle.product.price,
+                  qty: orderLineEle.quantity,
+                  status: orderLineEle.status || element.status,
+                });
+
+              });
+            });
+
+            onExport(columnMapping, excelRecord, "Admin_Order_Report.xlsx");
+          }}
+        >
+          <Download size={16} /> Export
+        </Button>
 
         <Button
           onClick={() => setShowFilter(true)}
