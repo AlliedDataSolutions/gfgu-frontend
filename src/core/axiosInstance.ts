@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = 
+export const baseURL = 
   import.meta.env.DEV
     ? "http://localhost:5000/api"        // local when running vite
     : "https://gfgu-backend.vercel.app/api";
