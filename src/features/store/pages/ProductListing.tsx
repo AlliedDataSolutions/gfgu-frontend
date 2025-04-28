@@ -26,7 +26,7 @@ export default function ProductListing() {
   const { data: deliveryLocations } = useDeliveryLocations();
 
   const [page, setPage] = useState<number>(0);
-  const limit = 10;
+  const limit = 12;
   const [appliedFilters, setAppliedFilters] = useState<Filters>({
     categories: [],
     vendors: [],
