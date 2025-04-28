@@ -61,10 +61,7 @@ interface OrderFilterProps {
 function OrderFilter({ open, onOpenChange, filterData, setFilterData }: OrderFilterProps) {
   const [localFilter, setLocalFilter] = useState<OrderFilterData>(filterData);
 
-  const handleInputChange = (
-    field: keyof OrderFilterData,
-    value: string
-  ) => {
+  const handleInputChange = (field: keyof OrderFilterData, value: string) => {
     setLocalFilter((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -101,7 +98,7 @@ function OrderFilter({ open, onOpenChange, filterData, setFilterData }: OrderFil
               onChange={(e) => handleInputChange("status", e.target.value)}
             />
           </div>
-          
+
           {/* Date Range */}
           <div className="flex gap-2">
             <div className="flex flex-col">
@@ -171,20 +168,17 @@ export const MyOrder = () => {
   // Filter orders based on search and filterData
   const filteredOrders = useMemo(() => {
     return orders.filter((order) => {
-      // Search filter on order ID or product names
       const matchesSearch = searchQuery
         ? order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          order.orderLines.some(line => 
+          order.orderLines.some((line) =>
             line.product.name.toLowerCase().includes(searchQuery.toLowerCase())
           )
         : true;
-      
-      // Status filter
+
       const matchesStatus = filterData.status
         ? order.status.toLowerCase() === filterData.status.toLowerCase()
         : true;
-      
-      // Date filters
+
       const orderDate = new Date(order.orderDate);
       const matchesStartDate = filterData.startDate
         ? orderDate >= new Date(filterData.startDate)
@@ -197,7 +191,6 @@ export const MyOrder = () => {
     });
   }, [orders, searchQuery, filterData]);
 
-  // Pagination
   const paginatedOrders = useMemo(() => {
     const start = currentPage * ITEMS_PER_PAGE;
     return filteredOrders.slice(start, start + ITEMS_PER_PAGE);
@@ -209,37 +202,33 @@ export const MyOrder = () => {
     setCurrentPage(data.selected);
   };
 
-  // Get status badge class based on status
   const getStatusBadgeClass = (status: string) => {
     switch (status.toLowerCase()) {
-      case 'confirmed':
+      case "confirmed":
         return "bg-blue-50 text-blue-600";
-      case 'shipped':
+      case "shipped":
         return "bg-amber-50 text-amber-600";
-      case 'delivered':
+      case "delivered":
         return "bg-green-50 text-green-600";
-      case 'canceled':
+      case "canceled":
         return "bg-red-50 text-red-600";
-      case 'pending':
-        return "bg-neutral-50 text-neutral-600";
+      case "pending":
       default:
         return "bg-neutral-50 text-neutral-600";
     }
   };
 
-  // Get status message based on status
   const getStatusMessage = (status: string) => {
     switch (status.toLowerCase()) {
-      case 'confirmed':
+      case "confirmed":
         return "Your order has been confirmed";
-      case 'shipped':
+      case "shipped":
         return "Your order has been shipped";
-      case 'delivered':
+      case "delivered":
         return "Your product has been delivered";
-      case 'canceled':
+      case "canceled":
         return "Your order has been canceled";
-      case 'pending':
-        return "Your order is pending";
+      case "pending":
       default:
         return "Order status: " + status;
     }
@@ -294,29 +283,25 @@ export const MyOrder = () => {
               {order.orderLines.map((line, index) => (
                 <div key={index} className="p-4 border-b last:border-b-0">
                   <div className="flex flex-col md:flex-row gap-4">
-                    {/* Product Image (if available) */}
                     <div className="w-20 h-20 bg-neutral-100 rounded flex items-center justify-center">
                       {line.product.images && line.product.images.length > 0 ? (
-                        <img 
-                          src={line.product.images[0].url} 
+                        <img
+                          src={line.product.images[0].url}
                           alt={line.product.name}
-                          className="max-w-full max-h-full object-contain" 
+                          className="max-w-full max-h-full object-contain"
                         />
                       ) : (
-                        <div className="w-12 h-12 bg-neutral-200 rounded"></div>
+                        <div className="w-12 h-12 bg-neutral-200 rounded" />
                       )}
                     </div>
-                    
-                    {/* Product Details */}
+
                     <div className="flex-1">
                       <h3 className="font-medium">{line.product.name}</h3>
                       <p className="text-sm text-neutral-500">
                         Sold by {line.vendor.businessName}
                       </p>
-                      
-                      {/* Status Badge and Message */}
                       <div className="mt-2">
-                        <span 
+                        <span
                           className={`inline-block px-2 py-1 rounded text-xs font-medium ${getStatusBadgeClass(order.status)}`}
                         >
                           {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
@@ -324,10 +309,11 @@ export const MyOrder = () => {
                         <p className="mt-1 text-sm">{getStatusMessage(order.status)}</p>
                       </div>
                     </div>
-                    
-                    {/* Price */}
+
                     <div className="text-right">
-                      <p className="font-semibold">${(Number(line.unitPrice) * line.quantity).toFixed(2)}</p>
+                      <p className="font-semibold">
+                        ${(Number(line.unitPrice) * line.quantity).toFixed(2)}
+                      </p>
                       {line.quantity > 1 && (
                         <p className="text-xs text-neutral-500">
                           {line.quantity} x ${Number(line.unitPrice).toFixed(2)}
@@ -337,16 +323,25 @@ export const MyOrder = () => {
                   </div>
                 </div>
               ))}
+
+              {/* View Invoice Link */}
+              <div className="p-4">
+                <a
+                  href={`http://localhost:5000/api/order/${order.id}/invoice`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline text-sm font-medium"
+                >
+                  View Invoice
+                </a>
+              </div>
             </div>
           ))}
-          
+
           {/* Pagination */}
           {pageCount > 1 && (
             <div className="mt-6">
-              <Pagination 
-                pageCount={pageCount} 
-                handlePageClick={handlePageChange} 
-              />
+              <Pagination pageCount={pageCount} handlePageClick={handlePageChange} />
             </div>
           )}
         </div>
