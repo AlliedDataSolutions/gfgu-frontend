@@ -2,7 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Filter } from "lucide-react";
-import axiosInstance from "@/core/axiosInstance";
+import axiosInstance, { baseURL } from "@/core/axiosInstance";
 import { Pagination } from "@/components/ui/pagination";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
@@ -327,7 +327,7 @@ export const MyOrder = () => {
               {/* View Invoice Link */}
               <div className="p-4">
                 <a
-                  href={`http://localhost:5000/api/order/${order.id}/invoice`}
+                  href={`${baseURL}/order/${order.id}/invoice`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline text-sm font-medium"
