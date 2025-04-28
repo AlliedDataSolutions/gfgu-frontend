@@ -218,6 +218,11 @@ export const createAppRouter = () =>
           element: <AddAddress />,
         },
         {
+          path: paths.account.editAddress.path,
+          element: <AddAddress />,
+        },
+        
+        {
           path: paths.account.orders.path,
           element: <MyOrder />,
         },

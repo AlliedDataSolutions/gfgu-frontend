@@ -84,6 +84,10 @@ export const paths = {
       path: "/account/add-address",
       getHref: () => "/account/add-address",
     },
+    editAddress: {
+      path: "/account/edit-address/:id",
+      getHref: (id: string) => `/account/edit-address/${id}`,
+    },
     orders: {
       path: "/account/orders",
       getHref: () => "/account/orders",
