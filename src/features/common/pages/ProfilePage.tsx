@@ -8,6 +8,10 @@ export function ProfilePage() {
     firstName: string;
     lastName: string;
     email: string;
+    vendor?: {
+      businessName: string;
+      businessDescription: string;
+    };
   } | null>(null);
   const nav = useNavigate();
 
@@ -28,7 +32,9 @@ export function ProfilePage() {
       <div className="flex justify-between items-center">
         <div>
           <h3 className="font-medium">Name</h3>
-          <p>{user.firstName} {user.lastName}</p>
+          <p className="text-sm">
+            {user.firstName} {user.lastName}
+          </p>
         </div>
         <Button variant="outline" onClick={() => nav("name")}>
           Edit
@@ -39,7 +45,7 @@ export function ProfilePage() {
       <div className="flex justify-between items-center">
         <div>
           <h3 className="font-medium">Email</h3>
-          <p>{user.email}</p>
+          <p className="text-sm">{user.email}</p>
         </div>
         <Button variant="outline" onClick={() => nav("email")}>
           Edit
@@ -50,14 +56,32 @@ export function ProfilePage() {
       <div className="flex justify-between items-center">
         <div>
           <h3 className="font-medium">Password</h3>
-          <p>••••••••</p>
+          <p className="text-sm">••••••••</p>
         </div>
         <Button variant="outline" onClick={() => nav("password")}>
           Change
         </Button>
       </div>
 
-
+      {/* Vendor Details */}
+      {user?.vendor && (
+        <>
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="font-medium">Business Name</h3>
+              <p className="text-sm">{user.vendor.businessName}</p>
+            </div>
+          </div>
+          {
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className="font-medium">Business Description</h3>
+                <p className="text-sm">{user.vendor.businessDescription}</p>
+              </div>
+            </div>
+          }
+        </>
+      )}
     </div>
   );
 }

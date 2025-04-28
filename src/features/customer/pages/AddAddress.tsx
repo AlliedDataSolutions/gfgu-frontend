@@ -92,10 +92,13 @@ export default function AddAddress() {
           {/* Street Address */}
           <div className="flex flex-col gap-1">
             <label className="text-sm text-neutral-700">
-              Street Address <span className="text-xs text-neutral-500">e.g. 123 Main St</span>
+              Street Address{" "}
+              <span className="text-xs text-neutral-500">e.g. 123 Main St</span>
             </label>
             <Input
-              {...register("streetName", { required: "Street Address is required" })}
+              {...register("streetName", {
+                required: "Street Address is required",
+              })}
               placeholder="Enter street address"
             />
             <ErrorMessage message={errors.streetName?.message} />
@@ -105,26 +108,31 @@ export default function AddAddress() {
           <div className="flex gap-4 flex-col sm:flex-row">
             <div className="flex-1 flex flex-col gap-1">
               <label className="text-sm text-neutral-700">
-                City <span className="text-xs text-neutral-500">e.g. Calgary</span>
+                City{" "}
+                <span className="text-xs text-neutral-500">e.g. Calgary</span>
               </label>
-              <Input
-                list="city-list"
-                {...register("city", { required: "City is required" })}
-                placeholder="Enter or select city"
-              />
-              <datalist id="city-list">
-                <option value="Edmonton" />
-                <option value="Calgary" />
-                <option value="Lethbridge" />
-                <option value="Airdrie" />
-              </datalist>
+              <Select {...register("city", { required: true })}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select City" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Edmonton">Edmonton</SelectItem>
+                  <SelectItem value="Calgary">Calgary</SelectItem>
+                  <SelectItem value="Lethbridge">Lethbridge</SelectItem>
+                  <SelectItem value="Airdrie">Airdrie</SelectItem>
+                </SelectContent>
+              </Select>
               <ErrorMessage message={errors.city?.message} />
             </div>
             <div className="flex-1 flex flex-col gap-1">
               <label className="text-sm text-neutral-700">
-                Apt, Suite, Unit (optional) <span className="text-xs text-neutral-500">e.g. Apt 4B</span>
+                Apt, Suite, Unit (optional){" "}
+                <span className="text-xs text-neutral-500">e.g. Apt 4B</span>
               </label>
-              <Input {...register("apartment")} placeholder="Apartment, suite, etc." />
+              <Input
+                {...register("apartment")}
+                placeholder="Apartment, suite, etc."
+              />
             </div>
           </div>
 
@@ -132,7 +140,8 @@ export default function AddAddress() {
           <div className="flex gap-4 flex-col sm:flex-row">
             <div className="flex-1 flex flex-col gap-1">
               <label className="text-sm text-neutral-700">
-                Province <span className="text-xs text-neutral-500">Alberta only</span>
+                Province{" "}
+                <span className="text-xs text-neutral-500">Alberta only</span>
               </label>
               <Select {...register("province", { required: true })}>
                 <SelectTrigger className="w-full">
@@ -142,11 +151,14 @@ export default function AddAddress() {
                   <SelectItem value="Alberta">Alberta</SelectItem>
                 </SelectContent>
               </Select>
-              <ErrorMessage message={errors.province && "Province is required"} />
+              <ErrorMessage
+                message={errors.province && "Province is required"}
+              />
             </div>
             <div className="flex-1 flex flex-col gap-1">
               <label className="text-sm text-neutral-700">
-                Postal Code <span className="text-xs text-neutral-500">e.g. T5A 0A7</span>
+                Postal Code{" "}
+                <span className="text-xs text-neutral-500">e.g. T5A 0A7</span>
               </label>
               <Input
                 {...register("postalCode", {
@@ -176,7 +188,10 @@ export default function AddAddress() {
             render={({ field: { onChange, value } }) => (
               <div className="flex flex-col gap-1">
                 <label className="text-sm text-neutral-700">
-                  Phone Number <span className="text-xs text-neutral-500">e.g. (403) 123-4567</span>
+                  Phone Number{" "}
+                  <span className="text-xs text-neutral-500">
+                    e.g. (403) 123-4567
+                  </span>
                 </label>
                 <Input
                   value={value}
@@ -190,7 +205,11 @@ export default function AddAddress() {
 
           {/* Buttons */}
           <div className="flex justify-end gap-4 mt-4">
-            <Button variant="secondary" type="button" onClick={() => navigate(-1)}>
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={() => navigate(-1)}
+            >
               Cancel
             </Button>
             <Button type="submit">{id ? "Save Changes" : "Add Address"}</Button>

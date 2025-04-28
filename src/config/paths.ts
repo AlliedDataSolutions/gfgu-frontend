@@ -17,6 +17,10 @@ export const paths = {
         }`,
     },
     logout: { path: "/auth/logout", getHref: () => "/auth/logout" },
+    confirmEmail: {
+      path: "/confirm-email",
+      getHref: () => "/confirm-email",
+    },
   },
 
   store: {
