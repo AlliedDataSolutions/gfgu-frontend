@@ -10,6 +10,7 @@ import { ProtectedRoute } from "@/lib/auth";
 import { Landing } from "@/features/common";
 import NotFound from "@/features/common/pages/NotFound";
 import { Login, Register } from "@/features/auth";
+import ConfirmEmailPage from "@/features/auth/pages/ConfirmEmailPage";
 import { Payment } from "@/features/customer";
 import CartPage from "@/features/store/pages/cartpage";
 import CheckoutPage from "@/features/customer/pages/CheckoutPage";
@@ -57,6 +58,7 @@ export const createAppRouter = () =>
     { path: paths.landing.path, element: <Landing /> },
     { path: paths.auth.login.path, element: <Login /> },
     { path: paths.auth.register.path, element: <Register /> },
+    { path: paths.auth.confirmEmail.path, element: <ConfirmEmailPage /> },
     { path: paths.error.notFound.path, element: <NotFound /> },
 
     {

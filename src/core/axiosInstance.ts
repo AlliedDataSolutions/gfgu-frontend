@@ -6,9 +6,9 @@ const baseURL =
     : "https://gfgu-backend.vercel.app/api";
 
 const axiosInstance = axios.create({
-  // baseURL,
+  baseURL,
   // baseURL: "https://gfgu-backend.vercel.app/api",
-  baseURL: "http://localhost:5000/api",
+  // baseURL: "http://localhost:5000/api",
   withCredentials: true,
   headers: {
     "Content-Type": "application/json",
