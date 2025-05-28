@@ -1,6 +1,6 @@
 "use client";
 import {
-  // LayoutDashboard,
+  LayoutDashboard,
   CreditCard,
   Users,
   User,
@@ -52,12 +52,12 @@ export default function Sidebar({
   }, []);
 
   const menuItems = [
-    // {
-    //   id: "dashboard",
-    //   label: "Dashboard",
-    //   icon: <LayoutDashboard size={16} />,
-    //   path: paths.admin.dashboard.path,
-    // },
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      icon: <LayoutDashboard size={16} />,
+      path: paths.admin.dashboard.path,
+    },
     {
       id: "product",
       label: "Product",

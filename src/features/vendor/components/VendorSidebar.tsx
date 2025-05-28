@@ -1,6 +1,6 @@
 "use client";
 import {
-  // LayoutDashboard,
+  LayoutDashboard,
   Box,
   ShoppingCart,
   CreditCard,
@@ -51,12 +51,12 @@ export default function VendorSidebar({
   }, []);
 
   const menuItems = [
-    // {
-    //   id: "dashboard",
-    //   label: "Dashboard",
-    //   icon: <LayoutDashboard size={16} />,
-    //   path: paths.vendor.dashboard.path,
-    // },
+    {
+      id: "dashboard",
+      label: "Dashboard",
+      icon: <LayoutDashboard size={16} />,
+      path: paths.vendor.dashboard.path,
+    },
     {
       id: "product",
       label: "Product",
