@@ -4,9 +4,6 @@ import {
   Box,
   ShoppingCart,
   CreditCard,
-  X,
-  ChevronLeft,
-  ChevronRight,
   LogOut,
   User,
 } from "lucide-react";
@@ -83,9 +80,7 @@ export default function VendorSidebar({
     },
   ];
 
-  const handleCollapse = () => {
-    setIsOpen(false);
-  };
+
 
   return (
     <>
@@ -115,16 +110,7 @@ export default function VendorSidebar({
               {isOpen && <span className="font-medium">Vendor Portal</span>}
             </div>
           </Link>
-          {isOpen && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleCollapse}
-              className="text-white hover:bg-brand-700"
-            >
-              {isMobile ? <X size={14} /> : <ChevronLeft size={14} />}
-            </Button>
-          )}
+         
         </div>
 
         <nav className="flex-1 mt-6 overflow-y-auto">
@@ -171,18 +157,7 @@ export default function VendorSidebar({
         </div>
 
         {/* Collapse toggle button for desktop */}
-        {!isMobile && (
-          <div className="p-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setIsOpen(!isOpen)}
-              className="w-full flex items-center justify-center text-white hover:bg-brand-700 rounded"
-            >
-              {isOpen ? <ChevronLeft size={14} /> : <ChevronRight size={14} />}
-            </Button>
-          </div>
-        )}
+        
       </aside>
     </>
   );

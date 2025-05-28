@@ -51,6 +51,9 @@ export default function VendorOrderTable({
                 Amount
               </th>
               <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
+                Date
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-500 uppercase tracking-wider">
                 Status
               </th>
             </tr>
@@ -68,6 +71,16 @@ export default function VendorOrderTable({
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                   ${order.totalAmount.toFixed(2)}
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                {order.orderDate
+                  ? new Date(order.orderDate).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })
+                  : "-"}
+              </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                   <span
                     className={`px-2 py-1 rounded text-xs font-medium ${
