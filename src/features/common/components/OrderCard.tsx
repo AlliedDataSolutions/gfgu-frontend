@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { baseURL } from "@/core/axiosInstance";
 
 interface OrderItem {
   productId: string;
@@ -50,12 +50,16 @@ export default function OrderCard({
           <span className="text-[10px] font-semibold text-neutral-600 uppercase mb-[2px]">
             Order # {orderId.slice(-10)}
           </span>
-          <Link
-            to={`/invoice/${orderId}`}
+          <a
+            href={`${baseURL}/order/${orderId}/invoice`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="text-blue-600 hover:underline text-xs"
           >
             Invoice
-          </Link>
+          </a>
+
+
         </div>
       </div>
 
