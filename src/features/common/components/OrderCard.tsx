@@ -22,45 +22,51 @@ export default function OrderCard({
   items,
 }: OrderCardProps) {
   return (
-    <div className="border rounded-md shadow-sm bg-white mb-6">
-      {/* Top grey section */}
-      <div className="bg-neutral-100 px-6 py-3 flex flex-wrap justify-between items-start text-sm text-neutral-600">
-        <div className="flex flex-col">
-          <span className="font-medium text-neutral-500">ORDER PLACED</span>
-          <span>{orderDate}</span>
+    <div className="border rounded-md shadow-md bg-white mb-6 max-w-screen-md mx-auto">
+      {/* Top grey header */}
+      <div className="bg-neutral-100 px-4 py-2 flex flex-wrap md:flex-nowrap justify-between items-end text-sm text-neutral-700 gap-3">
+        <div className="flex-1 min-w-[80px]">
+          <span className="block text-[10px] font-semibold text-neutral-600 uppercase mb-[2px]">
+            Order Placed
+          </span>
+          <span className="block text-xs">{orderDate}</span>
         </div>
 
-        <div className="flex flex-col">
-          <span className="font-medium text-neutral-500">TOTAL</span>
-          <span>${totalAmount.toFixed(2)}</span>
+        <div className="flex-1 min-w-[80px]">
+          <span className="block text-[10px] font-semibold text-neutral-600 uppercase mb-[2px]">
+            Total
+          </span>
+          <span className="block text-xs">${totalAmount.toFixed(2)}</span>
         </div>
 
-        <div className="flex flex-col">
-          <span className="font-medium text-neutral-500">SHIP TO</span>
-          <span>{shipTo}</span>
+        <div className="flex-1 min-w-[80px]">
+          <span className="block text-[10px] font-semibold text-neutral-600 uppercase mb-[2px]">
+            Ship To
+          </span>
+          <span className="block text-xs">{shipTo}</span>
         </div>
 
-        <div className="flex flex-col text-right ml-auto">
-          <span className="font-medium text-neutral-500">
-            ORDER # {orderId.slice(-10)}
+        <div className="flex flex-col text-right min-w-[160px] ml-auto">
+          <span className="text-[10px] font-semibold text-neutral-600 uppercase mb-[2px]">
+            Order # {orderId.slice(-10)}
           </span>
           <Link
             to={`/invoice/${orderId}`}
-            className="text-blue-600 hover:underline"
+            className="text-blue-600 hover:underline text-xs"
           >
             Invoice
           </Link>
         </div>
       </div>
 
-      {/* Items list */}
+      {/* Ordered items */}
       <div className="divide-y divide-neutral-200">
         {items.map((item) => (
-          <div key={item.productId} className="flex p-6 gap-6 items-start">
+          <div key={item.productId} className="flex px-4 py-3 gap-4 items-start">
             <img
               src={item.imageUrl}
               alt={item.name}
-              className="w-32 h-32 object-cover rounded"
+              className="w-20 h-20 object-cover rounded"
             />
             <div className="flex-1">
               <p className="text-sm font-medium text-neutral-800">
