@@ -1,104 +1,112 @@
-import React, { useState, useEffect, useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Filter,Download } from "lucide-react";
+import { useEffect, useState, useMemo } from "react";
 import axiosInstance from "@/core/axiosInstance";
-import VendorOrderTable, { VendorOrder } from "../components/VendorOrderTable";
+import OrderCard from "@/features/common/components/OrderCard";
 import VendorOrderFilter, {
   VendorOrderFilterData,
 } from "../components/VendorOrderFilter";
-import { onExport } from "@/lib/utils";
+import { Pagination } from "@/components/ui/pagination";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Filter } from "lucide-react";
 
-const ITEMS_PER_PAGE = 8;
+interface RawOrderLine {
+  id: string;
+  quantity: number;
+  unitPrice: number;
+  totalAmount: number;
+  status: string;
+  product?: {
+    id: string;
+    name: string;
+    images?: { url: string }[];
+  };
+  order: {
+    id: string;
+    orderDate?: string;
+    user: {
+      firstName: string;
+      lastName: string;
+    };
+  };
+}
+
+const ITEMS_PER_PAGE = 5;
 
 export function VendorOrders() {
-  const [allOrders, setAllOrders] = useState<VendorOrder[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [orders, setOrders] = useState<RawOrderLine[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filterData, setFilterData] = useState<VendorOrderFilterData>({});
-  const [showFilter, setShowFilter] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-
-  // Fetch all orders from backend (no filtering here)
-  const fetchOrders = async () => {
-    try {
-      setLoading(true);
-      const response = await axiosInstance.get("/order/vendor/orderline");
-      // Backend returns an array of order lines.
-      setAllOrders(response.data);
-    } catch (error) {
-      console.error("Error fetching vendor orders:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [showFilter, setShowFilter] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        setLoading(true);
+        const res = await axiosInstance.get("/order/vendor/orderline");
+        setOrders(res.data);
+      } catch (error) {
+        console.error("Error fetching orders", error);
+      } finally {
+        setLoading(false);
+      }
+    };
     fetchOrders();
   }, []);
 
-  // Filter orders based on search and filterData (client-side filtering)
+  const groupedOrders = useMemo(() => {
+    const groups = orders.reduce((acc: Record<string, RawOrderLine[]>, item) => {
+      const orderId = item.order?.id;
+      if (!orderId) return acc;
+      if (!acc[orderId]) acc[orderId] = [];
+      acc[orderId].push(item);
+      return acc;
+    }, {});
+    return Object.entries(groups);
+  }, [orders]);
+
   const filteredOrders = useMemo(() => {
-    return allOrders.filter((order) => {
-      // Search filter on product name (adjust as needed)
-      const matchesSearch = searchQuery
-        ? order.product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    return groupedOrders.filter(([_, lines]) => {
+      const productMatches = searchQuery
+        ? lines.some((line) =>
+            line.product?.name?.toLowerCase().includes(searchQuery.toLowerCase())
+          )
         : true;
-      // Status filter
-      const matchesStatus = filterData.status
-        ? order.status.toLowerCase() === filterData.status.toLowerCase()
-        : true;
-      // Product search filter (if different from searchQuery, you can combine or separate)
-      const matchesProduct = filterData.productSearch
-        ? order.product.name
-            .toLowerCase()
-            .includes(filterData.productSearch.toLowerCase())
-        : true;
-      // Quantity filters
-      const matchesMinQty =
-        filterData.minQty !== undefined
-          ? order.quantity >= filterData.minQty
-          : true;
-      const matchesMaxQty =
-        filterData.maxQty !== undefined
-          ? order.quantity <= filterData.maxQty
-          : true;
-      // Amount filters
-      const totalAmount = order.unitPrice * order.quantity;
-      const matchesMinAmount =
-        filterData.minAmount !== undefined
-          ? totalAmount >= filterData.minAmount
-          : true;
-      const matchesMaxAmount =
-        filterData.maxAmount !== undefined
-          ? totalAmount <= filterData.maxAmount
-          : true;
-      // Date filters: assuming order.orderDate exists as a valid date string.
-      const orderDate = order.orderDate ? new Date(order.orderDate) : null;
-      const matchesStartDate =
-        filterData.startDate && orderDate
-          ? orderDate >= new Date(filterData.startDate)
-          : true;
-      const matchesEndDate =
-        filterData.endDate && orderDate
-          ? orderDate <= new Date(filterData.endDate)
-          : true;
 
-      return (
-        matchesSearch &&
-        matchesStatus &&
-        matchesProduct &&
-        matchesMinQty &&
-        matchesMaxQty &&
-        matchesMinAmount &&
-        matchesMaxAmount &&
-        matchesStartDate &&
-        matchesEndDate
-      );
+      const statusMatches = filterData.status
+        ? lines.some((line) =>
+            line.status.toLowerCase() === filterData.status?.toLowerCase()
+          )
+        : true;
+
+      const amountMatches = lines.every((line) => {
+        const amount = line.unitPrice * line.quantity;
+        return (
+          (!filterData.minAmount || amount >= filterData.minAmount) &&
+          (!filterData.maxAmount || amount <= filterData.maxAmount)
+        );
+      });
+
+      const qtyMatches = lines.every((line) => {
+        return (
+          (!filterData.minQty || line.quantity >= filterData.minQty) &&
+          (!filterData.maxQty || line.quantity <= filterData.maxQty)
+        );
+      });
+
+      const dateMatches = lines.every((line) => {
+        const orderDate = new Date(line.order?.orderDate ?? "");
+        return (
+          (!filterData.startDate || orderDate >= new Date(filterData.startDate)) &&
+          (!filterData.endDate || orderDate <= new Date(filterData.endDate))
+        );
+      });
+
+      return productMatches && statusMatches && amountMatches && qtyMatches && dateMatches;
     });
-  }, [allOrders, searchQuery, filterData]);
+  }, [groupedOrders, searchQuery, filterData]);
 
-  // Pagination: determine orders for current page
   const paginatedOrders = useMemo(() => {
     const start = currentPage * ITEMS_PER_PAGE;
     return filteredOrders.slice(start, start + ITEMS_PER_PAGE);
@@ -106,76 +114,34 @@ export function VendorOrders() {
 
   const pageCount = Math.ceil(filteredOrders.length / ITEMS_PER_PAGE);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      // Reset to first page on new search
-      setCurrentPage(0);
-    }
-  };
-
   const handlePageChange = (data: { selected: number }) => {
     setCurrentPage(data.selected);
   };
 
-  const columnMapping = {
-    "id": "Order ID",
-    "customerName": "Customer Name",
-    "customerPhoneNumber": "Customer Phone Number",
-    "productName": "Product Name",
-    "productPrice": "Product Price",
-    "qty": "Qty",
-    "status": "Status",
-  }
-
   return (
-    <div className="p-4 bg-white h-full flex flex-col gap-4">
-      {/* Search and Filter Controls */}
-      <div className="flex flex-col sm:flex-row items-center gap-4">
+    <div className="p-4">
+      <div className="flex justify-between items-center mb-4">
         <Input
           type="search"
-          placeholder="Search orders..."
-          className="max-w-xs border border-neutral-500 px-3 py-2 rounded-md"
+          placeholder="Search orders"
           value={searchQuery}
           onChange={(e) => {
             setSearchQuery(e.target.value);
             setCurrentPage(0);
           }}
-          onKeyDown={handleKeyDown}
+          className="max-w-xs border border-neutral-300 px-3 py-2 rounded-md"
         />
-
-        <Button variant={"outline"} className="flex gap-1 border-neutral-500"
-          onClick={() => {
-            const excelRecord: any[] = [];
-            paginatedOrders.forEach((element: any) => {
-              excelRecord.push({
-                id: element.id,
-                customerName: `${element.user.firstName} ${element.user.lastName}`,
-                customerPhoneNumber: element.user.phoneNumber ? element.user.phoneNumber : "-",
-                customerEmail: element.user.email,
-                productName: element.product.name,
-                productPrice: element.unitPrice,
-                qty: element.quantity,
-                status: element.status,
-              });
-            });
-
-            onExport(columnMapping, excelRecord, "Vendor_Order_Report.xlsx");
-          }}
-        >
-          <Download size={16} /> Export
-        </Button>
-
         <Button
           variant="outline"
           onClick={() => setShowFilter(true)}
-          className="flex items-center gap-2"
+          className="flex items-center gap-2 bg-brand-700 hover:bg-brand-800 text-white"
         >
-          Filter
-          <Filter />
+          Filter Orders
+          <Filter size={16} />
         </Button>
       </div>
 
-      {/* Vendor Order Filter Dialog */}
+      {/* Order Filter Dialog */}
       <VendorOrderFilter
         open={showFilter}
         onOpenChange={setShowFilter}
@@ -186,18 +152,51 @@ export function VendorOrders() {
         }}
       />
 
-      {/* Orders Table */}
+      {/* Orders Cards */}
       {loading ? (
-        <p>Loading orders...</p>
+        <p className="text-center py-8">Loading orders...</p>
       ) : paginatedOrders.length === 0 ? (
-        <p className="mt-4 text-center">No orders found.</p>
+        <p className="text-center py-8">No orders found.</p>
       ) : (
-        <VendorOrderTable
-          orders={paginatedOrders}
-          pageCount={pageCount}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
+        <div className="space-y-6">
+          {paginatedOrders.map(([orderId, lines]) => {
+            const firstLine = lines[0];
+            if (!firstLine) return null;
+
+            const orderDate = firstLine.order?.orderDate
+              ? new Date(firstLine.order.orderDate).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })
+              : "-";
+
+            const shipTo = `${firstLine.order.user.firstName} ${firstLine.order.user.lastName}`;
+            const totalAmount = lines.reduce((sum, l) => sum + l.totalAmount, 0);
+
+            const items = lines.map((line) => ({
+              productId: line.product?.id ?? "",
+              name: line.product?.name ?? "Unknown product",
+              imageUrl: line.product?.images?.[0]?.url ?? "",
+            }));
+
+            return (
+              <OrderCard
+                key={orderId}
+                orderId={orderId}
+                orderDate={orderDate}
+                totalAmount={totalAmount}
+                shipTo={shipTo}
+                items={items}
+              />
+            );
+          })}
+          {pageCount > 1 && (
+            <div className="mt-6">
+              <Pagination pageCount={pageCount} handlePageClick={handlePageChange} />
+            </div>
+          )}
+        </div>
       )}
     </div>
   );
